@@ -18,7 +18,7 @@ namespace MyDive.Server.Controllers
             {
                 ObjectResult<stp_GetAllCitiesByCountryId_Result> cities = MyDiveDB.stp_GetAllCitiesByCountryId(i_CuntryID);
 
-                return Ok(cities);
+                return Ok(cities.ToList());
             }
         }
     }

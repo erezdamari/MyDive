@@ -11,7 +11,7 @@ namespace MyDive.Server.Controllers
     public class WishController : ApiController
     {
         [HttpPost]
-        [Route("Wish/Create")]
+        [Route("wish/Create")]
         public IHttpActionResult CreateWish(Wish i_Wish)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -22,7 +22,7 @@ namespace MyDive.Server.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Wish/Remove")]
         public IHttpActionResult RemoveWish(Wish i_Wish)
         {

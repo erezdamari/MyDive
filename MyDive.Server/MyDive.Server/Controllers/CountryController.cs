@@ -11,7 +11,7 @@ namespace MyDive.Server.Controllers
     public class CountryController : ApiController
     {
         [HttpGet]
-        [Route("Country/GetCounties")]
+        [Route("country/GetCounties")]
         public IHttpActionResult GetCountries()
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())

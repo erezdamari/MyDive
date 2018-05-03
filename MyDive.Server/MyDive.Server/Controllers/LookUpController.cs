@@ -11,7 +11,7 @@ namespace MyDive.Server.Controllers
     public class LookUpController : ApiController
     {
         [HttpGet]
-        [Route("GetBottoms")]
+        [Route("bottom")]
         public IHttpActionResult GetBottomTypes()
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -23,7 +23,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("GetSalinity")]
+        [Route("salinity")]
         public IHttpActionResult GetSalinityTypes()
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -35,7 +35,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("GetWater")]
+        [Route("water")]
         public IHttpActionResult GetWaterTypes()
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())

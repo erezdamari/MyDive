@@ -8,7 +8,7 @@ namespace MyDive.Server.Controllers
     {
         [HttpPost]
         [Route ("user/Login")]
-        public IHttpActionResult AuthenticateLogin(UserLogin i_UserLoginInfo)
+        public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
         {
             bool isAuthenticated = true;
 
@@ -18,7 +18,7 @@ namespace MyDive.Server.Controllers
             }
 
             if (isAuthenticated)
-                return Ok();
+                return Ok("ok");//return user id
             else
                 return NotFound();
         }

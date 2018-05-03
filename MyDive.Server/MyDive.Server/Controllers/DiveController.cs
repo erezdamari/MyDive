@@ -12,7 +12,7 @@ namespace MyDive.Server.Controllers
     public class DiveController : ApiController
     {
         [HttpPost]
-        [Route("Dive/Create")]
+        [Route("dive/Create")]
         public IHttpActionResult CreateDiveLog(DiveLog i_Dive)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -33,8 +33,8 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("Dive/GetTypes")]
-        public IHttpActionResult GetFiveTypes()
+        [Route("dive/GetTypes")]
+        public IHttpActionResult GetDiveTypes()
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
