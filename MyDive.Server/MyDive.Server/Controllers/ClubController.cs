@@ -31,7 +31,9 @@ namespace MyDive.Server.Controllers
                         Email = club.Email,
                         Address = club.Address,
                         Rating = club.Rating,
-                        SiteURL = club.SiteURL
+                        SiteURL = club.SiteURL,
+                        Lat = club.Lat,
+                        Long = club.Long
                     });
                 }
 
@@ -59,7 +61,9 @@ namespace MyDive.Server.Controllers
                         Email = club.Email,
                         Address = club.Address,
                         Rating = club.Rating,
-                        SiteURL = club.SiteURL
+                        SiteURL = club.SiteURL,
+                        Lat = club.Lat,
+                        Long = club.Long
                     });
                 }
 
@@ -87,7 +91,9 @@ namespace MyDive.Server.Controllers
                         Email = club.Email,
                         Address = club.Address,
                         Rating = club.Rating,
-                        SiteURL = club.SiteURL
+                        SiteURL = club.SiteURL,
+                        Lat = club.Lat,
+                        Long = club.Long
                     });
                 }
 
@@ -115,7 +121,9 @@ namespace MyDive.Server.Controllers
                         Email = club.Email,
                         Address = club.Address,
                         Rating = club.Rating,
-                        SiteURL = club.SiteURL
+                        SiteURL = club.SiteURL,
+                        Lat = club.Lat,
+                        Long = club.Long
                     });
                 }
 

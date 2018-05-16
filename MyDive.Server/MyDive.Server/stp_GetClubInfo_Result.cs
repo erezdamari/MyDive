@@ -22,5 +22,7 @@ namespace MyDive.Server
         public string SiteURL { get; set; }
         public int CountryID { get; set; }
         public int CityID { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
     }
 }

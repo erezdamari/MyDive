@@ -81,13 +81,9 @@
         </Function>
         <Function Name="stp_GetAllCountries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_GetBottomType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="stp_GetCitiesByCountry" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="countryID" Type="int" Mode="In" />
-        </Function>
         <Function Name="stp_GetClubInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="clubID" Type="int" Mode="In" />
         </Function>
-        <Function Name="stp_GetCountries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_GetDiveTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_GetSalinityTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_GetSiteInfoById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -193,37 +189,14 @@
           <FunctionImport Name="stp_GetAllCitiesByCountryId" ReturnType="Collection(MyDiveModel.stp_GetAllCitiesByCountryId_Result)">
           <Parameter Name="countryID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="stp_GetAllClubsByCountryANDCityId" ReturnType="Collection(MyDiveModel.stp_GetAllClubsByCountryANDCityId_Result)">
-            <Parameter Name="countryID" Mode="In" Type="Int32" />
-            <Parameter Name="cityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_GetAllClubsByCountryId" ReturnType="Collection(MyDiveModel.stp_GetAllClubsByCountryId_Result)">
-          <Parameter Name="countryID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_GetAllClubsBySearch" ReturnType="Collection(MyDiveModel.stp_GetAllClubsBySearch_Result)">
-          <Parameter Name="searchKeyword" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetAllCountries" ReturnType="Collection(MyDiveModel.stp_GetAllCountries_Result)" />
           <FunctionImport Name="stp_GetBottomType" ReturnType="Collection(MyDiveModel.stp_GetBottomType_Result)" />
           <FunctionImport Name="stp_GetCitiesByCountry" ReturnType="Collection(MyDiveModel.stp_GetCitiesByCountry_Result)">
           <Parameter Name="countryID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="stp_GetClubInfo" ReturnType="Collection(MyDiveModel.stp_GetClubInfo_Result)">
-          <Parameter Name="clubID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetCountries" ReturnType="Collection(MyDiveModel.stp_GetCountries_Result)" />
           <FunctionImport Name="stp_GetDiveTypes" ReturnType="Collection(MyDiveModel.stp_GetDiveTypes_Result)" />
           <FunctionImport Name="stp_GetSalinityTypes" ReturnType="Collection(MyDiveModel.stp_GetSalinityTypes_Result)" />
-          <FunctionImport Name="stp_GetSiteInfoById" ReturnType="Collection(MyDiveModel.stp_GetSiteInfoById_Result)">
-          <Parameter Name="siteID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_GetSitesByCountryAndCity" ReturnType="Collection(MyDiveModel.stp_GetSitesByCountryAndCity_Result)">
-            <Parameter Name="countryID" Mode="In" Type="Int32" />
-            <Parameter Name="cityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_GetSitesByKeywors" ReturnType="Collection(MyDiveModel.stp_GetSitesByKeywors_Result)">
-          <Parameter Name="keyword" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
           <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -248,6 +221,29 @@
             <Parameter Name="userID" Mode="In" Type="Int32" />
             <Parameter Name="siteID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="stp_GetAllClubsByCountryANDCityId" ReturnType="Collection(MyDiveModel.stp_GetAllClubsByCountryANDCityId_Result)">
+            <Parameter Name="countryID" Mode="In" Type="Int32" />
+            <Parameter Name="cityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetAllClubsByCountryId" ReturnType="Collection(MyDiveModel.stp_GetAllClubsByCountryId_Result)">
+            <Parameter Name="countryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetAllClubsBySearch" ReturnType="Collection(MyDiveModel.stp_GetAllClubsBySearch_Result)">
+            <Parameter Name="searchKeyword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetClubInfo" ReturnType="Collection(MyDiveModel.stp_GetClubInfo_Result)">
+            <Parameter Name="clubID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSiteInfoById" ReturnType="Collection(MyDiveModel.stp_GetSiteInfoById_Result)">
+            <Parameter Name="siteID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSitesByCountryAndCity" ReturnType="Collection(MyDiveModel.stp_GetSitesByCountryAndCity_Result)">
+            <Parameter Name="countryID" Mode="In" Type="Int32" />
+            <Parameter Name="cityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSitesByKeywors" ReturnType="Collection(MyDiveModel.stp_GetSitesByKeywors_Result)">
+            <Parameter Name="keyword" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -264,33 +260,6 @@
           <Property Type="Int32" Name="CityID" Nullable="false" />
           <Property Type="String" Name="CityName" Nullable="true" MaxLength="100" />
         </ComplexType>
-        <ComplexType Name="stp_GetAllClubsByCountryANDCityId_Result">
-          <Property Type="Int32" Name="ClubID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="stp_GetAllClubsByCountryId_Result">
-          <Property Type="Int32" Name="ClubID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="stp_GetAllClubsBySearch_Result">
-          <Property Type="Int32" Name="ClubID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
-        </ComplexType>
         <ComplexType Name="stp_GetAllCountries_Result">
           <Property Type="Int32" Name="CountryID" Nullable="false" />
           <Property Type="String" Name="CountryName" Nullable="true" MaxLength="100" />
@@ -304,17 +273,6 @@
           <Property Type="String" Name="CityName" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="CountryID" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="stp_GetClubInfo_Result">
-          <Property Type="Int32" Name="ClubID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="Int32" Name="CityID" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="stp_GetCountries_Result">
           <Property Type="Int32" Name="CountryID" Nullable="false" />
           <Property Type="String" Name="CountryName" Nullable="true" MaxLength="100" />
@@ -327,30 +285,6 @@
         <ComplexType Name="stp_GetSalinityTypes_Result">
           <Property Type="Int32" Name="SalinityID" Nullable="false" />
           <Property Type="String" Name="Salinity" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="stp_GetSiteInfoById_Result">
-          <Property Type="Int32" Name="SiteID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Polygon" Nullable="true" MaxLength="1000" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="Int32" Name="CityID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="stp_GetSitesByCountryAndCity_Result">
-          <Property Type="Int32" Name="SiteID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Polygon" Nullable="true" MaxLength="1000" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="Int32" Name="CityID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="stp_GetSitesByKeywors_Result">
-          <Property Type="Int32" Name="SiteID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Polygon" Nullable="true" MaxLength="1000" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="Int32" Name="CityID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="stp_GetUser_Result">
           <Property Type="Int32" Name="UserID" Nullable="false" />
@@ -384,6 +318,79 @@
         <ComplexType Name="stp_GetWaterTypes_Result">
           <Property Type="Int32" Name="WaterTypeID" Nullable="false" />
           <Property Type="String" Name="WaterType" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="stp_GetAllClubsByCountryANDCityId_Result">
+          <Property Type="Int32" Name="ClubID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetAllClubsByCountryId_Result">
+          <Property Type="Int32" Name="ClubID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetAllClubsBySearch_Result">
+          <Property Type="Int32" Name="ClubID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetClubInfo_Result">
+          <Property Type="Int32" Name="ClubID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+          <Property Type="String" Name="SiteURL" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="CountryID" Nullable="false" />
+          <Property Type="Int32" Name="CityID" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSiteInfoById_Result">
+          <Property Type="Int32" Name="SiteID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="CountryID" Nullable="false" />
+          <Property Type="Int32" Name="CityID" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSitesByCountryAndCity_Result">
+          <Property Type="Int32" Name="SiteID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="CountryID" Nullable="false" />
+          <Property Type="Int32" Name="CityID" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSitesByKeywors_Result">
+          <Property Type="Int32" Name="SiteID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="CountryID" Nullable="false" />
+          <Property Type="Int32" Name="CityID" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -427,45 +434,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetAllClubsByCountryANDCityId" FunctionName="MyDiveModel.Store.stp_GetAllClubsByCountryANDCityId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllClubsByCountryANDCityId_Result">
-                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetAllClubsByCountryId" FunctionName="MyDiveModel.Store.stp_GetAllClubsByCountryId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllClubsByCountryId_Result">
-                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetAllClubsBySearch" FunctionName="MyDiveModel.Store.stp_GetAllClubsBySearch">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllClubsBySearch_Result">
-                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_GetAllCountries" FunctionName="MyDiveModel.Store.stp_GetAllCountries">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllCountries_Result">
@@ -482,39 +450,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetCitiesByCountry" FunctionName="MyDiveModel.Store.stp_GetCitiesByCountry">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetCitiesByCountry_Result">
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetClubInfo" FunctionName="MyDiveModel.Store.stp_GetClubInfo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetClubInfo_Result">
-                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetCountries" FunctionName="MyDiveModel.Store.stp_GetCountries">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetCountries_Result">
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="CountryPhonePrefix" ColumnName="CountryPhonePrefix" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_GetDiveTypes" FunctionName="MyDiveModel.Store.stp_GetDiveTypes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetDiveTypes_Result">
@@ -528,42 +463,6 @@
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSalinityTypes_Result">
                 <ScalarProperty Name="SalinityID" ColumnName="SalinityID" />
                 <ScalarProperty Name="Salinity" ColumnName="Salinity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetSiteInfoById" FunctionName="MyDiveModel.Store.stp_GetSiteInfoById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteInfoById_Result">
-                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Polygon" ColumnName="Polygon" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetSitesByCountryAndCity" FunctionName="MyDiveModel.Store.stp_GetSitesByCountryAndCity">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByCountryAndCity_Result">
-                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Polygon" ColumnName="Polygon" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetSitesByKeywors" FunctionName="MyDiveModel.Store.stp_GetSitesByKeywors">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByKeywors_Result">
-                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Polygon" ColumnName="Polygon" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -619,6 +518,107 @@
           <FunctionImportMapping FunctionImportName="stp_RateClub" FunctionName="MyDiveModel.Store.stp_RateClub" />
           <FunctionImportMapping FunctionImportName="stp_RateSite" FunctionName="MyDiveModel.Store.stp_RateSite" />
           <FunctionImportMapping FunctionImportName="stp_RemoveFromWishList" FunctionName="MyDiveModel.Store.stp_RemoveFromWishList" />
+          <FunctionImportMapping FunctionImportName="stp_GetAllClubsByCountryANDCityId" FunctionName="MyDiveModel.Store.stp_GetAllClubsByCountryANDCityId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllClubsByCountryANDCityId_Result">
+                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetAllClubsByCountryId" FunctionName="MyDiveModel.Store.stp_GetAllClubsByCountryId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllClubsByCountryId_Result">
+                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetAllClubsBySearch" FunctionName="MyDiveModel.Store.stp_GetAllClubsBySearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllClubsBySearch_Result">
+                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetClubInfo" FunctionName="MyDiveModel.Store.stp_GetClubInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetClubInfo_Result">
+                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetSiteInfoById" FunctionName="MyDiveModel.Store.stp_GetSiteInfoById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteInfoById_Result">
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetSitesByCountryAndCity" FunctionName="MyDiveModel.Store.stp_GetSitesByCountryAndCity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByCountryAndCity_Result">
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetSitesByKeywors" FunctionName="MyDiveModel.Store.stp_GetSitesByKeywors">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByKeywors_Result">
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

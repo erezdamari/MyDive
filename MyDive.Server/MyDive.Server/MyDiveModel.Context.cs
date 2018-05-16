@@ -248,37 +248,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllCitiesByCountryId_Result>("stp_GetAllCitiesByCountryId", countryIDParameter);
         }
     
-        public virtual ObjectResult<stp_GetAllClubsByCountryANDCityId_Result> stp_GetAllClubsByCountryANDCityId(Nullable<int> countryID, Nullable<int> cityID)
-        {
-            var countryIDParameter = countryID.HasValue ?
-                new ObjectParameter("countryID", countryID) :
-                new ObjectParameter("countryID", typeof(int));
-    
-            var cityIDParameter = cityID.HasValue ?
-                new ObjectParameter("cityID", cityID) :
-                new ObjectParameter("cityID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllClubsByCountryANDCityId_Result>("stp_GetAllClubsByCountryANDCityId", countryIDParameter, cityIDParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetAllClubsByCountryId_Result> stp_GetAllClubsByCountryId(Nullable<int> countryID)
-        {
-            var countryIDParameter = countryID.HasValue ?
-                new ObjectParameter("countryID", countryID) :
-                new ObjectParameter("countryID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllClubsByCountryId_Result>("stp_GetAllClubsByCountryId", countryIDParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetAllClubsBySearch_Result> stp_GetAllClubsBySearch(string searchKeyword)
-        {
-            var searchKeywordParameter = searchKeyword != null ?
-                new ObjectParameter("searchKeyword", searchKeyword) :
-                new ObjectParameter("searchKeyword", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllClubsBySearch_Result>("stp_GetAllClubsBySearch", searchKeywordParameter);
-        }
-    
         public virtual ObjectResult<stp_GetAllCountries_Result> stp_GetAllCountries()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllCountries_Result>("stp_GetAllCountries");
@@ -298,15 +267,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetCitiesByCountry_Result>("stp_GetCitiesByCountry", countryIDParameter);
         }
     
-        public virtual ObjectResult<stp_GetClubInfo_Result> stp_GetClubInfo(Nullable<int> clubID)
-        {
-            var clubIDParameter = clubID.HasValue ?
-                new ObjectParameter("clubID", clubID) :
-                new ObjectParameter("clubID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetClubInfo_Result>("stp_GetClubInfo", clubIDParameter);
-        }
-    
         public virtual ObjectResult<stp_GetCountries_Result> stp_GetCountries()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetCountries_Result>("stp_GetCountries");
@@ -320,37 +280,6 @@ namespace MyDive.Server
         public virtual ObjectResult<stp_GetSalinityTypes_Result> stp_GetSalinityTypes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSalinityTypes_Result>("stp_GetSalinityTypes");
-        }
-    
-        public virtual ObjectResult<stp_GetSiteInfoById_Result> stp_GetSiteInfoById(Nullable<int> siteID)
-        {
-            var siteIDParameter = siteID.HasValue ?
-                new ObjectParameter("siteID", siteID) :
-                new ObjectParameter("siteID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSiteInfoById_Result>("stp_GetSiteInfoById", siteIDParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetSitesByCountryAndCity_Result> stp_GetSitesByCountryAndCity(Nullable<int> countryID, Nullable<int> cityID)
-        {
-            var countryIDParameter = countryID.HasValue ?
-                new ObjectParameter("countryID", countryID) :
-                new ObjectParameter("countryID", typeof(int));
-    
-            var cityIDParameter = cityID.HasValue ?
-                new ObjectParameter("cityID", cityID) :
-                new ObjectParameter("cityID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByCountryAndCity_Result>("stp_GetSitesByCountryAndCity", countryIDParameter, cityIDParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetSitesByKeywors_Result> stp_GetSitesByKeywors(string keyword)
-        {
-            var keywordParameter = keyword != null ?
-                new ObjectParameter("keyword", keyword) :
-                new ObjectParameter("keyword", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByKeywors_Result>("stp_GetSitesByKeywors", keywordParameter);
         }
     
         public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
@@ -430,6 +359,77 @@ namespace MyDive.Server
                 new ObjectParameter("siteID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_RemoveFromWishList", userIDParameter, siteIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetAllClubsByCountryANDCityId_Result> stp_GetAllClubsByCountryANDCityId(Nullable<int> countryID, Nullable<int> cityID)
+        {
+            var countryIDParameter = countryID.HasValue ?
+                new ObjectParameter("countryID", countryID) :
+                new ObjectParameter("countryID", typeof(int));
+    
+            var cityIDParameter = cityID.HasValue ?
+                new ObjectParameter("cityID", cityID) :
+                new ObjectParameter("cityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllClubsByCountryANDCityId_Result>("stp_GetAllClubsByCountryANDCityId", countryIDParameter, cityIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetAllClubsByCountryId_Result> stp_GetAllClubsByCountryId(Nullable<int> countryID)
+        {
+            var countryIDParameter = countryID.HasValue ?
+                new ObjectParameter("countryID", countryID) :
+                new ObjectParameter("countryID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllClubsByCountryId_Result>("stp_GetAllClubsByCountryId", countryIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetAllClubsBySearch_Result> stp_GetAllClubsBySearch(string searchKeyword)
+        {
+            var searchKeywordParameter = searchKeyword != null ?
+                new ObjectParameter("searchKeyword", searchKeyword) :
+                new ObjectParameter("searchKeyword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAllClubsBySearch_Result>("stp_GetAllClubsBySearch", searchKeywordParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetClubInfo_Result> stp_GetClubInfo(Nullable<int> clubID)
+        {
+            var clubIDParameter = clubID.HasValue ?
+                new ObjectParameter("clubID", clubID) :
+                new ObjectParameter("clubID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetClubInfo_Result>("stp_GetClubInfo", clubIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSiteInfoById_Result> stp_GetSiteInfoById(Nullable<int> siteID)
+        {
+            var siteIDParameter = siteID.HasValue ?
+                new ObjectParameter("siteID", siteID) :
+                new ObjectParameter("siteID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSiteInfoById_Result>("stp_GetSiteInfoById", siteIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSitesByCountryAndCity_Result> stp_GetSitesByCountryAndCity(Nullable<int> countryID, Nullable<int> cityID)
+        {
+            var countryIDParameter = countryID.HasValue ?
+                new ObjectParameter("countryID", countryID) :
+                new ObjectParameter("countryID", typeof(int));
+    
+            var cityIDParameter = cityID.HasValue ?
+                new ObjectParameter("cityID", cityID) :
+                new ObjectParameter("cityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByCountryAndCity_Result>("stp_GetSitesByCountryAndCity", countryIDParameter, cityIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSitesByKeywors_Result> stp_GetSitesByKeywors(string keyword)
+        {
+            var keywordParameter = keyword != null ?
+                new ObjectParameter("keyword", keyword) :
+                new ObjectParameter("keyword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByKeywors_Result>("stp_GetSitesByKeywors", keywordParameter);
         }
     }
 }

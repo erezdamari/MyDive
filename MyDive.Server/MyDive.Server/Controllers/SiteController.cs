@@ -28,8 +28,9 @@ namespace MyDive.Server.Controllers
                         Name = site.Name,
                         CityID = site.CityID,
                         CountryID = site.CountryID,
-                        Polygon = site.Polygon,
-                        Rating = site.Rating
+                        Rating = site.Rating,
+                        Lat = site.Lat,
+                        Long = site.Long
                     });
                 }
 
@@ -54,8 +55,9 @@ namespace MyDive.Server.Controllers
                         Name = site.Name,
                         CityID = site.CityID,
                         CountryID = site.CountryID,
-                        Polygon = site.Polygon,
-                        Rating = site.Rating
+                        Rating = site.Rating,
+                        Lat = site.Lat,
+                        Long = site.Long
                     });
                 }
 
@@ -80,8 +82,9 @@ namespace MyDive.Server.Controllers
                         Name = site.Name,
                         CityID = site.CityID,
                         CountryID = site.CountryID,
-                        Polygon = site.Polygon,
-                        Rating = site.Rating
+                        Rating = site.Rating,
+                        Lat = site.Lat,
+                        Long = site.Long
                     });
                 }
 
