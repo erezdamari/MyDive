@@ -17,9 +17,23 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetSiteInfoById_Result> site = MyDiveDB.stp_GetSiteInfoById(i_SiteID);
+                ObjectResult<stp_GetSiteInfoById_Result> sitesResult = MyDiveDB.stp_GetSiteInfoById(i_SiteID);
+                List<Site> sites = new List<Site>();
 
-                return Ok(site);
+                foreach (stp_GetSiteInfoById_Result site in sitesResult)
+                {
+                    sites.Add(new Site
+                    {
+                        SiteID = site.SiteID,
+                        Name = site.Name,
+                        CityID = site.CityID,
+                        CountryID = site.CountryID,
+                        Polygon = site.Polygon,
+                        Rating = site.Rating
+                    });
+                }
+
+                return Ok(sites);
             }
         }
 
@@ -29,9 +43,23 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetSitesByCountryAndCity_Result> site = MyDiveDB.stp_GetSitesByCountryAndCity(i_CuntryID, i_CityID);
+                ObjectResult<stp_GetSitesByCountryAndCity_Result> sitesResult = MyDiveDB.stp_GetSitesByCountryAndCity(i_CuntryID, i_CityID);
+                List<Site> sites = new List<Site>();
 
-                return Ok(site);
+                foreach (stp_GetSitesByCountryAndCity_Result site in sitesResult)
+                {
+                    sites.Add(new Site
+                    {
+                        SiteID = site.SiteID,
+                        Name = site.Name,
+                        CityID = site.CityID,
+                        CountryID = site.CountryID,
+                        Polygon = site.Polygon,
+                        Rating = site.Rating
+                    });
+                }
+
+                return Ok(sites);
             }
         }
 
@@ -41,15 +69,29 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetSitesByKeywors_Result> site = MyDiveDB.stp_GetSitesByKeywors(i_Keyword);
+                ObjectResult<stp_GetSitesByKeywors_Result> sitesResult = MyDiveDB.stp_GetSitesByKeywors(i_Keyword);
+                List<Site> sites = new List<Site>();
 
-                return Ok(site);
+                foreach (stp_GetSitesByKeywors_Result site in sitesResult)
+                {
+                    sites.Add(new Site
+                    {
+                        SiteID = site.SiteID,
+                        Name = site.Name,
+                        CityID = site.CityID,
+                        CountryID = site.CountryID,
+                        Polygon = site.Polygon,
+                        Rating = site.Rating
+                    });
+                }
+
+                return Ok(sites);
             }
         }
 
         [HttpPost]
         [Route("Site/Rate")]
-        public IHttpActionResult RateSite(Rating i_Rate)
+        public IHttpActionResult RateSite([FromBody] Rating i_Rate)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {

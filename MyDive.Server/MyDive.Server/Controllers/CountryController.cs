@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyDive.Server.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
@@ -16,7 +17,17 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetAllCountries_Result> countries = MyDiveDB.stp_GetAllCountries();
+                ObjectResult<stp_GetAllCountries_Result> countriesResult = MyDiveDB.stp_GetAllCountries();
+                List<Country> countries = new List<Country>();
+
+                foreach (stp_GetAllCountries_Result country in countriesResult)
+                {
+                    countries.Add(new Country
+                    {
+                        CountryID = country.CountryID,
+                        CountryName = country.CountryName
+                    });
+                }
 
                 return Ok(countries);
             }

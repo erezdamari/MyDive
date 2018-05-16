@@ -13,7 +13,7 @@ namespace MyDive.Server.Controllers
     {
         [HttpPost]
         [Route("dive/Create")]
-        public IHttpActionResult CreateDiveLog(DiveLog i_Dive)
+        public IHttpActionResult CreateDiveLog([FromBody] DiveLog i_Dive)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
@@ -38,7 +38,17 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetDiveTypes_Result> diveTypes = MyDiveDB.stp_GetDiveTypes();
+                ObjectResult<stp_GetDiveTypes_Result> diveTypesResult = MyDiveDB.stp_GetDiveTypes();
+                List<DiveType> diveTypes = new List<DiveType>();
+
+                foreach (stp_GetDiveTypes_Result type in diveTypesResult)
+                {
+                    diveTypes.Add(new DiveType
+                    {
+                        DiveTypeID = type.DiveTypeID,
+                        Type = type.Type
+                    });
+                }
 
                 return Ok(diveTypes);
             }

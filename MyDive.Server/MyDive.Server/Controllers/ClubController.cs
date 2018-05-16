@@ -17,8 +17,23 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetAllClubsByCountryANDCityId_Result> clubs =
+                ObjectResult<stp_GetAllClubsByCountryANDCityId_Result> clubsResult =
                     MyDiveDB.stp_GetAllClubsByCountryANDCityId(i_CuntryID, i_CityID);
+                List<Club> clubs = new List<Club>();
+
+                foreach(stp_GetAllClubsByCountryANDCityId_Result club in clubsResult)
+                {
+                    clubs.Add(new Club
+                    {
+                        ClubID = club.ClubID,
+                        Name = club.Name,
+                        Phone = club.Phone,
+                        Email = club.Email,
+                        Address = club.Address,
+                        Rating = club.Rating,
+                        SiteURL = club.SiteURL
+                    });
+                }
 
                 return Ok(clubs);
             }
@@ -30,8 +45,23 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetAllClubsByCountryId_Result> clubs =
+                ObjectResult<stp_GetAllClubsByCountryId_Result> clubsResult =
                     MyDiveDB.stp_GetAllClubsByCountryId(i_CuntryID);
+                List<Club> clubs = new List<Club>();
+
+                foreach (stp_GetAllClubsByCountryId_Result club in clubsResult)
+                {
+                    clubs.Add(new Club
+                    {
+                        ClubID = club.ClubID,
+                        Name = club.Name,
+                        Phone = club.Phone,
+                        Email = club.Email,
+                        Address = club.Address,
+                        Rating = club.Rating,
+                        SiteURL = club.SiteURL
+                    });
+                }
 
                 return Ok(clubs);
             }
@@ -43,8 +73,23 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetAllClubsBySearch_Result> clubs =
+                ObjectResult<stp_GetAllClubsBySearch_Result> clubsResult =
                     MyDiveDB.stp_GetAllClubsBySearch(i_Keyword);
+                List<Club> clubs = new List<Club>();
+
+                foreach (stp_GetAllClubsBySearch_Result club in clubsResult)
+                {
+                    clubs.Add(new Club
+                    {
+                        ClubID = club.ClubID,
+                        Name = club.Name,
+                        Phone = club.Phone,
+                        Email = club.Email,
+                        Address = club.Address,
+                        Rating = club.Rating,
+                        SiteURL = club.SiteURL
+                    });
+                }
 
                 return Ok(clubs);
             }
@@ -52,20 +97,35 @@ namespace MyDive.Server.Controllers
 
         [HttpGet]
         [Route("club/GetClub/{i_ClubID}")]
-        public IHttpActionResult GetClubsByKeyword(int i_ClubID)
+        public IHttpActionResult GetClubsByID(int i_ClubID)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetClubInfo_Result> club =
+                ObjectResult<stp_GetClubInfo_Result> clubsResult =
                     MyDiveDB.stp_GetClubInfo(i_ClubID);
+                List<Club> clubs = new List<Club>();
 
-                return Ok(club);
+                foreach (stp_GetClubInfo_Result club in clubsResult)
+                {
+                    clubs.Add(new Club
+                    {
+                        ClubID = club.ClubID,
+                        Name = club.Name,
+                        Phone = club.Phone,
+                        Email = club.Email,
+                        Address = club.Address,
+                        Rating = club.Rating,
+                        SiteURL = club.SiteURL
+                    });
+                }
+
+                return Ok(clubs);
             }
         }
 
         [HttpPost]
         [Route("club/Rate")]
-        public IHttpActionResult RateClub(Rating i_Rate)
+        public IHttpActionResult RateClub([FromBody] Rating i_Rate)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {

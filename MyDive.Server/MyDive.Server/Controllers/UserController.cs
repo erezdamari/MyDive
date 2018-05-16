@@ -25,7 +25,7 @@ namespace MyDive.Server.Controllers
 
         [HttpPost]
         [Route("user/Register")]
-        public IHttpActionResult CreateUser(User i_User)
+        public IHttpActionResult CreateUser([FromBody] User i_User)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
@@ -50,9 +50,24 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetUser_Result> user = MyDiveDB.stp_GetUser(i_UserId);
+                ObjectResult<stp_GetUser_Result> userResult = MyDiveDB.stp_GetUser(i_UserId);
+                User userToReturn = new User();
 
-                return Ok(user);
+                foreach (stp_GetUser_Result user in userResult)
+                {
+                    userToReturn.UserID = user.UserID;
+                    userToReturn.Username = user.Username;
+                    userToReturn.Password = user.Password;
+                    userToReturn.Email = user.Email;
+                    userToReturn.FirstName = user.FirstName;
+                    userToReturn.LastName = user.LastName;
+                    userToReturn.Association = user.AssociationID;
+                    userToReturn.UserLicenseNumber = user.UserLicenceNumber;
+                    userToReturn.LicenseTypeID = user.LicenseTypeID;
+                    userToReturn.Birthday = user.Birthday;
+                }
+
+                return Ok(userToReturn);
             }
         }
 
@@ -74,9 +89,16 @@ namespace MyDive.Server.Controllers
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                ObjectResult<stp_GetUserWishList_Result> user = MyDiveDB.stp_GetUserWishList(i_UserId);
+                ObjectResult<stp_GetUserWishList_Result> userResult = MyDiveDB.stp_GetUserWishList(i_UserId);
+                UserWishList userToReturn = new UserWishList();
 
-                return Ok(user);
+                foreach (stp_GetUserWishList_Result user in userResult)
+                {
+                    userToReturn.WishID = user.WishID;
+                    userToReturn.SiteID = user.SiteID;
+                    userToReturn.UserID = user.UserID;
+                }
+                return Ok(userToReturn);
             }
         }
     }

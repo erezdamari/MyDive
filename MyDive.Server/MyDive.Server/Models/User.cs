@@ -19,12 +19,12 @@ namespace MyDive.Server.Models
 
         public string LastName { get; set; }
 
-        public int Association { get; set; }
+        public int? Association { get; set; }
 
         public string UserLicenseNumber { get; set; }
 
-        public int LicenseTypeID { get; set; }
+        public int? LicenseTypeID { get; set; }
 
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
     }
 }
