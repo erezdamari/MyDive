@@ -8,6 +8,6 @@ namespace MyDive.Server.Models
     public class WaterType
     {
         public int WaterTypeID { get; set; }
-        public string WaterType { get; set; }
+        public string WaterTypeName { get; set; }
     }
 }

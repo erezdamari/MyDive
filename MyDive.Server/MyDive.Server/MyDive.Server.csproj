@@ -215,6 +215,8 @@
       <DependentUpon>MyDiveModel.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\mydive - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mydive - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

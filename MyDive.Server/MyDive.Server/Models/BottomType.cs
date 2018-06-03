@@ -8,6 +8,6 @@ namespace MyDive.Server.Models
     public class BottomType
     {
         public int BottomTypeID { get; set; }
-        public string BottomType { get; set; }
+        public string BottomTypeName { get; set; }
     }
 }

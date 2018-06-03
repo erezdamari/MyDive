@@ -25,7 +25,7 @@ namespace MyDive.Server.Controllers
                     bottomTypes.Add(new BottomType
                     {
                         BottomTypeID = type.BottomTypeID,
-                        BottomType = type.BottomType
+                        BottomTypeName = type.BottomType
                     });
                 }
 
@@ -69,7 +69,7 @@ namespace MyDive.Server.Controllers
                     waterTypes.Add(new WaterType
                     {
                         WaterTypeID = type.WaterTypeID,
-                        WaterType = type.WaterType
+                        WaterTypeName = type.WaterType
                     });
                 }
 
