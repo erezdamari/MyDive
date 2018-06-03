@@ -9,10 +9,11 @@ using System.Web.Http;
 
 namespace MyDive.Server.Controllers
 {
+    [RoutePrefix("size")]
     public class SiteController : ApiController
     {
         [HttpGet]
-        [Route("Site/GetSite/{i_SiteID}")]
+        [Route("getsite/{i_SiteID}")]
         public IHttpActionResult GetCitiesByCuntryID(int i_SiteID)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -39,7 +40,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("Site/GetSite/{i_CuntryID, i_CityID}")]
+        [Route("getsite/{i_CuntryID, i_CityID}")]
         public IHttpActionResult GetSiteByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -66,7 +67,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("Site/GetSite/{i_Keyword}")]
+        [Route("getsite/{i_Keyword}")]
         public IHttpActionResult GetSiteByKeyword(string i_Keyword)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -93,7 +94,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpPost]
-        [Route("Site/Rate")]
+        [Route("rate")]
         public IHttpActionResult RateSite([FromBody] Rating i_Rate)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())

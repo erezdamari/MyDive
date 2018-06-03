@@ -4,10 +4,11 @@ using System.Web.Http;
 
 namespace MyDive.Server.Controllers
 {
+    [RoutePrefix("user")]
     public class UserController : ApiController
     {
         [HttpPost]
-        [Route("user/Login")]
+        [Route("login")]
         public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
         {
             bool isAuthenticated = true;
@@ -24,7 +25,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpPost]
-        [Route("user/Register")]
+        [Route("register")]
         public IHttpActionResult CreateUser([FromBody] User i_User)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -45,14 +46,21 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("user/test")]
+        [Route("test")]
         public IHttpActionResult test()
         {
-            return Ok("success");
+            UserWishList UWL = new UserWishList
+            {
+                SiteID = 1,
+                UserID = 23,
+                WishID = 85
+            };
+
+            return Ok(UWL);
         }
 
         [HttpGet]
-        [Route("user/GetUser/{i_UserId}")]
+        [Route("getuser/{i_UserId}")]
         public IHttpActionResult GetUser(int i_UserId)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -79,7 +87,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("user/GetUserLog/{i_UserId}")]
+        [Route("getuserlog/{i_UserId}")]
         public IHttpActionResult GetUserDiveLog(int i_UserId)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -91,7 +99,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("user/GetUserWish/{i_UserId}")]
+        [Route("getuserwish/{i_UserId}")]
         public IHttpActionResult GetUserWishList(int i_UserId)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())

@@ -8,10 +8,11 @@ using System.Web.Http;
 
 namespace MyDive.Server.Controllers
 {
+    [RoutePrefix("wish")]
     public class WishController : ApiController
     {
         [HttpPost]
-        [Route("wish/Create")]
+        [Route("create")]
         public IHttpActionResult CreateWish([FromBody] Wish i_Wish)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -23,7 +24,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpPost]
-        [Route("Wish/Remove")]
+        [Route("remove")]
         public IHttpActionResult RemoveWish([FromBody] Wish i_Wish)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())

@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace MyDive.Server.Controllers
 {
+    [RoutePrefix("lookup")]
     public class LookUpController : ApiController
     {
         [HttpGet]

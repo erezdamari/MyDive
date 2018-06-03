@@ -9,10 +9,11 @@ using System.Web.Http;
 
 namespace MyDive.Server.Controllers
 {
+    [RoutePrefix("club")]
     public class ClubController : ApiController
     {
         [HttpGet]
-        [Route("club/GetClubs/{i_CuntryID, i_CityID}")]
+        [Route("getclubs/{i_CuntryID, i_CityID}")]
         public IHttpActionResult GetClubsByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -42,7 +43,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("club/GetClubs/{i_CuntryID}")]
+        [Route("getclubs/{i_CuntryID}")]
         public IHttpActionResult GetClubsByCuntryID(int i_CuntryID)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -72,7 +73,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("club/GetClubs/{i_Keyword}")]
+        [Route("getclubs/{i_Keyword}")]
         public IHttpActionResult GetClubsByKeyword(string i_Keyword)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -102,7 +103,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("club/GetClub/{i_ClubID}")]
+        [Route("getclub/{i_ClubID}")]
         public IHttpActionResult GetClubsByID(int i_ClubID)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -132,7 +133,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpPost]
-        [Route("club/Rate")]
+        [Route("rate")]
         public IHttpActionResult RateClub([FromBody] Rating i_Rate)
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())

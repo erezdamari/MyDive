@@ -9,10 +9,11 @@ using System.Web.Http;
 
 namespace MyDive.Server.Controllers
 {
+    [RoutePrefix("country")]
     public class CountryController : ApiController
     {
         [HttpGet]
-        [Route("country/GetCounties")]
+        [Route("getcounties")]
         public IHttpActionResult GetCountries()
         {
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
