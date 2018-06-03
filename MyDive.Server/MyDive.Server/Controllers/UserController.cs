@@ -7,12 +7,12 @@ namespace MyDive.Server.Controllers
     public class UserController : ApiController
     {
         [HttpPost]
-        [Route ("user/Login")]
+        [Route("user/Login")]
         public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
         {
             bool isAuthenticated = true;
 
-            using(MyDiveEntities MyDiveDB = new MyDiveEntities())
+            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
                 isAuthenticated = MyDiveDB.stp_AuthenticateLogin(i_UserLoginInfo.Username, i_UserLoginInfo.Password) == 1;
             }
@@ -42,6 +42,13 @@ namespace MyDive.Server.Controllers
 
                 return Ok(userID);
             }
+        }
+
+        [HttpGet]
+        [Route("user/test")]
+        public IHttpActionResult test()
+        {
+            return Ok("success");
         }
 
         [HttpGet]
