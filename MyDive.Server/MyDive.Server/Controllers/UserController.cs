@@ -46,20 +46,6 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("test")]
-        public IHttpActionResult test()
-        {
-            UserWishList UWL = new UserWishList
-            {
-                SiteID = 1,
-                UserID = 23,
-                WishID = 85
-            };
-
-            return Ok(UWL);
-        }
-
-        [HttpGet]
         [Route("getuser/{i_UserId}")]
         public IHttpActionResult GetUser(int i_UserId)
         {
