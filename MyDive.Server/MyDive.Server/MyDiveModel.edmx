@@ -37,7 +37,7 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_AuthenticateLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="usename" Type="nvarchar" Mode="In" />
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
           <Parameter Name="password" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="stp_CreateDiveLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -157,7 +157,7 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="stp_AuthenticateLogin">
-            <Parameter Name="usename" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="stp_CreateDiveLog">
@@ -226,23 +226,23 @@
             <Parameter Name="cityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetAllClubsByCountryId" ReturnType="Collection(MyDiveModel.stp_GetAllClubsByCountryId_Result)">
-            <Parameter Name="countryID" Mode="In" Type="Int32" />
+          <Parameter Name="countryID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetAllClubsBySearch" ReturnType="Collection(MyDiveModel.stp_GetAllClubsBySearch_Result)">
-            <Parameter Name="searchKeyword" Mode="In" Type="String" />
+          <Parameter Name="searchKeyword" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="stp_GetClubInfo" ReturnType="Collection(MyDiveModel.stp_GetClubInfo_Result)">
-            <Parameter Name="clubID" Mode="In" Type="Int32" />
+          <Parameter Name="clubID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetSiteInfoById" ReturnType="Collection(MyDiveModel.stp_GetSiteInfoById_Result)">
-            <Parameter Name="siteID" Mode="In" Type="Int32" />
+          <Parameter Name="siteID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetSitesByCountryAndCity" ReturnType="Collection(MyDiveModel.stp_GetSitesByCountryAndCity_Result)">
             <Parameter Name="countryID" Mode="In" Type="Int32" />
             <Parameter Name="cityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetSitesByKeywors" ReturnType="Collection(MyDiveModel.stp_GetSitesByKeywors_Result)">
-            <Parameter Name="keyword" Mode="In" Type="String" />
+          <Parameter Name="keyword" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">

@@ -131,17 +131,17 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual int stp_AuthenticateLogin(string usename, string password)
+        public virtual int stp_AuthenticateLogin(string username, string password)
         {
-            var usenameParameter = usename != null ?
-                new ObjectParameter("usename", usename) :
-                new ObjectParameter("usename", typeof(string));
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
     
             var passwordParameter = password != null ?
                 new ObjectParameter("password", password) :
                 new ObjectParameter("password", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_AuthenticateLogin", usenameParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_AuthenticateLogin", usernameParameter, passwordParameter);
         }
     
         public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID, string location)

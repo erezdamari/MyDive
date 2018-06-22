@@ -11,17 +11,21 @@ namespace MyDive.Server.Controllers
         [Route("login")]
         public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
         {
-            bool isAuthenticated = true;
+            int userId = 0;
 
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                isAuthenticated = MyDiveDB.stp_AuthenticateLogin(i_UserLoginInfo.Username, i_UserLoginInfo.Password) == 1;
+                userId = MyDiveDB.stp_AuthenticateLogin(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
             }
 
-            if (isAuthenticated)
-                return Ok("ok");//return user id
+            if (userId == 0)
+            {
+                return BadRequest();
+            }
             else
-                return NotFound();
+            {
+                return Ok(userId);
+            }
         }
 
         [HttpPost]
