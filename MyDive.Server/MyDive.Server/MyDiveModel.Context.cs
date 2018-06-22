@@ -131,19 +131,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual int stp_AuthenticateLogin(string username, string password)
-        {
-            var usernameParameter = username != null ?
-                new ObjectParameter("username", username) :
-                new ObjectParameter("username", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_AuthenticateLogin", usernameParameter, passwordParameter);
-        }
-    
         public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID, string location)
         {
             var siteIDParameter = siteID.HasValue ?
@@ -430,6 +417,19 @@ namespace MyDive.Server
                 new ObjectParameter("keyword", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByKeywors_Result>("stp_GetSitesByKeywors", keywordParameter);
+        }
+    
+        public virtual ObjectResult<stp_AuthenticateLogin1_Result> stp_AuthenticateLogin1(string username, string password)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_AuthenticateLogin1_Result>("stp_AuthenticateLogin1", usernameParameter, passwordParameter);
         }
     }
 }

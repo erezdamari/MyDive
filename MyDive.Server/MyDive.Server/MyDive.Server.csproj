@@ -157,6 +157,9 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="stp_AuthenticateLogin1_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="stp_GetAllCitiesByCountryId_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>

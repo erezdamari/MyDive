@@ -1,4 +1,5 @@
 ﻿using MyDive.Server.Models;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Web.Http;
 
@@ -11,20 +12,28 @@ namespace MyDive.Server.Controllers
         [Route("login")]
         public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
         {
-            int userId = 0;
+            ObjectResult<stp_AuthenticateLogin1_Result> result;
+            List<int> userToReturn = new List<int>();
 
             using (MyDiveEntities MyDiveDB = new MyDiveEntities())
             {
-                userId = MyDiveDB.stp_AuthenticateLogin(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
-            }
 
-            if (userId == 0)
+                result = MyDiveDB.stp_AuthenticateLogin1(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
+
+                foreach (stp_AuthenticateLogin1_Result res in result)
+                {
+                    userToReturn.Add(res.UserID);
+                }
+
+            }
+            
+            if (userToReturn.Count == 0 || userToReturn.Count > 1)
             {
                 return BadRequest();
             }
             else
             {
-                return Ok(userId);
+                return Ok(userToReturn[0]);
             }
         }
 

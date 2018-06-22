@@ -244,6 +244,10 @@
           <FunctionImport Name="stp_GetSitesByKeywors" ReturnType="Collection(MyDiveModel.stp_GetSitesByKeywors_Result)">
           <Parameter Name="keyword" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="stp_AuthenticateLogin1" ReturnType="Collection(MyDiveModel.stp_AuthenticateLogin1_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -392,6 +396,10 @@
           <Property Type="Double" Name="Lat" Nullable="false" />
           <Property Type="Double" Name="Long" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="stp_AuthenticateLogin1_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -422,7 +430,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MyDiveModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MyDiveModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="stp_AuthenticateLogin" FunctionName="MyDiveModel.Store.stp_AuthenticateLogin" />
           <FunctionImportMapping FunctionImportName="stp_CreateDiveLog" FunctionName="MyDiveModel.Store.stp_CreateDiveLog" />
           <FunctionImportMapping FunctionImportName="stp_CreateNewWish" FunctionName="MyDiveModel.Store.stp_CreateNewWish" />
           <FunctionImportMapping FunctionImportName="stp_CreateUser" FunctionName="MyDiveModel.Store.stp_CreateUser" />
@@ -616,6 +623,14 @@
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_AuthenticateLogin1" FunctionName="MyDiveModel.Store.stp_AuthenticateLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_AuthenticateLogin1_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
