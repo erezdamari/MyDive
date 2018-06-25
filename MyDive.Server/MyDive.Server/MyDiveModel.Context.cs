@@ -131,6 +131,19 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
+        public virtual int stp_AuthenticateLogin(string username, string password)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_AuthenticateLogin", usernameParameter, passwordParameter);
+        }
+    
         public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID, string location)
         {
             var siteIDParameter = siteID.HasValue ?
@@ -430,6 +443,54 @@ namespace MyDive.Server
                 new ObjectParameter("password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_AuthenticateLogin1_Result>("stp_AuthenticateLogin1", usernameParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetAssosiations_Result> stp_GetAssosiations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAssosiations_Result>("stp_GetAssosiations");
+        }
+    
+        public virtual ObjectResult<stp_GetAssociations_Result> stp_GetAssociations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAssociations_Result>("stp_GetAssociations");
+        }
+    
+        public virtual int stp_EditUserProfile(Nullable<int> userId, string firstname, string lastname, Nullable<int> licenseId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            var firstnameParameter = firstname != null ?
+                new ObjectParameter("firstname", firstname) :
+                new ObjectParameter("firstname", typeof(string));
+    
+            var lastnameParameter = lastname != null ?
+                new ObjectParameter("lastname", lastname) :
+                new ObjectParameter("lastname", typeof(string));
+    
+            var licenseIdParameter = licenseId.HasValue ?
+                new ObjectParameter("licenseId", licenseId) :
+                new ObjectParameter("licenseId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_EditUserProfile", userIdParameter, firstnameParameter, lastnameParameter, licenseIdParameter);
+        }
+    
+        public virtual int stp_CreateIssue(string subject, string email, string description)
+        {
+            var subjectParameter = subject != null ?
+                new ObjectParameter("subject", subject) :
+                new ObjectParameter("subject", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateIssue", subjectParameter, emailParameter, descriptionParameter);
         }
     }
 }

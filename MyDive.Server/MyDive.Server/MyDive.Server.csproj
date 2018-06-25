@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\LookUpController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\ClubController.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssociationModel.cs" />
     <Compile Include="Models\BottomType.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Club.cs" />
@@ -173,6 +175,12 @@
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetAllCountries_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stp_GetAssociations_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stp_GetAssosiations_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetBottomType_Result.cs">

@@ -77,5 +77,27 @@ namespace MyDive.Server.Controllers
                 return Ok(waterTypes);
             }
         }
+
+        [HttpGet]
+        [Route("association")]
+        public IHttpActionResult GetAssociations()
+        {
+            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            {
+                ObjectResult<stp_GetAssociations_Result> associationsResult = MyDiveDB.stp_GetAssociations();
+                List<AssociationModel> associationTypes = new List<AssociationModel>();
+
+                foreach (stp_GetAssociations_Result type in associationsResult)
+                {
+                    associationTypes.Add(new AssociationModel
+                    {
+                        AssociationID = type.AssociationID,
+                        AssociationName = type.AssociationName
+                    });
+                }
+
+                return Ok(associationTypes);
+            }
+        }
     }
 }

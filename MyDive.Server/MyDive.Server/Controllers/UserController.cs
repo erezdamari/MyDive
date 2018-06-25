@@ -1,4 +1,5 @@
-﻿using MyDive.Server.Models;
+﻿using MyDive.Server.Logic;
+using MyDive.Server.Models;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Web.Http;
@@ -12,28 +13,39 @@ namespace MyDive.Server.Controllers
         [Route("login")]
         public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
         {
-            ObjectResult<stp_AuthenticateLogin1_Result> result;
-            List<int> userToReturn = new List<int>();
-
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            if (UserLogic.CheckUserLoginValidation(i_UserLoginInfo))
             {
-
-                result = MyDiveDB.stp_AuthenticateLogin1(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
-
-                foreach (stp_AuthenticateLogin1_Result res in result)
+                try
                 {
-                    userToReturn.Add(res.UserID);
-                }
+                    ObjectResult<stp_AuthenticateLogin1_Result> result;
+                    List<int> userToReturn = new List<int>();
+                    MyDiveEntities MyDiveDB = new MyDiveEntities();
+                   
+                    result = MyDiveDB.stp_AuthenticateLogin1(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
+                    foreach (stp_AuthenticateLogin1_Result res in result)
+                    {
+                        userToReturn.Add(res.UserID);
+                    }
 
-            }
-            
-            if (userToReturn.Count == 0 || userToReturn.Count > 1)
-            {
-                return BadRequest();
+                    if (userToReturn.Count == 0 || userToReturn.Count > 1)
+                    {
+                        return BadRequest();
+                    }
+                    else
+                    {
+                        return Ok(userToReturn[0]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //log error 
+                    return InternalServerError();
+                }
             }
             else
             {
-                return Ok(userToReturn[0]);
+                //log error
+                return BadRequest();
             }
         }
 
@@ -113,6 +125,24 @@ namespace MyDive.Server.Controllers
                     userToReturn.UserID = user.UserID;
                 }
                 return Ok(userToReturn);
+            }
+        }
+
+        [HttpPost]
+        [Route("editprofile")]
+        public IHttpActionResult EditUserProfile([FromBody] User i_User)
+        {
+            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            {
+                i_User.FirstName = i_User.FirstName == null ? i_User.FirstName : "";
+                i_User.LastName = i_User.LastName == null ? i_User.LastName : "";
+                int userID = MyDiveDB.stp_EditUserProfile(
+                    i_User.UserID,
+                    i_User.FirstName,
+                    i_User.LastName,
+                    i_User.LicenseTypeID);
+
+                return Ok(userID);
             }
         }
     }

@@ -51,6 +51,11 @@
           <Parameter Name="WaterTypeID" Type="int" Mode="In" />
           <Parameter Name="Location" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="stp_CreateIssue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="subject" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="description" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="stp_CreateNewWish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="siteID" Type="int" Mode="In" />
           <Parameter Name="userID" Type="int" Mode="In" />
@@ -66,6 +71,12 @@
           <Parameter Name="LicenseTypeID" Type="int" Mode="In" />
           <Parameter Name="Birthday" Type="date" Mode="In" />
         </Function>
+        <Function Name="stp_EditUserProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="firstname" Type="nvarchar" Mode="In" />
+          <Parameter Name="lastname" Type="nvarchar" Mode="In" />
+          <Parameter Name="licenseId" Type="int" Mode="In" />
+        </Function>
         <Function Name="stp_GetAllCitiesByCountryId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="countryID" Type="int" Mode="In" />
         </Function>
@@ -80,6 +91,7 @@
           <Parameter Name="searchKeyword" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="stp_GetAllCountries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stp_GetAssociations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_GetBottomType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_GetClubInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="clubID" Type="int" Mode="In" />
@@ -248,6 +260,19 @@
             <Parameter Name="username" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="stp_GetAssosiations" ReturnType="Collection(MyDiveModel.stp_GetAssosiations_Result)" />
+          <FunctionImport Name="stp_GetAssociations" ReturnType="Collection(MyDiveModel.stp_GetAssociations_Result)" />
+          <FunctionImport Name="stp_EditUserProfile">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="firstname" Mode="In" Type="String" />
+            <Parameter Name="lastname" Mode="In" Type="String" />
+            <Parameter Name="licenseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_CreateIssue">
+            <Parameter Name="subject" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -399,6 +424,14 @@
         <ComplexType Name="stp_AuthenticateLogin1_Result">
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="stp_GetAssosiations_Result">
+          <Property Type="Int32" Name="AssociationID" Nullable="false" />
+          <Property Type="String" Name="AssociationName" Nullable="true" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="stp_GetAssociations_Result">
+          <Property Type="Int32" Name="AssociationID" Nullable="false" />
+          <Property Type="String" Name="AssociationName" Nullable="true" MaxLength="150" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -634,6 +667,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetAssociations" FunctionName="MyDiveModel.Store.stp_GetAssociations">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAssociations_Result">
+                <ScalarProperty Name="AssociationID" ColumnName="AssociationID" />
+                <ScalarProperty Name="AssociationName" ColumnName="AssociationName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_EditUserProfile" FunctionName="MyDiveModel.Store.stp_EditUserProfile" />
+          <FunctionImportMapping FunctionImportName="stp_CreateIssue" FunctionName="MyDiveModel.Store.stp_CreateIssue" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
