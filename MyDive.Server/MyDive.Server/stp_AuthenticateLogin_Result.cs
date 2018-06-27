@@ -11,7 +11,7 @@ namespace MyDive.Server
 {
     using System;
     
-    public partial class stp_AuthenticateLogin1_Result
+    public partial class stp_AuthenticateLogin_Result
     {
         public int UserID { get; set; }
         public string Username { get; set; }

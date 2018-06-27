@@ -97,6 +97,9 @@
           <Parameter Name="clubID" Type="int" Mode="In" />
         </Function>
         <Function Name="stp_GetDiveTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stp_GetLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Type" Type="int" Mode="In" />
+        </Function>
         <Function Name="stp_GetSalinityTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_GetSiteInfoById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="siteID" Type="int" Mode="In" />
@@ -118,6 +121,11 @@
           <Parameter Name="userID" Type="int" Mode="In" />
         </Function>
         <Function Name="stp_GetWaterTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stp_InsertLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Type" Type="int" Mode="In" />
+          <Parameter Name="Msg" Type="text" Mode="In" />
+          <Parameter Name="Date" Type="smalldatetime" Mode="In" />
+        </Function>
         <Function Name="stp_RateClub" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="clubID" Type="int" Mode="In" />
           <Parameter Name="rate" Type="int" Mode="In" />
@@ -168,10 +176,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="stp_AuthenticateLogin">
-            <Parameter Name="username" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="stp_CreateDiveLog">
             <Parameter Name="SiteID" Mode="In" Type="Int32" />
             <Parameter Name="MaxDepth" Mode="In" Type="Double" />
@@ -256,10 +260,6 @@
           <FunctionImport Name="stp_GetSitesByKeywors" ReturnType="Collection(MyDiveModel.stp_GetSitesByKeywors_Result)">
           <Parameter Name="keyword" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="stp_AuthenticateLogin1" ReturnType="Collection(MyDiveModel.stp_AuthenticateLogin1_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetAssosiations" ReturnType="Collection(MyDiveModel.stp_GetAssosiations_Result)" />
           <FunctionImport Name="stp_GetAssociations" ReturnType="Collection(MyDiveModel.stp_GetAssociations_Result)" />
           <FunctionImport Name="stp_EditUserProfile">
@@ -272,6 +272,21 @@
             <Parameter Name="subject" Mode="In" Type="String" />
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_InsertLog">
+            <Parameter Name="Type" Mode="In" Type="Int32" />
+            <Parameter Name="Msg" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetDebugLog" />
+          <FunctionImport Name="stp_GetErrorLog" />
+          <FunctionImport Name="stp_GetInfoLog" />
+          <FunctionImport Name="stp_GetLog" ReturnType="Collection(MyDiveModel.stp_GetLog_Result)">
+          <Parameter Name="Type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_AuthenticateLogin" ReturnType="Collection(MyDiveModel.stp_AuthenticateLogin_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -421,10 +436,6 @@
           <Property Type="Double" Name="Lat" Nullable="false" />
           <Property Type="Double" Name="Long" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="stp_AuthenticateLogin1_Result">
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
-        </ComplexType>
         <ComplexType Name="stp_GetAssosiations_Result">
           <Property Type="Int32" Name="AssociationID" Nullable="false" />
           <Property Type="String" Name="AssociationName" Nullable="true" MaxLength="150" />
@@ -432,6 +443,14 @@
         <ComplexType Name="stp_GetAssociations_Result">
           <Property Type="Int32" Name="AssociationID" Nullable="false" />
           <Property Type="String" Name="AssociationName" Nullable="true" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="stp_GetLog_Result">
+          <Property Type="String" Name="Msg" Nullable="false" MaxLength="Max" />
+          <Property Type="DateTime" Name="LogDate" Nullable="false" Precision="16" />
+        </ComplexType>
+        <ComplexType Name="stp_AuthenticateLogin_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -659,14 +678,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_AuthenticateLogin1" FunctionName="MyDiveModel.Store.stp_AuthenticateLogin">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_AuthenticateLogin1_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_GetAssociations" FunctionName="MyDiveModel.Store.stp_GetAssociations">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAssociations_Result">
@@ -677,7 +688,24 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_EditUserProfile" FunctionName="MyDiveModel.Store.stp_EditUserProfile" />
           <FunctionImportMapping FunctionImportName="stp_CreateIssue" FunctionName="MyDiveModel.Store.stp_CreateIssue" />
-        </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="stp_InsertLog" FunctionName="MyDiveModel.Store.stp_InsertLog" />
+          <FunctionImportMapping FunctionImportName="stp_GetLog" FunctionName="MyDiveModel.Store.stp_GetLog">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetLog_Result">
+                <ScalarProperty Name="Msg" ColumnName="Msg" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_AuthenticateLogin" FunctionName="MyDiveModel.Store.stp_AuthenticateLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_AuthenticateLogin_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

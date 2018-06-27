@@ -1,4 +1,5 @@
-﻿using MyDive.Server.Logic;
+﻿using MyDive.Server.Log;
+using MyDive.Server.Logic;
 using MyDive.Server.Models;
 using System;
 using System.Web.Http;
@@ -12,22 +13,23 @@ namespace MyDive.Server.Controllers
         [Route("add")]
         public IHttpActionResult AddNewIssue([FromBody] IssueModel i_Issue)
         {
+            Logger.Instance.Notify("Start issues controller", eLogType.Debug);
             IHttpActionResult result = Ok();
             if (IssueLogic.CheckIsValidInfo(i_Issue))
             {
                 MyDiveEntities MyDiveDB = null;
-                //log info - method started
                 try
                 {
                     MyDiveDB = new MyDiveEntities();
-
                     var issueId = MyDiveDB.stp_CreateIssue(i_Issue.Subject, i_Issue.Email, i_Issue.Description);
-                    //log debug - details
+                    Logger.Instance.Notify(
+                        string.Format("add issue: '{0}'", i_Issue.Subject),
+                        eLogType.Info);
                     result = Ok(issueId);
                 }
                 catch (Exception ex)
                 {
-                    //log error 
+                    Logger.Instance.Notify(ex.StackTrace, eLogType.Error);
                     result = InternalServerError();
                 }
                 finally
@@ -35,12 +37,13 @@ namespace MyDive.Server.Controllers
                     if(MyDiveDB != null)
                     {
                         MyDiveDB.Dispose();
+                        Logger.Instance.Notify("Connection was closed", eLogType.Info);
                     }
                 }
             }
             else
             {
-                //log error
+                Logger.Instance.Notify("issue info in insufficient", eLogType.Error);
                 result = BadRequest();
             }
 

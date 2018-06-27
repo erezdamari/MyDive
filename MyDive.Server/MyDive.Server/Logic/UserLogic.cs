@@ -12,5 +12,13 @@ namespace MyDive.Server.Logic
         {
             return !string.IsNullOrEmpty(i_model.Username) && !string.IsNullOrEmpty(i_model.Password);
         }
+
+        public static bool CheckUserRegistrationValidation(User i_model)
+        {
+            return 
+                !string.IsNullOrEmpty(i_model.Username) &&
+                !string.IsNullOrEmpty(i_model.Password) &&
+                !string.IsNullOrEmpty(i_model.Email);
+        }
     }
 }

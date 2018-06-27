@@ -111,17 +111,23 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
+    <Compile Include="Controllers\LoggerController.cs" />
     <Compile Include="Controllers\LookUpController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\ClubController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\DiveController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WishController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logger\eLogType.cs" />
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Logic\IssueLogic.cs" />
+    <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Models\AssociationModel.cs" />
     <Compile Include="Models\BottomType.cs" />
     <Compile Include="Models\City.cs" />
@@ -129,6 +135,8 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\DiveLog.cs" />
     <Compile Include="Models\DiveType.cs" />
+    <Compile Include="Models\IssueModel.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\SalinityType.cs" />
     <Compile Include="Models\Site.cs" />
@@ -159,7 +167,7 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="stp_AuthenticateLogin1_Result.cs">
+    <Compile Include="stp_AuthenticateLogin_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetAllCitiesByCountryId_Result.cs">
@@ -196,6 +204,9 @@
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetDiveTypes_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stp_GetLog_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetSalinityTypes_Result.cs">

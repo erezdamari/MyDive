@@ -1,5 +1,7 @@
-﻿using MyDive.Server.Logic;
+﻿using MyDive.Server.Log;
+using MyDive.Server.Logic;
 using MyDive.Server.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Web.Http;
@@ -7,143 +9,187 @@ using System.Web.Http;
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("user")]
-    public class UserController : ApiController
+    public class UserController : MainController
     {
         [HttpPost]
         [Route("login")]
         public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
         {
+            LogControllerEntring();
+            IHttpActionResult result = null;
             if (UserLogic.CheckUserLoginValidation(i_UserLoginInfo))
             {
                 try
                 {
-                    ObjectResult<stp_AuthenticateLogin1_Result> result;
-                    List<int> userToReturn = new List<int>();
-                    MyDiveEntities MyDiveDB = new MyDiveEntities();
-                   
-                    result = MyDiveDB.stp_AuthenticateLogin1(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
-                    foreach (stp_AuthenticateLogin1_Result res in result)
+                    using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                     {
-                        userToReturn.Add(res.UserID);
-                    }
+                        ObjectResult<stp_AuthenticateLogin_Result> serverAnswer;
+                        List<int> userToReturn = new List<int>();
+                        serverAnswer = MyDiveDB.stp_AuthenticateLogin(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
+                        foreach (stp_AuthenticateLogin_Result res in serverAnswer)
+                        {
+                            userToReturn.Add(res.UserID);
+                        }
 
-                    if (userToReturn.Count == 0 || userToReturn.Count > 1)
-                    {
-                        return BadRequest();
-                    }
-                    else
-                    {
-                        return Ok(userToReturn[0]);
+                        if (userToReturn.Count == 0 || userToReturn.Count > 1)
+                        {
+                            Logger.Instance.Notify(
+                                string.Format("user {0} were unable to login", i_UserLoginInfo.Username)
+                                , eLogType.Info);
+                            result = BadRequest();
+                        }
+                        else
+                        {
+                            Logger.Instance.Notify(
+                                string.Format("user {0} is logged in", i_UserLoginInfo.Username)
+                                , eLogType.Info);
+                            result = Ok(userToReturn[0]);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    //log error 
-                    return InternalServerError();
+                    result = LogException(ex);
                 }
             }
             else
             {
-                //log error
-                return BadRequest();
+                Logger.Instance.Notify("user info in insufficient", eLogType.Error);
+                result = BadRequest();
             }
+
+            return result;
         }
 
         [HttpPost]
         [Route("register")]
         public IHttpActionResult CreateUser([FromBody] User i_User)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-            {
-                int userID = MyDiveDB.stp_CreateUser(
-                    i_User.Username,
-                    i_User.Password,
-                    i_User.Email,
-                    i_User.FirstName,
-                    i_User.LastName,
-                    i_User.Association,
-                    i_User.UserLicenseNumber,
-                    i_User.LicenseTypeID,
-                    i_User.Birthday);
+            LogControllerEntring();
+            IHttpActionResult result = null;
 
-                return Ok(userID);
+            if (UserLogic.CheckUserRegistrationValidation(i_User))
+            {
+                try
+                {
+                    using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                    {
+                        int userID = MyDiveDB.stp_CreateUser(
+                            i_User.Username,
+                            i_User.Password,
+                            i_User.Email,
+                            i_User.FirstName,
+                            i_User.LastName,
+                            i_User.Association,
+                            i_User.UserLicenseNumber,
+                            i_User.LicenseTypeID,
+                            i_User.Birthday);
+
+                        result = Ok(userID);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result = LogException(ex);
+                }
             }
+            else
+            {
+                Logger.Instance.Notify("user info in insufficient", eLogType.Error);
+                result = BadRequest();
+            }
+
+            return result;
         }
 
         [HttpGet]
         [Route("getuser/{i_UserId}")]
         public IHttpActionResult GetUser(int i_UserId)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring();
+            IHttpActionResult result = null;
+            try
             {
-                ObjectResult<stp_GetUser_Result> userResult = MyDiveDB.stp_GetUser(i_UserId);
-                User userToReturn = new User();
-
-                foreach (stp_GetUser_Result user in userResult)
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    userToReturn.UserID = user.UserID;
-                    userToReturn.Username = user.Username;
-                    userToReturn.Password = user.Password;
-                    userToReturn.Email = user.Email;
-                    userToReturn.FirstName = user.FirstName;
-                    userToReturn.LastName = user.LastName;
-                    userToReturn.Association = user.AssociationID;
-                    userToReturn.UserLicenseNumber = user.UserLicenceNumber;
-                    userToReturn.LicenseTypeID = user.LicenseTypeID;
-                    userToReturn.Birthday = user.Birthday;
-                }
+                    ObjectResult<stp_GetUser_Result> userResult = MyDiveDB.stp_GetUser(i_UserId);
+                    User userToReturn = new User();
 
-                return Ok(userToReturn);
+                    foreach (stp_GetUser_Result user in userResult)
+                    {
+                        userToReturn.UserID = user.UserID;
+                        userToReturn.Username = user.Username;
+                        userToReturn.Password = user.Password;
+                        userToReturn.Email = user.Email;
+                        userToReturn.FirstName = user.FirstName;
+                        userToReturn.LastName = user.LastName;
+                        userToReturn.Association = user.AssociationID;
+                        userToReturn.UserLicenseNumber = user.UserLicenceNumber;
+                        userToReturn.LicenseTypeID = user.LicenseTypeID;
+                        userToReturn.Birthday = user.Birthday;
+                    }
+
+                    result = Ok(userToReturn);
+                }
             }
+            catch(Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpGet]
         [Route("getuserlog/{i_UserId}")]
         public IHttpActionResult GetUserDiveLog(int i_UserId)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring();
+            IHttpActionResult result = null;
+            try
             {
-                ObjectResult<stp_GetUserDiveLogs_Result> user = MyDiveDB.stp_GetUserDiveLogs(i_UserId);
-
-                return Ok(user);
-            }
-        }
-
-        [HttpGet]
-        [Route("getuserwish/{i_UserId}")]
-        public IHttpActionResult GetUserWishList(int i_UserId)
-        {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-            {
-                ObjectResult<stp_GetUserWishList_Result> userResult = MyDiveDB.stp_GetUserWishList(i_UserId);
-                UserWishList userToReturn = new UserWishList();
-
-                foreach (stp_GetUserWishList_Result user in userResult)
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    userToReturn.WishID = user.WishID;
-                    userToReturn.SiteID = user.SiteID;
-                    userToReturn.UserID = user.UserID;
+                    ObjectResult<stp_GetUserDiveLogs_Result> user = MyDiveDB.stp_GetUserDiveLogs(i_UserId);
+
+                    result = Ok(user);
                 }
-                return Ok(userToReturn);
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpPost]
         [Route("editprofile")]
         public IHttpActionResult EditUserProfile([FromBody] User i_User)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring();
+            IHttpActionResult result = null;
+            try
             {
-                i_User.FirstName = i_User.FirstName == null ? i_User.FirstName : "";
-                i_User.LastName = i_User.LastName == null ? i_User.LastName : "";
-                int userID = MyDiveDB.stp_EditUserProfile(
-                    i_User.UserID,
-                    i_User.FirstName,
-                    i_User.LastName,
-                    i_User.LicenseTypeID);
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    i_User.FirstName = i_User.FirstName == null ? i_User.FirstName : "";
+                    i_User.LastName = i_User.LastName == null ? i_User.LastName : "";
+                    int userID = MyDiveDB.stp_EditUserProfile(
+                        i_User.UserID,
+                        i_User.FirstName,
+                        i_User.LastName,
+                        i_User.LicenseTypeID);
 
-                return Ok(userID);
+                    result = Ok(userID);
+                }
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
     }
 }
