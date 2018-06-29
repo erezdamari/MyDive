@@ -42,7 +42,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("delete/{i_LogId")]
+        [Route("delete/{i_LogId}")]
         public IHttpActionResult DeleteLog(int i_LogId)
         {
             LogControllerEntring("delete");
