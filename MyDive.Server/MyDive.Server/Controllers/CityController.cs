@@ -17,7 +17,7 @@ namespace MyDive.Server.Controllers
         private CityLogic m_Logic = new CityLogic();
 
         [HttpGet]
-        [Route("getcities/{i_CuntryID}")]
+        [Route("getcities/{i_CountryID}")]
         public IHttpActionResult GetCitiesByCuntryID(int i_CountryID)
         {
             LogControllerEntring("getcities");

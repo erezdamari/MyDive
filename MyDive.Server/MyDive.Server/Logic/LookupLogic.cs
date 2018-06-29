@@ -34,7 +34,7 @@ namespace MyDive.Server.Logic
                 bottomTypes = null;
             }
 
-            return bottomTypes;
+            return bottomTypes.Count > 0 ? bottomTypes : null;
         }
 
         public List<SalinityTypeModel> GetSalinityTypes()
@@ -62,7 +62,7 @@ namespace MyDive.Server.Logic
                 salinityTypes = null;
             }
 
-            return salinityTypes;
+            return salinityTypes.Count > 0 ? salinityTypes : null;
         }
 
         public List<WaterTypeModel> GetWaterTypes()
@@ -90,7 +90,7 @@ namespace MyDive.Server.Logic
                 waterTypes = null;
             }
 
-            return waterTypes;
+            return waterTypes.Count > 0 ? waterTypes : null;
         }
 
         public List<AssociationModel> GetAssociation()
@@ -118,7 +118,7 @@ namespace MyDive.Server.Logic
                 assosiations = null;
             }
 
-            return assosiations;
+            return assosiations.Count > 0 ? assosiations : null;
         }
 
         public List<LicenseTypeModel> GetLicenseTypes()
@@ -146,7 +146,7 @@ namespace MyDive.Server.Logic
                 licenseTypes = null;
             }
 
-            return licenseTypes;
+            return licenseTypes.Count > 0 ? licenseTypes : null;
         }
 
         public List<DiveTypeModel> GetDiveTypes()
@@ -174,7 +174,7 @@ namespace MyDive.Server.Logic
                 DiveTypes = null;
             }
 
-            return DiveTypes;
+            return DiveTypes.Count > 0 ? DiveTypes : null;
         }
     }
 }

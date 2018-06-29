@@ -150,9 +150,25 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    ObjectResult<stp_GetUserDiveLogs_Result> user = MyDiveDB.stp_GetUserDiveLogs(i_UserId);
+                    ObjectResult<stp_GetUserDiveLogs_Result> serverResult = MyDiveDB.stp_GetUserDiveLogs(i_UserId);
+                    List<DiveLogModel> userDiveLog = new List<DiveLogModel>();
+                    foreach(stp_GetUserDiveLogs_Result res in serverResult)
+                    {
+                        userDiveLog.Add(new DiveLogModel
+                        {
+                            BottomTypeID = res.ButtomTypeID,
+                            Description = res.Description,
+                            DiveTypeID = res.DiveTypeID,
+                            Location = new LocationModel { Lat = res.Lat, Long = res.Long},
+                            MaxDepth = res.MaxDepth,
+                            SalinityID = res.SalinityID,
+                            SiteID = res.SiteID,
+                            UserID = res.UserID,
+                            WaterTypeID = res.WaterTypeID
+                        });
+                    }
 
-                    result = Ok(user);
+                    result = Ok(userDiveLog.Count > 0 ? userDiveLog : null);
                 }
             }
             catch (Exception ex)

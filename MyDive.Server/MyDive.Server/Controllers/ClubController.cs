@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using System.Collections.Generic;
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("club")]
@@ -19,13 +19,14 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("getclubs");
             IHttpActionResult result = Ok();
+            List<ClubModel> clubs;
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     ObjectResult<stp_GetAllClubsByCountryANDCityId_Result> clubsResult =
                         MyDiveDB.stp_GetAllClubsByCountryANDCityId(i_CuntryID, i_CityID);
-                    List<ClubModel> clubs = new List<ClubModel>();
+                    clubs = new List<ClubModel>();
 
                     foreach (stp_GetAllClubsByCountryANDCityId_Result club in clubsResult)
                     {
@@ -44,11 +45,12 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch all clubs", eLogType.Info);
-                    result = Ok(clubs);
+                    result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
+                clubs = null;
                 result = LogException(ex);
             }
 
@@ -61,13 +63,14 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("getclubs");
             IHttpActionResult result = Ok();
+            List<ClubModel> clubs;
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     ObjectResult<stp_GetAllClubsByCountryId_Result> clubsResult =
                         MyDiveDB.stp_GetAllClubsByCountryId(i_CuntryID);
-                    List<ClubModel> clubs = new List<ClubModel>();
+                    clubs = new List<ClubModel>();
 
                     foreach (stp_GetAllClubsByCountryId_Result club in clubsResult)
                     {
@@ -86,11 +89,12 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch all clubs", eLogType.Info);
-                    result = Ok(clubs);
+                    result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
+                clubs = null;
                 result = LogException(ex);
             }
 
@@ -103,13 +107,14 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("getclubs");
             IHttpActionResult result = Ok();
+            List<ClubModel> clubs;
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     ObjectResult<stp_GetAllClubsBySearch_Result> clubsResult =
                         MyDiveDB.stp_GetAllClubsBySearch(i_Keyword);
-                    List<ClubModel> clubs = new List<ClubModel>();
+                    clubs = new List<ClubModel>();
 
                     foreach (stp_GetAllClubsBySearch_Result club in clubsResult)
                     {
@@ -128,11 +133,12 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch all clubs", eLogType.Info);
-                    result = Ok(clubs);
+                    result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
+                clubs = null;
                 result = LogException(ex);
             }
 
@@ -145,13 +151,14 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("getclub");
             IHttpActionResult result = Ok();
+            List<ClubModel> clubs;
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     ObjectResult<stp_GetClubInfo_Result> clubsResult =
                         MyDiveDB.stp_GetClubInfo(i_ClubID);
-                    List<ClubModel> clubs = new List<ClubModel>();
+                    clubs = new List<ClubModel>();
 
                     foreach (stp_GetClubInfo_Result club in clubsResult)
                     {
@@ -170,11 +177,12 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch club", eLogType.Info);
-                    result = Ok(clubs);
+                    result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
+                clubs = null;
                 result = LogException(ex);
             }
 
@@ -191,10 +199,11 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    int rateID = MyDiveDB.stp_RateClub(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
+                    int? rateID = -1;
+                    rateID = MyDiveDB.stp_RateClub(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
 
                     Logger.Instance.Notify("rete club", eLogType.Info);
-                    result = Ok(rateID);
+                    result = Ok(rateID != -1 ? rateID : null);
                 }
             }
             catch (Exception ex)

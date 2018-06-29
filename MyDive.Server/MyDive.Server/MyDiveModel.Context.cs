@@ -131,47 +131,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID, string location)
-        {
-            var siteIDParameter = siteID.HasValue ?
-                new ObjectParameter("SiteID", siteID) :
-                new ObjectParameter("SiteID", typeof(int));
-    
-            var maxDepthParameter = maxDepth.HasValue ?
-                new ObjectParameter("MaxDepth", maxDepth) :
-                new ObjectParameter("MaxDepth", typeof(double));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("Description", description) :
-                new ObjectParameter("Description", typeof(string));
-    
-            var diveTypeIDParameter = diveTypeID.HasValue ?
-                new ObjectParameter("DiveTypeID", diveTypeID) :
-                new ObjectParameter("DiveTypeID", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var bottomTypeIDParameter = bottomTypeID.HasValue ?
-                new ObjectParameter("BottomTypeID", bottomTypeID) :
-                new ObjectParameter("BottomTypeID", typeof(int));
-    
-            var salinityUDParameter = salinityUD.HasValue ?
-                new ObjectParameter("SalinityUD", salinityUD) :
-                new ObjectParameter("SalinityUD", typeof(int));
-    
-            var waterTypeIDParameter = waterTypeID.HasValue ?
-                new ObjectParameter("WaterTypeID", waterTypeID) :
-                new ObjectParameter("WaterTypeID", typeof(int));
-    
-            var locationParameter = location != null ?
-                new ObjectParameter("Location", location) :
-                new ObjectParameter("Location", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateDiveLog", siteIDParameter, maxDepthParameter, descriptionParameter, diveTypeIDParameter, userIDParameter, bottomTypeIDParameter, salinityUDParameter, waterTypeIDParameter, locationParameter);
-        }
-    
         public virtual int stp_CreateNewWish(Nullable<int> siteID, Nullable<int> userID)
         {
             var siteIDParameter = siteID.HasValue ?
@@ -271,15 +230,6 @@ namespace MyDive.Server
                 new ObjectParameter("userID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetUserDiveLogs_Result> stp_GetUserDiveLogs(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserDiveLogs_Result>("stp_GetUserDiveLogs", userIDParameter);
         }
     
         public virtual ObjectResult<stp_GetUserWishList_Result> stp_GetUserWishList(Nullable<int> userID)
@@ -509,6 +459,69 @@ namespace MyDive.Server
         public virtual ObjectResult<stp_GetLicenseTypes_Result> stp_GetLicenseTypes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLicenseTypes_Result>("stp_GetLicenseTypes");
+        }
+    
+        public virtual ObjectResult<stp_GetUserDiveLogs_Result> stp_GetUserDiveLogs(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserDiveLogs_Result>("stp_GetUserDiveLogs", userIDParameter);
+        }
+    
+        public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID, Nullable<double> lat, Nullable<double> @long)
+        {
+            var siteIDParameter = siteID.HasValue ?
+                new ObjectParameter("SiteID", siteID) :
+                new ObjectParameter("SiteID", typeof(int));
+    
+            var maxDepthParameter = maxDepth.HasValue ?
+                new ObjectParameter("MaxDepth", maxDepth) :
+                new ObjectParameter("MaxDepth", typeof(double));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var diveTypeIDParameter = diveTypeID.HasValue ?
+                new ObjectParameter("DiveTypeID", diveTypeID) :
+                new ObjectParameter("DiveTypeID", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bottomTypeIDParameter = bottomTypeID.HasValue ?
+                new ObjectParameter("BottomTypeID", bottomTypeID) :
+                new ObjectParameter("BottomTypeID", typeof(int));
+    
+            var salinityUDParameter = salinityUD.HasValue ?
+                new ObjectParameter("SalinityUD", salinityUD) :
+                new ObjectParameter("SalinityUD", typeof(int));
+    
+            var waterTypeIDParameter = waterTypeID.HasValue ?
+                new ObjectParameter("WaterTypeID", waterTypeID) :
+                new ObjectParameter("WaterTypeID", typeof(int));
+    
+            var latParameter = lat.HasValue ?
+                new ObjectParameter("Lat", lat) :
+                new ObjectParameter("Lat", typeof(double));
+    
+            var longParameter = @long.HasValue ?
+                new ObjectParameter("Long", @long) :
+                new ObjectParameter("Long", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateDiveLog", siteIDParameter, maxDepthParameter, descriptionParameter, diveTypeIDParameter, userIDParameter, bottomTypeIDParameter, salinityUDParameter, waterTypeIDParameter, latParameter, longParameter);
+        }
+    
+        public virtual int stp_DeleteLogById(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_DeleteLogById", idParameter);
         }
     }
 }

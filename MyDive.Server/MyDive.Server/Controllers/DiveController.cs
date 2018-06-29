@@ -23,7 +23,8 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    int diveID = MyDiveDB.stp_CreateDiveLog
+                    int? diveID = -1;
+                    diveID = MyDiveDB.stp_CreateDiveLog
                         (i_Dive.SiteID,
                         i_Dive.MaxDepth,
                         i_Dive.Description,
@@ -32,10 +33,11 @@ namespace MyDive.Server.Controllers
                         i_Dive.BottomTypeID,
                         i_Dive.SalinityID,
                         i_Dive.WaterTypeID,
-                        i_Dive.Location);
+                        i_Dive.Location.Lat,
+                        i_Dive.Location.Long);
 
                     Logger.Instance.Notify("Dive log created", eLogType.Info);
-                    result = Ok(diveID);
+                    result = Ok(diveID != -1 ? diveID : null);
                 }
             }
             catch(Exception ex)

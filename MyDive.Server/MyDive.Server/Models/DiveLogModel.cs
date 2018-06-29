@@ -9,7 +9,7 @@ namespace MyDive.Server.Models
     {
         public int SiteID { get; set; }
 
-        public float MaxDepth { get; set; }
+        public double? MaxDepth { get; set; }
 
         public string Description { get; set; }
 
@@ -23,6 +23,6 @@ namespace MyDive.Server.Models
 
         public int WaterTypeID { get; set; }
 
-        public string Location { get; set; }
+        public LocationModel Location { get; set; }
     }
 }

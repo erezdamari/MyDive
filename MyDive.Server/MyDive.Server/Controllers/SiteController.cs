@@ -41,7 +41,7 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch sites", eLogType.Info);
-                    result = Ok(sites);
+                    result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
             catch (Exception ex)
@@ -80,7 +80,7 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch sites", eLogType.Info);
-                    result = Ok(sites);
+                    result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
             catch (Exception ex)
@@ -119,7 +119,7 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch sites", eLogType.Info);
-                    result = Ok(sites);
+                    result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
             catch (Exception ex)
@@ -140,10 +140,11 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    int rateID = MyDiveDB.stp_RateSite(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
+                    int? rateID = -1;
+                    rateID = MyDiveDB.stp_RateSite(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
 
                     Logger.Instance.Notify("Rate sites", eLogType.Info);
-                    result = Ok(rateID);
+                    result = Ok(rateID != -1 ? rateID : null);
                 }
             }
             catch (Exception ex)

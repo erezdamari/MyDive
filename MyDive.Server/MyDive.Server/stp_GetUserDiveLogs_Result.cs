@@ -22,6 +22,7 @@ namespace MyDive.Server
         public int ButtomTypeID { get; set; }
         public int SalinityID { get; set; }
         public int WaterTypeID { get; set; }
-        public string Location { get; set; }
+        public Nullable<double> Lat { get; set; }
+        public Nullable<double> Long { get; set; }
     }
 }

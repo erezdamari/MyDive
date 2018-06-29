@@ -23,8 +23,9 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    int wishID = MyDiveDB.stp_CreateNewWish(i_Wish.SiteID, i_Wish.UserID);
-                    result =  Ok(wishID);
+                    int? wishID = -1;
+                    wishID = MyDiveDB.stp_CreateNewWish(i_Wish.SiteID, i_Wish.UserID);
+                    result =  Ok(wishID != -1 ? wishID : null);
                 }
             }
             catch(Exception ex)
@@ -46,8 +47,9 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    int wishID = MyDiveDB.stp_RemoveFromWishList(i_Wish.UserID, i_Wish.SiteID);
-                    result =  Ok(wishID);
+                    int? wishID = -1;
+                    wishID = MyDiveDB.stp_RemoveFromWishList(i_Wish.UserID, i_Wish.SiteID);
+                    result =  Ok(wishID != -1 ? wishID : null);
                 }
             }
             catch(Exception ex)
@@ -68,16 +70,19 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    ObjectResult<stp_GetUserWishList_Result> userResult = MyDiveDB.stp_GetUserWishList(i_UserId);
-                    UserWishListModel userToReturn = new UserWishListModel();
+                    ObjectResult<stp_GetUserWishList_Result> serverResult = MyDiveDB.stp_GetUserWishList(i_UserId);
+                    List<UserWishListModel> userWishList = new List<UserWishListModel>();
 
-                    foreach (stp_GetUserWishList_Result user in userResult)
+                    foreach (stp_GetUserWishList_Result res in serverResult)
                     {
-                        userToReturn.WishID = user.WishID;
-                        userToReturn.SiteID = user.SiteID;
-                        userToReturn.UserID = user.UserID;
+                        userWishList.Add(new UserWishListModel
+                        {
+                            WishID = res.WishID,
+                            SiteID = res.SiteID,
+                            UserID = res.UserID
+                        });
                     }
-                    result = Ok(userToReturn);
+                    result = Ok(userWishList.Count > 0 ? userWishList : null);
                 }
             }
             catch (Exception ex)

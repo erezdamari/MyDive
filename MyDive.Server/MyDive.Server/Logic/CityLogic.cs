@@ -17,15 +17,15 @@ namespace MyDive.Server.Logic
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    ObjectResult<stp_GetAllCitiesByCountryId_Result> citiesResult = MyDiveDB.stp_GetAllCitiesByCountryId(i_CountryId);
+                    ObjectResult<stp_GetAllCitiesByCountryId_Result> serverResult = MyDiveDB.stp_GetAllCitiesByCountryId(i_CountryId);
                     cities = new List<CityModel>();
 
-                    foreach (stp_GetAllCitiesByCountryId_Result city in citiesResult)
+                    foreach (stp_GetAllCitiesByCountryId_Result res in serverResult)
                     {
                         cities.Add(new CityModel
                         {
-                            CityID = city.CityID,
-                            CityName = city.CityName
+                            CityID = res.CityID,
+                            CityName = res.CityName
                         });
                     }
 

@@ -127,6 +127,7 @@
     <Compile Include="Logger\eLogType.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logic\CityLogic.cs" />
+    <Compile Include="Logic\ClubLogic.cs" />
     <Compile Include="Logic\IssueLogic.cs" />
     <Compile Include="Logic\LookupLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Models\DiveTypeModel.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Models\LicenseTypeModel.cs" />
+    <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\LogNewDiveModel.cs" />
     <Compile Include="Models\RatingModel.cs" />

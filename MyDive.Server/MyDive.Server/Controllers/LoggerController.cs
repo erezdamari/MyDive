@@ -41,6 +41,29 @@ namespace MyDive.Server.Controllers
             return Get(0, "all");
         }
 
+        [HttpGet]
+        [Route("delete/{i_LogId")]
+        public IHttpActionResult DeleteLog(int i_LogId)
+        {
+            LogControllerEntring("delete");
+            IHttpActionResult result = Ok();
+            try
+            {
+                using(MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    int? logId = -1;
+                    logId = MyDiveDB.stp_DeleteLogById(i_LogId);
+                    result = Ok(logId != -1 ? logId : null);
+                }
+            }
+            catch(Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
+        }
+
         private IHttpActionResult Get(int i_Type, string i_FunctionName)
         {
             LogControllerEntring(i_FunctionName);
@@ -76,7 +99,7 @@ namespace MyDive.Server.Controllers
                 });
             }
 
-            return result;
+            return result.Count > 0 ? result : null;
         }
     }
 }

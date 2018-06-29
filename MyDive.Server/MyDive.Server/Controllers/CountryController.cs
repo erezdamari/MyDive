@@ -36,7 +36,7 @@ namespace MyDive.Server.Controllers
                     }
 
                     Logger.Instance.Notify("Fetch all countries", eLogType.Info);
-                    result = Ok(countries);
+                    result = Ok(countries.Count > 0 ? countries : null);
                 }
             }
             catch(Exception ex)
