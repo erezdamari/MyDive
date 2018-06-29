@@ -1,4 +1,6 @@
-﻿using MyDive.Server.Models;
+﻿using MyDive.Server.Log;
+using MyDive.Server.Logic;
+using MyDive.Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -10,28 +12,26 @@ using System.Web.Http;
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("city")]
-    public class CityController : ApiController
+    public class CityController : MainController
     {
+        private CityLogic m_Logic = new CityLogic();
+
         [HttpGet]
         [Route("getcities/{i_CuntryID}")]
-        public IHttpActionResult GetCitiesByCuntryID(int i_CuntryID)
+        public IHttpActionResult GetCitiesByCuntryID(int i_CountryID)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("getcities");
+            IHttpActionResult result = Ok();
+            try
             {
-                ObjectResult<stp_GetAllCitiesByCountryId_Result> citiesResult = MyDiveDB.stp_GetAllCitiesByCountryId(i_CuntryID);
-                List<City> cities = new List<City>();
-
-                foreach(stp_GetAllCitiesByCountryId_Result city in citiesResult)
-                {
-                    cities.Add(new City
-                    {
-                        CityID = city.CityID,
-                        CityName = city.CityName
-                    });
-                }
-
-                return Ok(cities);
+                result = Ok(m_Logic.GetCities(i_CountryID));
             }
+            catch(Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class UserWishList
+    public class UserWishListModel
     {
         public int WishID { get; set; }
         public int SiteID { get; set; }

@@ -17,33 +17,33 @@ namespace MyDive.Server.Controllers
         [Route("error")]
         public IHttpActionResult GetErrorLog()
         {
-            return Get((int)eLogType.Error);
+            return Get((int)eLogType.Error, "error");
         }
 
         [HttpGet]
         [Route("info")]
         public IHttpActionResult GetInfoLog()
         {
-            return Get((int)eLogType.Info);
+            return Get((int)eLogType.Info, "info");
         }
 
         [HttpGet]
         [Route("debug")]
         public IHttpActionResult GetDeugeLog()
         {
-            return Get((int)eLogType.Debug);
+            return Get((int)eLogType.Debug, "debug");
         }
 
         [HttpGet]
         [Route("all")]
         public IHttpActionResult GetAllLogs()
         {
-            return Get(0);
+            return Get(0, "all");
         }
 
-        private IHttpActionResult Get(int i_Type)
+        private IHttpActionResult Get(int i_Type, string i_FunctionName)
         {
-            LogControllerEntring();
+            LogControllerEntring(i_FunctionName);
             IHttpActionResult result = Ok();
 
             try
@@ -70,6 +70,7 @@ namespace MyDive.Server.Controllers
             {
                 result.Add(new LogModel
                 {
+                    Type = res.Type,
                     Msg = res.Msg,
                     Date = res.LogDate
                 });

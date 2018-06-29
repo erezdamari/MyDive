@@ -14,9 +14,9 @@ namespace MyDive.Server.Controllers
     {
         [HttpPost]
         [Route("create")]
-        public IHttpActionResult CreateWish([FromBody] Wish i_Wish)
+        public IHttpActionResult CreateWish([FromBody] WishModel i_Wish)
         {
-            LogControllerEntring();
+            LogControllerEntring("create");
             IHttpActionResult result = null;
 
             try
@@ -37,9 +37,9 @@ namespace MyDive.Server.Controllers
 
         [HttpPost]
         [Route("remove")]
-        public IHttpActionResult RemoveWish([FromBody] Wish i_Wish)
+        public IHttpActionResult RemoveWish([FromBody] WishModel i_Wish)
         {
-            LogControllerEntring();
+            LogControllerEntring("remove");
             IHttpActionResult result = null;
 
             try
@@ -62,14 +62,14 @@ namespace MyDive.Server.Controllers
         [Route("getuserwish/{i_UserId}")]
         public IHttpActionResult GetUserWishList(int i_UserId)
         {
-            LogControllerEntring();
+            LogControllerEntring("getuserwish");
             IHttpActionResult result = null;
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     ObjectResult<stp_GetUserWishList_Result> userResult = MyDiveDB.stp_GetUserWishList(i_UserId);
-                    UserWishList userToReturn = new UserWishList();
+                    UserWishListModel userToReturn = new UserWishListModel();
 
                     foreach (stp_GetUserWishList_Result user in userResult)
                     {

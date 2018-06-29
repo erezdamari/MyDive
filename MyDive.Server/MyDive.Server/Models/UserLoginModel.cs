@@ -5,9 +5,10 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class WaterType
+    public class UserLoginModel
     {
-        public int WaterTypeID { get; set; }
-        public string WaterTypeName { get; set; }
+        public string Username { get; set; }
+
+        public string Password { get; set; }
     }
 }

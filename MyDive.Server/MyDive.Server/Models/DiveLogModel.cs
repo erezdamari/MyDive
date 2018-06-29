@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class DiveLog
+    public class DiveLogModel
     {
         public int SiteID { get; set; }
 

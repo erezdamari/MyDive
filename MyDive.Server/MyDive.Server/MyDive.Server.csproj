@@ -126,25 +126,30 @@
     </Compile>
     <Compile Include="Logger\eLogType.cs" />
     <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Logic\CityLogic.cs" />
     <Compile Include="Logic\IssueLogic.cs" />
+    <Compile Include="Logic\LookupLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Models\AssociationModel.cs" />
-    <Compile Include="Models\BottomType.cs" />
-    <Compile Include="Models\City.cs" />
-    <Compile Include="Models\Club.cs" />
-    <Compile Include="Models\Country.cs" />
-    <Compile Include="Models\DiveLog.cs" />
-    <Compile Include="Models\DiveType.cs" />
+    <Compile Include="Models\BottomTypeModel.cs" />
+    <Compile Include="Models\CityModel.cs" />
+    <Compile Include="Models\ClubModel.cs" />
+    <Compile Include="Models\CountryModel.cs" />
+    <Compile Include="Models\DiveLogModel.cs" />
+    <Compile Include="Models\DiveTypeModel.cs" />
     <Compile Include="Models\IssueModel.cs" />
+    <Compile Include="Models\LicenseTypeModel.cs" />
     <Compile Include="Models\LogModel.cs" />
-    <Compile Include="Models\Rating.cs" />
-    <Compile Include="Models\SalinityType.cs" />
-    <Compile Include="Models\Site.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserLogin.cs" />
-    <Compile Include="Models\UserWishList.cs" />
-    <Compile Include="Models\WaterType.cs" />
-    <Compile Include="Models\Wish.cs" />
+    <Compile Include="Models\LogNewDiveModel.cs" />
+    <Compile Include="Models\RatingModel.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\SalinityTypeModel.cs" />
+    <Compile Include="Models\SiteModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserLoginModel.cs" />
+    <Compile Include="Models\UserWishListModel.cs" />
+    <Compile Include="Models\WaterTypeModel.cs" />
+    <Compile Include="Models\WishModel.cs" />
     <Compile Include="MyDiveModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,6 +209,9 @@
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetDiveTypes_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stp_GetLicenseTypes_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetLog_Result.cs">

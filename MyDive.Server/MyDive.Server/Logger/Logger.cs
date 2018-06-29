@@ -22,11 +22,12 @@ namespace MyDive.Server.Log
 
             try
             {
+                DateTime d = DateTime.Now.Date;
                 MyDiveDB = new MyDiveEntities();
                 MyDiveDB.stp_InsertLog(
                     (int)i_LogType,
                     i_Msg,
-                    DateTime.Now.ToLocalTime());
+                    DateTime.Now.Date);
             }
             catch (Exception ex)
             {

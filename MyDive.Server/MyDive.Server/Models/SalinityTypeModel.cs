@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class SalinityType
+    public class SalinityTypeModel
     {
         public int SalinityID { get; set; }
         public string Salinity { get; set; }

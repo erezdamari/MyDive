@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class Rating
+    public class RatingModel
     {
         public int EntityID { get; set; }//club or site
 

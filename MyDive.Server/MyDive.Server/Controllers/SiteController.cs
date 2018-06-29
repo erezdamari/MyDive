@@ -1,4 +1,5 @@
-﻿using MyDive.Server.Models;
+﻿using MyDive.Server.Log;
+using MyDive.Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -10,99 +11,147 @@ using System.Web.Http;
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("size")]
-    public class SiteController : ApiController
+    public class SiteController : MainController
     {
         [HttpGet]
-        [Route("getsite/{i_SiteID}")]
-        public IHttpActionResult GetCitiesByCuntryID(int i_SiteID)
+        [Route("getsites/{i_SiteID}")]
+        public IHttpActionResult GetSitesByCuntryID(int i_SiteID)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("getsites");
+            IHttpActionResult result = Ok();
+            try
             {
-                ObjectResult<stp_GetSiteInfoById_Result> sitesResult = MyDiveDB.stp_GetSiteInfoById(i_SiteID);
-                List<Site> sites = new List<Site>();
-
-                foreach (stp_GetSiteInfoById_Result site in sitesResult)
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    sites.Add(new Site
-                    {
-                        SiteID = site.SiteID,
-                        Name = site.Name,
-                        CityID = site.CityID,
-                        CountryID = site.CountryID,
-                        Rating = site.Rating,
-                        Lat = site.Lat,
-                        Long = site.Long
-                    });
-                }
+                    ObjectResult<stp_GetSiteInfoById_Result> sitesResult = MyDiveDB.stp_GetSiteInfoById(i_SiteID);
+                    List<SiteModel> sites = new List<SiteModel>();
 
-                return Ok(sites);
+                    foreach (stp_GetSiteInfoById_Result site in sitesResult)
+                    {
+                        sites.Add(new SiteModel
+                        {
+                            SiteID = site.SiteID,
+                            Name = site.Name,
+                            CityID = site.CityID,
+                            CountryID = site.CountryID,
+                            Rating = site.Rating,
+                            Lat = site.Lat,
+                            Long = site.Long
+                        });
+                    }
+
+                    Logger.Instance.Notify("Fetch sites", eLogType.Info);
+                    result = Ok(sites);
+                }
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpGet]
-        [Route("getsite/{i_CuntryID, i_CityID}")]
-        public IHttpActionResult GetSiteByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
+        [Route("getsites/{i_CuntryID, i_CityID}")]
+        public IHttpActionResult GetSitesByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("getsites");
+            IHttpActionResult result = Ok();
+            try
             {
-                ObjectResult<stp_GetSitesByCountryAndCity_Result> sitesResult = MyDiveDB.stp_GetSitesByCountryAndCity(i_CuntryID, i_CityID);
-                List<Site> sites = new List<Site>();
-
-                foreach (stp_GetSitesByCountryAndCity_Result site in sitesResult)
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    sites.Add(new Site
-                    {
-                        SiteID = site.SiteID,
-                        Name = site.Name,
-                        CityID = site.CityID,
-                        CountryID = site.CountryID,
-                        Rating = site.Rating,
-                        Lat = site.Lat,
-                        Long = site.Long
-                    });
-                }
+                    ObjectResult<stp_GetSitesByCountryAndCity_Result> sitesResult = MyDiveDB.stp_GetSitesByCountryAndCity(i_CuntryID, i_CityID);
+                    List<SiteModel> sites = new List<SiteModel>();
 
-                return Ok(sites);
+                    foreach (stp_GetSitesByCountryAndCity_Result site in sitesResult)
+                    {
+                        sites.Add(new SiteModel
+                        {
+                            SiteID = site.SiteID,
+                            Name = site.Name,
+                            CityID = site.CityID,
+                            CountryID = site.CountryID,
+                            Rating = site.Rating,
+                            Lat = site.Lat,
+                            Long = site.Long
+                        });
+                    }
+
+                    Logger.Instance.Notify("Fetch sites", eLogType.Info);
+                    result = Ok(sites);
+                }
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpGet]
-        [Route("getsite/{i_Keyword}")]
-        public IHttpActionResult GetSiteByKeyword(string i_Keyword)
+        [Route("getsites/{i_Keyword}")]
+        public IHttpActionResult GetSitesByKeyword(string i_Keyword)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("getsites");
+            IHttpActionResult result = Ok();
+            try
             {
-                ObjectResult<stp_GetSitesByKeywors_Result> sitesResult = MyDiveDB.stp_GetSitesByKeywors(i_Keyword);
-                List<Site> sites = new List<Site>();
-
-                foreach (stp_GetSitesByKeywors_Result site in sitesResult)
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    sites.Add(new Site
-                    {
-                        SiteID = site.SiteID,
-                        Name = site.Name,
-                        CityID = site.CityID,
-                        CountryID = site.CountryID,
-                        Rating = site.Rating,
-                        Lat = site.Lat,
-                        Long = site.Long
-                    });
-                }
+                    ObjectResult<stp_GetSitesByKeywors_Result> sitesResult = MyDiveDB.stp_GetSitesByKeywors(i_Keyword);
+                    List<SiteModel> sites = new List<SiteModel>();
 
-                return Ok(sites);
+                    foreach (stp_GetSitesByKeywors_Result site in sitesResult)
+                    {
+                        sites.Add(new SiteModel
+                        {
+                            SiteID = site.SiteID,
+                            Name = site.Name,
+                            CityID = site.CityID,
+                            CountryID = site.CountryID,
+                            Rating = site.Rating,
+                            Lat = site.Lat,
+                            Long = site.Long
+                        });
+                    }
+
+                    Logger.Instance.Notify("Fetch sites", eLogType.Info);
+                    result = Ok(sites);
+                }
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpPost]
         [Route("rate")]
-        public IHttpActionResult RateSite([FromBody] Rating i_Rate)
+        public IHttpActionResult RateSite([FromBody] RatingModel i_Rate)
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("rate");
+            IHttpActionResult result = Ok();
+            try
             {
-                int rateID = MyDiveDB.stp_RateSite(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    int rateID = MyDiveDB.stp_RateSite(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
 
-                return Ok(rateID);
+                    Logger.Instance.Notify("Rate sites", eLogType.Info);
+                    result = Ok(rateID);
+                }
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
     }
 }

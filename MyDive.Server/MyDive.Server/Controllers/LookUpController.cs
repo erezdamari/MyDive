@@ -1,4 +1,5 @@
-﻿using MyDive.Server.Models;
+﻿using MyDive.Server.Logic;
+using MyDive.Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -10,94 +11,172 @@ using System.Web.Http;
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("lookup")]
-    public class LookUpController : ApiController
+    public class LookUpController : MainController
     {
+        private LookupLogic m_Logic = new LookupLogic();
+
         [HttpGet]
         [Route("bottom")]
         public IHttpActionResult GetBottomTypes()
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("bottom");
+            IHttpActionResult result = Ok();
+
+            try
             {
-                ObjectResult<stp_GetBottomType_Result> bottomTypesResult = MyDiveDB.stp_GetBottomType();
-                List<BottomType> bottomTypes = new List<BottomType>();
-
-                foreach (stp_GetBottomType_Result type in bottomTypesResult)
-                {
-                    bottomTypes.Add(new BottomType
-                    {
-                        BottomTypeID = type.BottomTypeID,
-                        BottomTypeName = type.BottomType
-                    });
-                }
-
-                return Ok(bottomTypes);
+                result = Ok(m_Logic.GetBottomTypes());
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpGet]
         [Route("salinity")]
         public IHttpActionResult GetSalinityTypes()
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("salinity");
+            IHttpActionResult result = Ok();
+
+            try
             {
-                ObjectResult<stp_GetSalinityTypes_Result> salinityTypesResult = MyDiveDB.stp_GetSalinityTypes();
-                List<SalinityType> salinityTypes = new List<SalinityType>();
-
-                foreach (stp_GetSalinityTypes_Result type in salinityTypesResult)
-                {
-                    salinityTypes.Add(new SalinityType
-                    {
-                        SalinityID = type.SalinityID,
-                        Salinity = type.Salinity
-                    });
-                }
-
-                return Ok(salinityTypes);
+                result = Ok(m_Logic.GetSalinityTypes());
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpGet]
         [Route("water")]
         public IHttpActionResult GetWaterTypes()
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("water");
+            IHttpActionResult result = Ok();
+
+            try
             {
-                ObjectResult<stp_GetWaterTypes_Result> waterTypesResult = MyDiveDB.stp_GetWaterTypes();
-                List<WaterType> waterTypes = new List<WaterType>();
-
-                foreach (stp_GetWaterTypes_Result type in waterTypesResult)
-                {
-                    waterTypes.Add(new WaterType
-                    {
-                        WaterTypeID = type.WaterTypeID,
-                        WaterTypeName = type.WaterType
-                    });
-                }
-
-                return Ok(waterTypes);
+                result = Ok(m_Logic.GetWaterTypes());
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
 
         [HttpGet]
         [Route("association")]
         public IHttpActionResult GetAssociations()
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("association");
+            IHttpActionResult result = Ok();
+
+            try
             {
-                ObjectResult<stp_GetAssociations_Result> associationsResult = MyDiveDB.stp_GetAssociations();
-                List<AssociationModel> associationTypes = new List<AssociationModel>();
-
-                foreach (stp_GetAssociations_Result type in associationsResult)
-                {
-                    associationTypes.Add(new AssociationModel
-                    {
-                        AssociationID = type.AssociationID,
-                        AssociationName = type.AssociationName
-                    });
-                }
-
-                return Ok(associationTypes);
+                result = Ok(m_Logic.GetAssociation());
             }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("license")]
+        public IHttpActionResult GetLicenses()
+        {
+            LogControllerEntring("license");
+            IHttpActionResult result = Ok();
+
+            try
+            {
+                result = Ok(m_Logic.GetLicenseTypes());
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("dive")]
+        public IHttpActionResult GetDiveTypes()
+        {
+            LogControllerEntring("dive");
+            IHttpActionResult result = Ok();
+
+            try
+            {
+                result = Ok(m_Logic.GetDiveTypes());
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("registration")]
+        public IHttpActionResult GetRegistrationModel()
+        {
+            LogControllerEntring("registration");
+            IHttpActionResult result = Ok();
+            try
+            {
+                RegistrationModel model = new RegistrationModel
+                {
+                    AssociationsTypes = m_Logic.GetAssociation(),
+                    LicenseTypes = m_Logic.GetLicenseTypes()
+                };
+
+                result = Ok(model);
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("lognewdive")]
+        public IHttpActionResult GetLogNewDiveModel()
+        {
+            LogControllerEntring("lognewdive");
+            IHttpActionResult result = Ok();
+            try
+            {
+                LogNewDiveModel model = new LogNewDiveModel
+                {
+                    BottomTypes = m_Logic.GetBottomTypes(),
+                    DiveTypes = m_Logic.GetDiveTypes(),
+                    SalinityTypes = m_Logic.GetSalinityTypes(),
+                    WaterTypes = m_Logic.GetWaterTypes()
+                };
+
+                result = Ok(model);
+            }
+            catch(Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
     }
 }

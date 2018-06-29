@@ -5,9 +5,9 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class Country
+    public class DiveTypeModel
     {
-        public int CountryID { get; set; }
-        public string CountryName { get; set; }
+        public int DiveTypeID { get; set; }
+        public string Type { get; set; }
     }
 }

@@ -5,9 +5,10 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class BottomType
+    public class WishModel
     {
-        public int BottomTypeID { get; set; }
-        public string BottomTypeName { get; set; }
+        public int SiteID { get; set; }
+
+        public int UserID { get; set; }
     }
 }

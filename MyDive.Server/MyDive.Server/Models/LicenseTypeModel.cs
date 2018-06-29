@@ -5,10 +5,10 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class UserLogin
+    public class LicenseTypeModel
     {
-        public string Username { get; set; }
+        public int Id { get; set; }
 
-        public string Password { get; set; }
+        public string Type { get; set; }
     }
 }

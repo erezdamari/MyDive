@@ -1,4 +1,5 @@
-﻿using MyDive.Server.Models;
+﻿using MyDive.Server.Log;
+using MyDive.Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -10,28 +11,40 @@ using System.Web.Http;
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("country")]
-    public class CountryController : ApiController
+    public class CountryController : MainController
     {
         [HttpGet]
         [Route("getcounties")]
         public IHttpActionResult GetCountries()
         {
-            using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+            LogControllerEntring("getcountries");
+            IHttpActionResult result = Ok();
+            try
             {
-                ObjectResult<stp_GetAllCountries_Result> countriesResult = MyDiveDB.stp_GetAllCountries();
-                List<Country> countries = new List<Country>();
-
-                foreach (stp_GetAllCountries_Result country in countriesResult)
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    countries.Add(new Country
-                    {
-                        CountryID = country.CountryID,
-                        CountryName = country.CountryName
-                    });
-                }
+                    ObjectResult<stp_GetAllCountries_Result> countriesResult = MyDiveDB.stp_GetAllCountries();
+                    List<CountryModel> countries = new List<CountryModel>();
 
-                return Ok(countries);
+                    foreach (stp_GetAllCountries_Result country in countriesResult)
+                    {
+                        countries.Add(new CountryModel
+                        {
+                            CountryID = country.CountryID,
+                            CountryName = country.CountryName
+                        });
+                    }
+
+                    Logger.Instance.Notify("Fetch all countries", eLogType.Info);
+                    result = Ok(countries);
+                }
             }
+            catch(Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
         }
     }
 }

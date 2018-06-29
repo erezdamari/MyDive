@@ -5,10 +5,9 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class Wish
+    public class CountryModel
     {
-        public int SiteID { get; set; }
-
-        public int UserID { get; set; }
+        public int CountryID { get; set; }
+        public string CountryName { get; set; }
     }
 }

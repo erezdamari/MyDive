@@ -259,11 +259,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetCountries_Result>("stp_GetCountries");
         }
     
-        public virtual ObjectResult<stp_GetDiveTypes_Result> stp_GetDiveTypes()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetDiveTypes_Result>("stp_GetDiveTypes");
-        }
-    
         public virtual ObjectResult<stp_GetSalinityTypes_Result> stp_GetSalinityTypes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSalinityTypes_Result>("stp_GetSalinityTypes");
@@ -484,30 +479,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_InsertLog", typeParameter, msgParameter, dateParameter);
         }
     
-        public virtual int stp_GetDebugLog()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_GetDebugLog");
-        }
-    
-        public virtual int stp_GetErrorLog()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_GetErrorLog");
-        }
-    
-        public virtual int stp_GetInfoLog()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_GetInfoLog");
-        }
-    
-        public virtual ObjectResult<stp_GetLog_Result> stp_GetLog(Nullable<int> type)
-        {
-            var typeParameter = type.HasValue ?
-                new ObjectParameter("Type", type) :
-                new ObjectParameter("Type", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLog_Result>("stp_GetLog", typeParameter);
-        }
-    
         public virtual ObjectResult<stp_AuthenticateLogin_Result> stp_AuthenticateLogin(string username, string password)
         {
             var usernameParameter = username != null ?
@@ -519,6 +490,25 @@ namespace MyDive.Server
                 new ObjectParameter("password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_AuthenticateLogin_Result>("stp_AuthenticateLogin", usernameParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetDiveTypes_Result> stp_GetDiveTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetDiveTypes_Result>("stp_GetDiveTypes");
+        }
+    
+        public virtual ObjectResult<stp_GetLog_Result> stp_GetLog(Nullable<int> type)
+        {
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLog_Result>("stp_GetLog", typeParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetLicenseTypes_Result> stp_GetLicenseTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLicenseTypes_Result>("stp_GetLicenseTypes");
         }
     }
 }

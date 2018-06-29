@@ -5,9 +5,9 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class DiveType
+    public class WaterTypeModel
     {
-        public int DiveTypeID { get; set; }
-        public string Type { get; set; }
+        public int WaterTypeID { get; set; }
+        public string WaterTypeName { get; set; }
     }
 }

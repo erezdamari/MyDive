@@ -11,10 +11,9 @@ namespace MyDive.Server
 {
     using System;
     
-    public partial class stp_GetLog_Result
+    public partial class stp_GetLicenseTypes_Result
     {
-        public int Type { get; set; }
-        public string Msg { get; set; }
-        public System.DateTime LogDate { get; set; }
+        public int LicenseTypeID { get; set; }
+        public string LicenseType { get; set; }
     }
 }

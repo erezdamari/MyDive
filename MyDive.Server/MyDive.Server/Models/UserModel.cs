@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MyDive.Server.Models
 {
-    public class User
+    public class UserModel
     {
         public int UserID { get; set; }
 

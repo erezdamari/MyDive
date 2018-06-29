@@ -13,9 +13,9 @@ namespace MyDive.Server.Controllers
     {
         [HttpPost]
         [Route("login")]
-        public IHttpActionResult AuthenticateLogin([FromBody] UserLogin i_UserLoginInfo)
+        public IHttpActionResult AuthenticateLogin([FromBody] UserLoginModel i_UserLoginInfo)
         {
-            LogControllerEntring();
+            LogControllerEntring("login");
             IHttpActionResult result = null;
             if (UserLogic.CheckUserLoginValidation(i_UserLoginInfo))
             {
@@ -63,9 +63,9 @@ namespace MyDive.Server.Controllers
 
         [HttpPost]
         [Route("register")]
-        public IHttpActionResult CreateUser([FromBody] User i_User)
+        public IHttpActionResult CreateUser([FromBody] UserModel i_User)
         {
-            LogControllerEntring();
+            LogControllerEntring("register");
             IHttpActionResult result = null;
 
             if (UserLogic.CheckUserRegistrationValidation(i_User))
@@ -106,14 +106,14 @@ namespace MyDive.Server.Controllers
         [Route("getuser/{i_UserId}")]
         public IHttpActionResult GetUser(int i_UserId)
         {
-            LogControllerEntring();
+            LogControllerEntring("getuser");
             IHttpActionResult result = null;
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     ObjectResult<stp_GetUser_Result> userResult = MyDiveDB.stp_GetUser(i_UserId);
-                    User userToReturn = new User();
+                    UserModel userToReturn = new UserModel();
 
                     foreach (stp_GetUser_Result user in userResult)
                     {
@@ -144,7 +144,7 @@ namespace MyDive.Server.Controllers
         [Route("getuserlog/{i_UserId}")]
         public IHttpActionResult GetUserDiveLog(int i_UserId)
         {
-            LogControllerEntring();
+            LogControllerEntring("getuserlog");
             IHttpActionResult result = null;
             try
             {
@@ -165,9 +165,9 @@ namespace MyDive.Server.Controllers
 
         [HttpPost]
         [Route("editprofile")]
-        public IHttpActionResult EditUserProfile([FromBody] User i_User)
+        public IHttpActionResult EditUserProfile([FromBody] UserModel i_User)
         {
-            LogControllerEntring();
+            LogControllerEntring("editprofile");
             IHttpActionResult result = null;
             try
             {

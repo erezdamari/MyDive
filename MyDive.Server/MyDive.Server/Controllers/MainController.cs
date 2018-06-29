@@ -16,11 +16,11 @@ namespace MyDive.Server.Controllers
             return InternalServerError();
         }
 
-        public void LogControllerEntring()
+        public void LogControllerEntring(string i_FunctionName)
         {
             
             Logger.Instance.Notify(
-                string.Format("start {0} controller", this.GetType().Name),
+                string.Format("start {0}/{1} controller", this.GetType().Name, i_FunctionName),
                 eLogType.Debug);
         }
     }

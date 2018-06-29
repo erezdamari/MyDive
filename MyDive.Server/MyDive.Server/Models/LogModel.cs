@@ -7,6 +7,8 @@ namespace MyDive.Server.Models
 {
     public class LogModel
     {
+        public int Type { get; set; }
+
         public string Msg { get; set; }
 
         public DateTime Date { get; set; }
