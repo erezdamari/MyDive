@@ -119,7 +119,6 @@ namespace MyDive.Server.Controllers
                     {
                         userToReturn.UserID = user.UserID;
                         userToReturn.Username = user.Username;
-                        userToReturn.Password = user.Password;
                         userToReturn.Email = user.Email;
                         userToReturn.FirstName = user.FirstName;
                         userToReturn.LastName = user.LastName;

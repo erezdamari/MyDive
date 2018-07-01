@@ -206,9 +206,6 @@
           </FunctionImport>
           <FunctionImport Name="stp_GetCountries" ReturnType="Collection(MyDiveModel.stp_GetCountries_Result)" />
           <FunctionImport Name="stp_GetSalinityTypes" ReturnType="Collection(MyDiveModel.stp_GetSalinityTypes_Result)" />
-          <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
-          <Parameter Name="userID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetUserWishList" ReturnType="Collection(MyDiveModel.stp_GetUserWishList_Result)">
           <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -293,7 +290,10 @@
             <Parameter Name="Long" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="stp_DeleteLogById">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -332,18 +332,6 @@
         <ComplexType Name="stp_GetSalinityTypes_Result">
           <Property Type="Int32" Name="SalinityID" Nullable="false" />
           <Property Type="String" Name="Salinity" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="stp_GetUser_Result">
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Password" Nullable="false" MaxLength="64" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="AssociationID" Nullable="true" />
-          <Property Type="String" Name="UserLicenceNumber" Nullable="true" MaxLength="40" />
-          <Property Type="Int32" Name="LicenseTypeID" Nullable="true" />
-          <Property Type="DateTime" Name="Birthday" Nullable="true" />
         </ComplexType>
         <ComplexType Name="stp_GetUserWishList_Result">
           <Property Type="Int32" Name="WishID" Nullable="false" />
@@ -465,6 +453,17 @@
           <Property Type="Double" Name="Lat" Nullable="true" />
           <Property Type="Double" Name="Long" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="stp_GetUser_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="AssociationID" Nullable="true" />
+          <Property Type="String" Name="UserLicenceNumber" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="LicenseTypeID" Nullable="true" />
+          <Property Type="DateTime" Name="Birthday" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -526,22 +525,6 @@
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSalinityTypes_Result">
                 <ScalarProperty Name="SalinityID" ColumnName="SalinityID" />
                 <ScalarProperty Name="Salinity" ColumnName="Salinity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetUser" FunctionName="MyDiveModel.Store.stp_GetUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetUser_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="AssociationID" ColumnName="AssociationID" />
-                <ScalarProperty Name="UserLicenceNumber" ColumnName="UserLicenceNumber" />
-                <ScalarProperty Name="LicenseTypeID" ColumnName="LicenseTypeID" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -729,6 +712,21 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_CreateDiveLog" FunctionName="MyDiveModel.Store.stp_CreateDiveLog" />
           <FunctionImportMapping FunctionImportName="stp_DeleteLogById" FunctionName="MyDiveModel.Store.stp_DeleteLogById" />
+          <FunctionImportMapping FunctionImportName="stp_GetUser" FunctionName="MyDiveModel.Store.stp_GetUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetUser_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="AssociationID" ColumnName="AssociationID" />
+                <ScalarProperty Name="UserLicenceNumber" ColumnName="UserLicenceNumber" />
+                <ScalarProperty Name="LicenseTypeID" ColumnName="LicenseTypeID" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

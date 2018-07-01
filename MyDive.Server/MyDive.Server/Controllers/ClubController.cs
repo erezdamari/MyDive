@@ -7,14 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Collections.Generic;
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("club")]
     public class ClubController : MainController
     {
         [HttpGet]
-        [Route("getclubs/{i_CuntryID, i_CityID}")]
+        [Route("getclubs/{i_CuntryID}/{i_CityID}")]
         public IHttpActionResult GetClubsByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
         {
             LogControllerEntring("getclubs");
@@ -102,7 +101,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("getclubs/{i_Keyword}")]
+        [Route("getclubssearch/{i_Keyword}")]
         public IHttpActionResult GetClubsByKeyword(string i_Keyword)
         {
             LogControllerEntring("getclubs");

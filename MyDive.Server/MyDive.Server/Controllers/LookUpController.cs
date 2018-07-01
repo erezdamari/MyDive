@@ -154,7 +154,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("lognewdive")]
+        [Route("getlognewdivemodel")]
         public IHttpActionResult GetLogNewDiveModel()
         {
             LogControllerEntring("lognewdive");

@@ -223,15 +223,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSalinityTypes_Result>("stp_GetSalinityTypes");
         }
     
-        public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
-        }
-    
         public virtual ObjectResult<stp_GetUserWishList_Result> stp_GetUserWishList(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
@@ -522,6 +513,15 @@ namespace MyDive.Server
                 new ObjectParameter("id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_DeleteLogById", idParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
         }
     }
 }

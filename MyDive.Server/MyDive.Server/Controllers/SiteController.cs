@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace MyDive.Server.Controllers
 {
-    [RoutePrefix("size")]
+    [RoutePrefix("site")]
     public class SiteController : MainController
     {
         [HttpGet]
