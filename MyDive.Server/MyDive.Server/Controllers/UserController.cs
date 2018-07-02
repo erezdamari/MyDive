@@ -188,8 +188,8 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    i_User.FirstName = i_User.FirstName == null ? i_User.FirstName : "";
-                    i_User.LastName = i_User.LastName == null ? i_User.LastName : "";
+                    i_User.FirstName = i_User.FirstName != null ? i_User.FirstName : "";
+                    i_User.LastName = i_User.LastName != null ? i_User.LastName : "";
                     int userID = MyDiveDB.stp_EditUserProfile(
                         i_User.UserID,
                         i_User.FirstName,

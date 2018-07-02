@@ -53,7 +53,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("getsites/{i_CuntryID, i_CityID}")]
+        [Route("getsites/{i_CuntryID}/{i_CityID}")]
         public IHttpActionResult GetSitesByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
         {
             LogControllerEntring("getsites");
@@ -92,7 +92,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("getsites/{i_Keyword}")]
+        [Route("getsitessearch/{i_Keyword}")]
         public IHttpActionResult GetSitesByKeyword(string i_Keyword)
         {
             LogControllerEntring("getsites");
