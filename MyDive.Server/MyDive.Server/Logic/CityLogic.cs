@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
+using static MyDive.Server.Enums;
 
 namespace MyDive.Server.Logic
 {

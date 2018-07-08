@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static MyDive.Server.Enums;
+
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("club")]

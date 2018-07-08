@@ -125,7 +125,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Logger\eLogType.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logic\CityLogic.cs" />
     <Compile Include="Logic\ClubLogic.cs" />

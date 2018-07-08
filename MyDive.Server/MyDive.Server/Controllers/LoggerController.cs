@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static MyDive.Server.Enums;
 
 namespace MyDive.Server.Controllers
 {
@@ -17,46 +18,43 @@ namespace MyDive.Server.Controllers
         [Route("error")]
         public IHttpActionResult GetErrorLog()
         {
-            return Get((int)eLogType.Error, "error");
+            return Get((int)eLogType.Error);
         }
 
         [HttpGet]
         [Route("info")]
         public IHttpActionResult GetInfoLog()
         {
-            return Get((int)eLogType.Info, "info");
+            return Get((int)eLogType.Info);
         }
 
         [HttpGet]
         [Route("debug")]
-        public IHttpActionResult GetDeugeLog()
+        public IHttpActionResult GetDeugLog()
         {
-            return Get((int)eLogType.Debug, "debug");
+            return Get((int)eLogType.Debug);
         }
 
         [HttpGet]
         [Route("all")]
         public IHttpActionResult GetAllLogs()
         {
-            return Get(0, "all");
+            return Get(0);
         }
 
         [HttpGet]
-        [Route("delete/{i_LogId}")]
-        public IHttpActionResult DeleteLog(int i_LogId)
+        [Route("clearlog")]
+        public IHttpActionResult ClearLog()
         {
-            LogControllerEntring("delete");
             IHttpActionResult result = Ok();
             try
             {
-                using(MyDiveEntities MyDiveDB = new MyDiveEntities())
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    int? logId = -1;
-                    logId = MyDiveDB.stp_DeleteLogById(i_LogId);
-                    result = Ok(logId != -1 ? logId : null);
+                    MyDiveDB.stp_ClearLog();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = LogException(ex);
             }
@@ -64,9 +62,9 @@ namespace MyDive.Server.Controllers
             return result;
         }
 
-        private IHttpActionResult Get(int i_Type, string i_FunctionName)
+        private IHttpActionResult Get(int i_Type)
         {
-            LogControllerEntring(i_FunctionName);
+            LogControllerEntring(i_Type.ToString());
             IHttpActionResult result = Ok();
 
             try

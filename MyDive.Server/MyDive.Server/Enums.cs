@@ -13,5 +13,13 @@ namespace MyDive.Server
             PasswordIsWrong = -1,
             PasswordAreNotEqual = -2
         }
+
+        public enum eLogType
+        {
+            All = 0,
+            Error = 1,
+            Info = 2,
+            Debug = 3
+        }
     }
 }

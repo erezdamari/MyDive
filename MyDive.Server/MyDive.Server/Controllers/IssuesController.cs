@@ -3,6 +3,7 @@ using MyDive.Server.Logic;
 using MyDive.Server.Models;
 using System;
 using System.Web.Http;
+using static MyDive.Server.Enums;
 
 namespace MyDive.Server.Controllers
 {

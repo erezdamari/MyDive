@@ -485,15 +485,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateDiveLog", siteIDParameter, maxDepthParameter, descriptionParameter, diveTypeIDParameter, userIDParameter, bottomTypeIDParameter, salinityUDParameter, waterTypeIDParameter, latParameter, longParameter);
         }
     
-        public virtual int stp_DeleteLogById(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_DeleteLogById", idParameter);
-        }
-    
         public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
@@ -544,6 +535,11 @@ namespace MyDive.Server
                 new ObjectParameter("userid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("stp_GetUserPassword", useridParameter);
+        }
+    
+        public virtual int stp_ClearLog()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_ClearLog");
         }
     }
 }

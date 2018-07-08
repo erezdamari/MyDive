@@ -40,6 +40,7 @@
           <Parameter Name="username" Type="nvarchar" Mode="In" />
           <Parameter Name="password" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="stp_ClearLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_CreateDiveLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SiteID" Type="int" Mode="In" />
           <Parameter Name="MaxDepth" Type="float" Mode="In" />
@@ -71,9 +72,6 @@
           <Parameter Name="UserLicenseNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="LicenseTypeID" Type="int" Mode="In" />
           <Parameter Name="Birthday" Type="date" Mode="In" />
-        </Function>
-        <Function Name="stp_DeleteLogById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="stp_EditUserProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
@@ -290,9 +288,6 @@
             <Parameter Name="Lat" Mode="In" Type="Double" />
             <Parameter Name="Long" Mode="In" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="stp_DeleteLogById">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
           <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -307,8 +302,9 @@
             <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="stp_GetUserPassword" ReturnType="Collection(String)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
+          <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="stp_ClearLog" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -724,7 +720,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_CreateDiveLog" FunctionName="MyDiveModel.Store.stp_CreateDiveLog" />
-          <FunctionImportMapping FunctionImportName="stp_DeleteLogById" FunctionName="MyDiveModel.Store.stp_DeleteLogById" />
           <FunctionImportMapping FunctionImportName="stp_GetUser" FunctionName="MyDiveModel.Store.stp_GetUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetUser_Result">
@@ -743,6 +738,7 @@
           <FunctionImportMapping FunctionImportName="stp_EditUserProfile" FunctionName="MyDiveModel.Store.stp_EditUserProfile" />
           <FunctionImportMapping FunctionImportName="stp_UpdateUserPassword" FunctionName="MyDiveModel.Store.stp_UpdateUserPassword" />
           <FunctionImportMapping FunctionImportName="stp_GetUserPassword" FunctionName="MyDiveModel.Store.stp_GetUserPassword" />
+          <FunctionImportMapping FunctionImportName="stp_ClearLog" FunctionName="MyDiveModel.Store.stp_ClearLog" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
