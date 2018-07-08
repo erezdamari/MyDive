@@ -122,6 +122,9 @@
         <Function Name="stp_GetUserDiveLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
         </Function>
+        <Function Name="stp_GetUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
         <Function Name="stp_GetUserWishList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
         </Function>
@@ -144,6 +147,10 @@
         <Function Name="stp_RemoveFromWishList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
           <Parameter Name="siteID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_UpdateUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="MyDiveModelStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -249,12 +256,6 @@
           </FunctionImport>
           <FunctionImport Name="stp_GetAssosiations" ReturnType="Collection(MyDiveModel.stp_GetAssosiations_Result)" />
           <FunctionImport Name="stp_GetAssociations" ReturnType="Collection(MyDiveModel.stp_GetAssociations_Result)" />
-          <FunctionImport Name="stp_EditUserProfile">
-            <Parameter Name="userId" Mode="In" Type="Int32" />
-            <Parameter Name="firstname" Mode="In" Type="String" />
-            <Parameter Name="lastname" Mode="In" Type="String" />
-            <Parameter Name="licenseId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="stp_CreateIssue">
             <Parameter Name="subject" Mode="In" Type="String" />
             <Parameter Name="email" Mode="In" Type="String" />
@@ -293,7 +294,20 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
-            <Parameter Name="userID" Mode="In" Type="Int32" />
+          <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_EditUserProfile">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="firstname" Mode="In" Type="String" />
+            <Parameter Name="lastname" Mode="In" Type="String" />
+            <Parameter Name="licenseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_UpdateUserPassword">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetUserPassword" ReturnType="Collection(String)">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -657,7 +671,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_EditUserProfile" FunctionName="MyDiveModel.Store.stp_EditUserProfile" />
           <FunctionImportMapping FunctionImportName="stp_CreateIssue" FunctionName="MyDiveModel.Store.stp_CreateIssue" />
           <FunctionImportMapping FunctionImportName="stp_InsertLog" FunctionName="MyDiveModel.Store.stp_InsertLog" />
           <FunctionImportMapping FunctionImportName="stp_AuthenticateLogin" FunctionName="MyDiveModel.Store.stp_AuthenticateLogin">
@@ -727,6 +740,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_EditUserProfile" FunctionName="MyDiveModel.Store.stp_EditUserProfile" />
+          <FunctionImportMapping FunctionImportName="stp_UpdateUserPassword" FunctionName="MyDiveModel.Store.stp_UpdateUserPassword" />
+          <FunctionImportMapping FunctionImportName="stp_GetUserPassword" FunctionName="MyDiveModel.Store.stp_GetUserPassword" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

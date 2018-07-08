@@ -121,6 +121,7 @@
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WishController.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -130,6 +131,7 @@
     <Compile Include="Logic\ClubLogic.cs" />
     <Compile Include="Logic\IssueLogic.cs" />
     <Compile Include="Logic\LookupLogic.cs" />
+    <Compile Include="Logic\UpdatePasswordLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Models\AssociationModel.cs" />
     <Compile Include="Models\BottomTypeModel.cs" />
@@ -147,6 +149,7 @@
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\SalinityTypeModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
+    <Compile Include="Models\UpdatePasswordModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserWishListModel.cs" />

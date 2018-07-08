@@ -365,27 +365,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAssociations_Result>("stp_GetAssociations");
         }
     
-        public virtual int stp_EditUserProfile(Nullable<int> userId, string firstname, string lastname, Nullable<int> licenseId)
-        {
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("userId", userId) :
-                new ObjectParameter("userId", typeof(int));
-    
-            var firstnameParameter = firstname != null ?
-                new ObjectParameter("firstname", firstname) :
-                new ObjectParameter("firstname", typeof(string));
-    
-            var lastnameParameter = lastname != null ?
-                new ObjectParameter("lastname", lastname) :
-                new ObjectParameter("lastname", typeof(string));
-    
-            var licenseIdParameter = licenseId.HasValue ?
-                new ObjectParameter("licenseId", licenseId) :
-                new ObjectParameter("licenseId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_EditUserProfile", userIdParameter, firstnameParameter, lastnameParameter, licenseIdParameter);
-        }
-    
         public virtual int stp_CreateIssue(string subject, string email, string description)
         {
             var subjectParameter = subject != null ?
@@ -522,6 +501,49 @@ namespace MyDive.Server
                 new ObjectParameter("userID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
+        }
+    
+        public virtual int stp_EditUserProfile(Nullable<int> userId, string firstname, string lastname, Nullable<int> licenseId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            var firstnameParameter = firstname != null ?
+                new ObjectParameter("firstname", firstname) :
+                new ObjectParameter("firstname", typeof(string));
+    
+            var lastnameParameter = lastname != null ?
+                new ObjectParameter("lastname", lastname) :
+                new ObjectParameter("lastname", typeof(string));
+    
+            var licenseIdParameter = licenseId.HasValue ?
+                new ObjectParameter("licenseId", licenseId) :
+                new ObjectParameter("licenseId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_EditUserProfile", userIdParameter, firstnameParameter, lastnameParameter, licenseIdParameter);
+        }
+    
+        public virtual int stp_UpdateUserPassword(Nullable<int> userid, string password)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_UpdateUserPassword", useridParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<string> stp_GetUserPassword(Nullable<int> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("stp_GetUserPassword", useridParameter);
         }
     }
 }

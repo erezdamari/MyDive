@@ -5,12 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Web.Http;
+using static MyDive.Server.Enums;
 
 namespace MyDive.Server.Controllers
 {
     [RoutePrefix("user")]
     public class UserController : MainController
     {
+        public UpdatePasswordLogic m_Logic { get; set; } = new UpdatePasswordLogic();
+
         [HttpPost]
         [Route("login")]
         public IHttpActionResult AuthenticateLogin([FromBody] UserLoginModel i_UserLoginInfo)
@@ -131,7 +134,7 @@ namespace MyDive.Server.Controllers
                     result = Ok(userToReturn);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = LogException(ex);
             }
@@ -151,14 +154,14 @@ namespace MyDive.Server.Controllers
                 {
                     ObjectResult<stp_GetUserDiveLogs_Result> serverResult = MyDiveDB.stp_GetUserDiveLogs(i_UserId);
                     List<DiveLogModel> userDiveLog = new List<DiveLogModel>();
-                    foreach(stp_GetUserDiveLogs_Result res in serverResult)
+                    foreach (stp_GetUserDiveLogs_Result res in serverResult)
                     {
                         userDiveLog.Add(new DiveLogModel
                         {
                             BottomTypeID = res.ButtomTypeID,
                             Description = res.Description,
                             DiveTypeID = res.DiveTypeID,
-                            Location = new LocationModel { Lat = res.Lat, Long = res.Long},
+                            Location = new LocationModel { Lat = res.Lat, Long = res.Long },
                             MaxDepth = res.MaxDepth,
                             SalinityID = res.SalinityID,
                             SiteID = res.SiteID,
@@ -198,6 +201,46 @@ namespace MyDive.Server.Controllers
 
                     result = Ok(userID);
                 }
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex);
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        [Route("changepassword")]
+        public IHttpActionResult UpdatePassword([FromBody] UpdatePasswordModel i_NewPassword)
+        {
+            LogControllerEntring("changepassword");
+            IHttpActionResult result = Ok();
+
+            try
+            {
+                eErrors error = m_Logic.CheckPasswordValidation(i_NewPassword);
+
+                if (error == eErrors.None)
+                {
+                    error = m_Logic.CheckIfPasswordsAreEquals(i_NewPassword);
+                    if (error == eErrors.None)
+                    {
+                        using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                        {
+                            MyDiveDB.stp_UpdateUserPassword(i_NewPassword.UserId, i_NewPassword.NewPassword);
+                        }
+                    }
+                    else
+                    {
+                        LogInternalError(error);
+                    }
+                }
+                else
+                {
+                    LogInternalError(error);
+                }
+
             }
             catch (Exception ex)
             {
