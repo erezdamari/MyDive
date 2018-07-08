@@ -161,15 +161,14 @@ namespace MyDive.Server.Controllers
                     {
                         userDiveLog.Add(new DiveLogModel
                         {
-                            BottomTypeID = res.ButtomTypeID,
+                            BottomType = res.BottomType,
                             Description = res.Description,
-                            DiveTypeID = res.DiveTypeID,
+                            DiveType = res.Type,
                             Location = new LocationModel { Lat = res.Lat, Long = res.Long },
                             MaxDepth = res.MaxDepth,
-                            SalinityID = res.SalinityID,
-                            SiteID = res.SiteID,
-                            UserID = res.UserID,
-                            WaterTypeID = res.WaterTypeID
+                            Salinity = res.Salinity,
+                            SiteName = res.Name,
+                            WaterType = res.WaterType
                         });
                     }
 

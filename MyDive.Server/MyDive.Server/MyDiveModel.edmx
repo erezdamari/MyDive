@@ -266,9 +266,6 @@
           </FunctionImport>
           <FunctionImport Name="stp_GetDiveTypes" ReturnType="Collection(MyDiveModel.stp_GetDiveTypes_Result)" />
           <FunctionImport Name="stp_GetLicenseTypes" ReturnType="Collection(MyDiveModel.stp_GetLicenseTypes_Result)" />
-          <FunctionImport Name="stp_GetUserDiveLogs" ReturnType="Collection(MyDiveModel.stp_GetUserDiveLogs_Result)">
-          <Parameter Name="userID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="stp_CreateDiveLog">
             <Parameter Name="SiteID" Mode="In" Type="Int32" />
             <Parameter Name="MaxDepth" Mode="In" Type="Double" />
@@ -299,13 +296,16 @@
           </FunctionImport>
           <FunctionImport Name="stp_ClearLog" />
           <FunctionImport Name="stp_GetLog" ReturnType="Collection(MyDiveModel.stp_GetLog_Result)">
-            <Parameter Name="Type" Mode="In" Type="Int32" />
+          <Parameter Name="Type" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_InsertLog">
             <Parameter Name="Type" Mode="In" Type="Int32" />
             <Parameter Name="Msg" Mode="In" Type="String" />
             <Parameter Name="Date" Mode="In" Type="DateTime" />
             <Parameter Name="data" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetUserDiveLogs" ReturnType="Collection(MyDiveModel.stp_GetUserDiveLogs_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -447,19 +447,6 @@
           <Property Type="Int32" Name="LicenseTypeID" Nullable="false" />
           <Property Type="String" Name="LicenseType" Nullable="true" MaxLength="150" />
         </ComplexType>
-        <ComplexType Name="stp_GetUserDiveLogs_Result">
-          <Property Type="Int32" Name="LogID" Nullable="false" />
-          <Property Type="Int32" Name="SiteID" Nullable="false" />
-          <Property Type="Double" Name="MaxDepth" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="DiveTypeID" Nullable="false" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="Int32" Name="ButtomTypeID" Nullable="false" />
-          <Property Type="Int32" Name="SalinityID" Nullable="false" />
-          <Property Type="Int32" Name="WaterTypeID" Nullable="false" />
-          <Property Type="Double" Name="Lat" Nullable="true" />
-          <Property Type="Double" Name="Long" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="stp_GetUser_Result">
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
@@ -476,6 +463,18 @@
           <Property Type="String" Name="Msg" Nullable="false" MaxLength="Max" />
           <Property Type="DateTime" Name="LogDate" Nullable="false" Precision="16" />
           <Property Type="String" Name="Data" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="stp_GetUserDiveLogs_Result">
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="MaxDepth" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BottomType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Salinity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="WaterType" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="Lat" Nullable="true" />
+          <Property Type="Double" Name="Long" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -695,23 +694,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetUserDiveLogs" FunctionName="MyDiveModel.Store.stp_GetUserDiveLogs">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetUserDiveLogs_Result">
-                <ScalarProperty Name="LogID" ColumnName="LogID" />
-                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
-                <ScalarProperty Name="MaxDepth" ColumnName="MaxDepth" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DiveTypeID" ColumnName="DiveTypeID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ButtomTypeID" ColumnName="ButtomTypeID" />
-                <ScalarProperty Name="SalinityID" ColumnName="SalinityID" />
-                <ScalarProperty Name="WaterTypeID" ColumnName="WaterTypeID" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Long" ColumnName="Long" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_CreateDiveLog" FunctionName="MyDiveModel.Store.stp_CreateDiveLog" />
           <FunctionImportMapping FunctionImportName="stp_GetUser" FunctionName="MyDiveModel.Store.stp_GetUser">
             <ResultMapping>
@@ -743,6 +725,22 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_InsertLog" FunctionName="MyDiveModel.Store.stp_InsertLog" />
+          <FunctionImportMapping FunctionImportName="stp_GetUserDiveLogs" FunctionName="MyDiveModel.Store.stp_GetUserDiveLogs">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetUserDiveLogs_Result">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MaxDepth" ColumnName="MaxDepth" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="BottomType" ColumnName="BottomType" />
+                <ScalarProperty Name="Salinity" ColumnName="Salinity" />
+                <ScalarProperty Name="WaterType" ColumnName="WaterType" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

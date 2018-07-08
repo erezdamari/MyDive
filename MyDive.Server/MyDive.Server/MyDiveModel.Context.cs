@@ -405,15 +405,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLicenseTypes_Result>("stp_GetLicenseTypes");
         }
     
-        public virtual ObjectResult<stp_GetUserDiveLogs_Result> stp_GetUserDiveLogs(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserDiveLogs_Result>("stp_GetUserDiveLogs", userIDParameter);
-        }
-    
         public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID, Nullable<double> lat, Nullable<double> @long)
         {
             var siteIDParameter = siteID.HasValue ?
@@ -544,6 +535,15 @@ namespace MyDive.Server
                 new ObjectParameter("data", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_InsertLog", typeParameter, msgParameter, dateParameter, dataParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetUserDiveLogs_Result> stp_GetUserDiveLogs(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserDiveLogs_Result>("stp_GetUserDiveLogs", userIDParameter);
         }
     }
 }

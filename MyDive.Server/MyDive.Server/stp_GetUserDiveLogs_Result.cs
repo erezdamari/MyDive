@@ -14,14 +14,13 @@ namespace MyDive.Server
     public partial class stp_GetUserDiveLogs_Result
     {
         public int LogID { get; set; }
-        public int SiteID { get; set; }
+        public string Name { get; set; }
         public Nullable<double> MaxDepth { get; set; }
         public string Description { get; set; }
-        public int DiveTypeID { get; set; }
-        public int UserID { get; set; }
-        public int ButtomTypeID { get; set; }
-        public int SalinityID { get; set; }
-        public int WaterTypeID { get; set; }
+        public string Type { get; set; }
+        public string BottomType { get; set; }
+        public string Salinity { get; set; }
+        public string WaterType { get; set; }
         public Nullable<double> Lat { get; set; }
         public Nullable<double> Long { get; set; }
     }
