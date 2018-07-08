@@ -30,7 +30,7 @@ namespace MyDive.Server.Logic
                         });
                     }
 
-                    Logger.Instance.Notify("Get all cities", eLogType.Info);
+                    Logger.Instance.Notify("Get all cities", eLogType.Info, null);
                 }
             }
             catch (Exception ex)

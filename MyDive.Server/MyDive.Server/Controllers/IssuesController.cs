@@ -1,6 +1,7 @@
 ﻿using MyDive.Server.Log;
 using MyDive.Server.Logic;
 using MyDive.Server.Models;
+using Newtonsoft.Json;
 using System;
 using System.Web.Http;
 using static MyDive.Server.Enums;
@@ -26,18 +27,19 @@ namespace MyDive.Server.Controllers
                         issueId = MyDiveDB.stp_CreateIssue(i_Issue.Subject, i_Issue.Email, i_Issue.Description);
                         Logger.Instance.Notify(
                             string.Format("add issue: '{0}'", i_Issue.Subject),
-                            eLogType.Info);
+                            eLogType.Info,
+                            JsonConvert.SerializeObject(i_Issue));
                         result = Ok(issueId != -1 ? issueId : null);
                     }
                 }
                 catch (Exception ex)
                 {
-                    result = LogException(ex);
+                    result = LogException(ex, null);
                 }
             }
             else
             {
-                Logger.Instance.Notify("issue info in insufficient", eLogType.Error);
+                Logger.Instance.Notify("issue info in insufficient", eLogType.Error, JsonConvert.SerializeObject(i_Issue));
                 result = BadRequest();
             }
 

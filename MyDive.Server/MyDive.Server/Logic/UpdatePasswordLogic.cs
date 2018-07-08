@@ -1,5 +1,6 @@
 ﻿using MyDive.Server.Log;
 using MyDive.Server.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -32,7 +33,7 @@ namespace MyDive.Server.Logic
             }
             catch(Exception ex)
             {
-                Logger.Instance.Notify(ex.StackTrace, eLogType.Error);
+                Logger.Instance.Notify(ex.StackTrace, eLogType.Error, JsonConvert.SerializeObject(i_Model));
             }
 
             return error;

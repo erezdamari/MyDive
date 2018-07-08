@@ -1,5 +1,6 @@
 ﻿using MyDive.Server.Log;
 using MyDive.Server.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -16,7 +17,7 @@ namespace MyDive.Server.Controllers
     {
         [HttpGet]
         [Route("getclubs/{i_CuntryID}/{i_CityID}")]
-        public IHttpActionResult GetClubsByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
+        public IHttpActionResult GetClubsByCuntryIDAndCityID(int i_CountryID, int i_CityID)
         {
             LogControllerEntring("getclubs");
             IHttpActionResult result = Ok();
@@ -26,7 +27,7 @@ namespace MyDive.Server.Controllers
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     ObjectResult<stp_GetAllClubsByCountryANDCityId_Result> clubsResult =
-                        MyDiveDB.stp_GetAllClubsByCountryANDCityId(i_CuntryID, i_CityID);
+                        MyDiveDB.stp_GetAllClubsByCountryANDCityId(i_CountryID, i_CityID);
                     clubs = new List<ClubModel>();
 
                     foreach (stp_GetAllClubsByCountryANDCityId_Result club in clubsResult)
@@ -45,14 +46,15 @@ namespace MyDive.Server.Controllers
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info);
+                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info,
+                        i_CityID.ToString() + i_CountryID.ToString());
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
                 clubs = null;
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -89,14 +91,14 @@ namespace MyDive.Server.Controllers
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info);
+                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info, i_CuntryID.ToString());
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
                 clubs = null;
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -133,14 +135,14 @@ namespace MyDive.Server.Controllers
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info);
+                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info, i_Keyword);
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
                 clubs = null;
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -177,14 +179,14 @@ namespace MyDive.Server.Controllers
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch club", eLogType.Info);
+                    Logger.Instance.Notify("Fetch club", eLogType.Info, i_ClubID.ToString());
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
             catch (Exception ex)
             {
                 clubs = null;
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -203,13 +205,13 @@ namespace MyDive.Server.Controllers
                     int? rateID = -1;
                     rateID = MyDiveDB.stp_RateClub(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
 
-                    Logger.Instance.Notify("rete club", eLogType.Info);
+                    Logger.Instance.Notify("rete club", eLogType.Info, JsonConvert.SerializeObject(i_Rate));
                     result = Ok(rateID != -1 ? rateID : null);
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;

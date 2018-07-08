@@ -1,4 +1,6 @@
-﻿using MyDive.Server.Models;
+﻿using MyDive.Server.Log;
+using MyDive.Server.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -25,12 +27,13 @@ namespace MyDive.Server.Controllers
                 {
                     int? wishID = -1;
                     wishID = MyDiveDB.stp_CreateNewWish(i_Wish.SiteID, i_Wish.UserID);
+                    Logger.Instance.Notify("add wish", Enums.eLogType.Info, JsonConvert.SerializeObject(i_Wish));
                     result =  Ok(wishID != -1 ? wishID : null);
                 }
             }
             catch(Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -49,12 +52,13 @@ namespace MyDive.Server.Controllers
                 {
                     int? wishID = -1;
                     wishID = MyDiveDB.stp_RemoveFromWishList(i_Wish.UserID, i_Wish.SiteID);
+                    Logger.Instance.Notify("remove wish", Enums.eLogType.Info, JsonConvert.SerializeObject(i_Wish));
                     result =  Ok(wishID != -1 ? wishID : null);
                 }
             }
             catch(Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -82,12 +86,13 @@ namespace MyDive.Server.Controllers
                             UserID = res.UserID
                         });
                     }
+                    Logger.Instance.Notify("fetch user wish list", Enums.eLogType.Info, i_UserId.ToString());
                     result = Ok(userWishList.Count > 0 ? userWishList : null);
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;

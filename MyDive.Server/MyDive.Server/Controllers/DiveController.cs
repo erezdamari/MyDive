@@ -1,5 +1,6 @@
 ﻿using MyDive.Server.Log;
 using MyDive.Server.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -37,13 +38,13 @@ namespace MyDive.Server.Controllers
                         i_Dive.Location.Lat,
                         i_Dive.Location.Long);
 
-                    Logger.Instance.Notify("Dive log created", eLogType.Info);
+                    Logger.Instance.Notify("Dive log created", eLogType.Info, JsonConvert.SerializeObject(i_Dive));
                     result = Ok(diveID != -1 ? diveID : null);
                 }
             }
             catch(Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;

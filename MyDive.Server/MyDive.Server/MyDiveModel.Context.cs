@@ -382,23 +382,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateIssue", subjectParameter, emailParameter, descriptionParameter);
         }
     
-        public virtual int stp_InsertLog(Nullable<int> type, string msg, Nullable<System.DateTime> date)
-        {
-            var typeParameter = type.HasValue ?
-                new ObjectParameter("Type", type) :
-                new ObjectParameter("Type", typeof(int));
-    
-            var msgParameter = msg != null ?
-                new ObjectParameter("Msg", msg) :
-                new ObjectParameter("Msg", typeof(string));
-    
-            var dateParameter = date.HasValue ?
-                new ObjectParameter("Date", date) :
-                new ObjectParameter("Date", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_InsertLog", typeParameter, msgParameter, dateParameter);
-        }
-    
         public virtual ObjectResult<stp_AuthenticateLogin_Result> stp_AuthenticateLogin(string username, string password)
         {
             var usernameParameter = username != null ?
@@ -415,15 +398,6 @@ namespace MyDive.Server
         public virtual ObjectResult<stp_GetDiveTypes_Result> stp_GetDiveTypes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetDiveTypes_Result>("stp_GetDiveTypes");
-        }
-    
-        public virtual ObjectResult<stp_GetLog_Result> stp_GetLog(Nullable<int> type)
-        {
-            var typeParameter = type.HasValue ?
-                new ObjectParameter("Type", type) :
-                new ObjectParameter("Type", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLog_Result>("stp_GetLog", typeParameter);
         }
     
         public virtual ObjectResult<stp_GetLicenseTypes_Result> stp_GetLicenseTypes()
@@ -540,6 +514,36 @@ namespace MyDive.Server
         public virtual int stp_ClearLog()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_ClearLog");
+        }
+    
+        public virtual ObjectResult<stp_GetLog_Result> stp_GetLog(Nullable<int> type)
+        {
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLog_Result>("stp_GetLog", typeParameter);
+        }
+    
+        public virtual int stp_InsertLog(Nullable<int> type, string msg, Nullable<System.DateTime> date, string data)
+        {
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            var msgParameter = msg != null ?
+                new ObjectParameter("Msg", msg) :
+                new ObjectParameter("Msg", typeof(string));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            var dataParameter = data != null ?
+                new ObjectParameter("data", data) :
+                new ObjectParameter("data", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_InsertLog", typeParameter, msgParameter, dateParameter, dataParameter);
         }
     }
 }

@@ -6,14 +6,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using static MyDive.Server.Enums;
+using Newtonsoft;
 
 namespace MyDive.Server.Controllers
 {
     public abstract class MainController : ApiController
     {
-        public IHttpActionResult LogException(Exception ex)
+        public IHttpActionResult LogException(Exception ex, string i_Data)
         {
-            Logger.Instance.Notify(ex.StackTrace, eLogType.Error);
+            Logger.Instance.Notify(ex.StackTrace, eLogType.Error, i_Data);
             return InternalServerError();
         }
 
@@ -22,17 +23,18 @@ namespace MyDive.Server.Controllers
             
             Logger.Instance.Notify(
                 string.Format("start {0}/{1} controller", this.GetType().Name, i_FunctionName),
-                eLogType.Debug);
+                eLogType.Debug,
+                null);
         }
 
-        public void LogError(string i_Error)
+        public void LogError(string i_Error, string i_Data)
         {
-            Logger.Instance.Notify(i_Error, eLogType.Error);
+            Logger.Instance.Notify(i_Error, eLogType.Error, i_Data);
         }
 
-        public IHttpActionResult LogInternalError(eErrors i_Error)
+        public IHttpActionResult LogInternalError(eErrors i_Error, string i_Data)
         {
-            LogError(i_Error.ToString());
+            LogError(i_Error.ToString(), i_Data);
             return BadRequest(((int)i_Error).ToString());
         }
     }

@@ -16,5 +16,6 @@ namespace MyDive.Server
         public int Type { get; set; }
         public string Msg { get; set; }
         public System.DateTime LogDate { get; set; }
+        public string Data { get; set; }
     }
 }

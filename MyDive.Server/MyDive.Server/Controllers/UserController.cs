@@ -1,6 +1,7 @@
 ﻿using MyDive.Server.Log;
 using MyDive.Server.Logic;
 using MyDive.Server.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -37,27 +38,29 @@ namespace MyDive.Server.Controllers
                         if (userToReturn.Count == 0 || userToReturn.Count > 1)
                         {
                             Logger.Instance.Notify(
-                                string.Format("user {0} were unable to login", i_UserLoginInfo.Username)
-                                , eLogType.Info);
+                                string.Format("user {0} were unable to login", i_UserLoginInfo.Username),
+                                eLogType.Info,
+                                JsonConvert.SerializeObject(i_UserLoginInfo));
                             result = BadRequest();
                         }
                         else
                         {
                             Logger.Instance.Notify(
-                                string.Format("user {0} is logged in", i_UserLoginInfo.Username)
-                                , eLogType.Info);
+                                string.Format("user {0} is logged in", i_UserLoginInfo.Username),
+                                eLogType.Info,
+                                JsonConvert.SerializeObject(i_UserLoginInfo));
                             result = Ok(userToReturn[0]);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    result = LogException(ex);
+                    result = LogException(ex, null);
                 }
             }
             else
             {
-                Logger.Instance.Notify("user info in insufficient", eLogType.Error);
+                Logger.Instance.Notify("user info in insufficient", eLogType.Error, JsonConvert.SerializeObject(i_UserLoginInfo));
                 result = BadRequest();
             }
 
@@ -93,12 +96,12 @@ namespace MyDive.Server.Controllers
                 }
                 catch (Exception ex)
                 {
-                    result = LogException(ex);
+                    result = LogException(ex, null);
                 }
             }
             else
             {
-                Logger.Instance.Notify("user info in insufficient", eLogType.Error);
+                Logger.Instance.Notify("user info in insufficient", eLogType.Error, JsonConvert.SerializeObject(i_User));
                 result = BadRequest();
             }
 
@@ -136,7 +139,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -175,7 +178,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -204,7 +207,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -233,18 +236,18 @@ namespace MyDive.Server.Controllers
                     }
                     else
                     {
-                        LogInternalError(error);
+                        LogInternalError(error, JsonConvert.SerializeObject(i_NewPassword));
                     }
                 }
                 else
                 {
-                    LogInternalError(error);
+                    LogInternalError(error, JsonConvert.SerializeObject(i_NewPassword));
                 }
 
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;

@@ -17,7 +17,7 @@ namespace MyDive.Server.Log
         {
         }
 
-        public void Notify(string i_Msg, eLogType i_LogType)
+        public void Notify(string i_Msg, eLogType i_LogType, string i_LogData)
         {
             MyDiveEntities MyDiveDB = null;
 
@@ -28,7 +28,8 @@ namespace MyDive.Server.Log
                 MyDiveDB.stp_InsertLog(
                     (int)i_LogType,
                     i_Msg,
-                    DateTime.Now.Date);
+                    DateTime.Now.Date,
+                    i_LogData);
             }
             catch (Exception ex)
             {

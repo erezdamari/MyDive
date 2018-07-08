@@ -12,5 +12,7 @@ namespace MyDive.Server.Models
         public string Msg { get; set; }
 
         public DateTime Date { get; set; }
+
+        public string Data { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -47,7 +47,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -66,7 +66,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -85,7 +85,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -104,7 +104,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -123,7 +123,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -147,7 +147,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -173,7 +173,7 @@ namespace MyDive.Server.Controllers
             }
             catch(Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;

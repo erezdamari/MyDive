@@ -56,7 +56,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -72,13 +72,13 @@ namespace MyDive.Server.Controllers
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     var Log = MyDiveDB.stp_GetLog(i_Type);
-                    Logger.Instance.Notify(string.Format("Retrive {0} log", i_Type.ToString()), eLogType.Info);
+                    Logger.Instance.Notify(string.Format("Retrive {0} log", i_Type.ToString()), eLogType.Info, null);
                     result = Ok(convertToList(Log));
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -93,7 +93,8 @@ namespace MyDive.Server.Controllers
                 {
                     Type = res.Type,
                     Msg = res.Msg,
-                    Date = res.LogDate
+                    Date = res.LogDate,
+                    Data = res.Data
                 });
             }
 

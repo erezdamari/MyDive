@@ -1,5 +1,6 @@
 ﻿using MyDive.Server.Log;
 using MyDive.Server.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -41,13 +42,13 @@ namespace MyDive.Server.Controllers
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch sites", eLogType.Info);
+                    Logger.Instance.Notify("Fetch sites", eLogType.Info, i_SiteID.ToString());
                     result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -55,7 +56,7 @@ namespace MyDive.Server.Controllers
 
         [HttpGet]
         [Route("getsites/{i_CuntryID}/{i_CityID}")]
-        public IHttpActionResult GetSitesByCuntryIDAndCityID(int i_CuntryID, int i_CityID)
+        public IHttpActionResult GetSitesByCuntryIDAndCityID(int i_CountryID, int i_CityID)
         {
             LogControllerEntring("getsites");
             IHttpActionResult result = Ok();
@@ -63,7 +64,7 @@ namespace MyDive.Server.Controllers
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
-                    ObjectResult<stp_GetSitesByCountryAndCity_Result> sitesResult = MyDiveDB.stp_GetSitesByCountryAndCity(i_CuntryID, i_CityID);
+                    ObjectResult<stp_GetSitesByCountryAndCity_Result> sitesResult = MyDiveDB.stp_GetSitesByCountryAndCity(i_CountryID, i_CityID);
                     List<SiteModel> sites = new List<SiteModel>();
 
                     foreach (stp_GetSitesByCountryAndCity_Result site in sitesResult)
@@ -80,13 +81,13 @@ namespace MyDive.Server.Controllers
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch sites", eLogType.Info);
+                    Logger.Instance.Notify("Fetch sites", eLogType.Info, i_CityID.ToString() + " " + i_CountryID.ToString());
                     result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -119,13 +120,13 @@ namespace MyDive.Server.Controllers
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch sites", eLogType.Info);
+                    Logger.Instance.Notify("Fetch sites", eLogType.Info, i_Keyword);
                     result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
@@ -144,13 +145,13 @@ namespace MyDive.Server.Controllers
                     int? rateID = -1;
                     rateID = MyDiveDB.stp_RateSite(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
 
-                    Logger.Instance.Notify("Rate sites", eLogType.Info);
+                    Logger.Instance.Notify("Rate sites", eLogType.Info, JsonConvert.SerializeObject(i_Rate));
                     result = Ok(rateID != -1 ? rateID : null);
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex);
+                result = LogException(ex, null);
             }
 
             return result;
