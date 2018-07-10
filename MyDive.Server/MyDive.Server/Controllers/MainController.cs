@@ -1,12 +1,8 @@
 ﻿using MyDive.Server.Log;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using static MyDive.Server.Enums;
-using Newtonsoft;
 
 namespace MyDive.Server.Controllers
 {
@@ -36,6 +32,11 @@ namespace MyDive.Server.Controllers
         {
             LogError(i_Error.ToString(), i_Data);
             return BadRequest(((int)i_Error).ToString());
+        }
+
+        public void LogData(string i_Msg, object i_Model)
+        {
+            LogData(i_Msg, i_Model);
         }
     }
 }

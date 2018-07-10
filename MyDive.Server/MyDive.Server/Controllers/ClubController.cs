@@ -41,13 +41,11 @@ namespace MyDive.Server.Controllers
                             Address = club.Address,
                             Rating = club.Rating,
                             SiteURL = club.SiteURL,
-                            Lat = club.Lat,
-                            Long = club.Long
+                            Coordinates = new LocationModel { Lat = club.Lat, Long = club.Long}
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info,
-                        i_CityID.ToString() + i_CountryID.ToString());
+                    LogData("Fetch all clubs", i_CityID.ToString() + i_CountryID.ToString());
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
@@ -86,12 +84,11 @@ namespace MyDive.Server.Controllers
                             Address = club.Address,
                             Rating = club.Rating,
                             SiteURL = club.SiteURL,
-                            Lat = club.Lat,
-                            Long = club.Long
+                            Coordinates = new LocationModel { Lat = club.Lat, Long = club.Long }
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info, i_CuntryID.ToString());
+                    LogData("Fetch all clubs", i_CuntryID.ToString());
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
@@ -130,12 +127,11 @@ namespace MyDive.Server.Controllers
                             Address = club.Address,
                             Rating = club.Rating,
                             SiteURL = club.SiteURL,
-                            Lat = club.Lat,
-                            Long = club.Long
+                            Coordinates = new LocationModel { Lat = club.Lat, Long = club.Long }
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch all clubs", eLogType.Info, i_Keyword);
+                    LogData("Fetch all clubs", i_Keyword);
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
@@ -174,12 +170,11 @@ namespace MyDive.Server.Controllers
                             Address = club.Address,
                             Rating = club.Rating,
                             SiteURL = club.SiteURL,
-                            Lat = club.Lat,
-                            Long = club.Long
+                            Coordinates = new LocationModel { Lat = club.Lat, Long = club.Long }
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch club", eLogType.Info, i_ClubID.ToString());
+                    LogData("Fetch club", i_ClubID);
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }
@@ -205,7 +200,7 @@ namespace MyDive.Server.Controllers
                     int? rateID = -1;
                     rateID = MyDiveDB.stp_RateClub(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
 
-                    Logger.Instance.Notify("rete club", eLogType.Info, JsonConvert.SerializeObject(i_Rate));
+                    LogData("rete club", i_Rate);
                     result = Ok(rateID != -1 ? rateID : null);
                 }
             }

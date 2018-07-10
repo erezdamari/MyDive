@@ -22,5 +22,6 @@ namespace MyDive.Server
         public string UserLicenceNumber { get; set; }
         public Nullable<int> LicenseTypeID { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
+        public int UserRole { get; set; }
     }
 }

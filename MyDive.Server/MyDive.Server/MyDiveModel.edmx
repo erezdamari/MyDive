@@ -72,6 +72,7 @@
           <Parameter Name="UserLicenseNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="LicenseTypeID" Type="int" Mode="In" />
           <Parameter Name="Birthday" Type="date" Mode="In" />
+          <Parameter Name="Role" Type="int" Mode="In" />
         </Function>
         <Function Name="stp_EditUserProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
@@ -122,6 +123,9 @@
         </Function>
         <Function Name="stp_GetUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_GetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
         </Function>
         <Function Name="stp_GetUserWishList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
@@ -190,17 +194,6 @@
           <FunctionImport Name="stp_CreateNewWish">
             <Parameter Name="siteID" Mode="In" Type="Int32" />
             <Parameter Name="userID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_CreateUser">
-            <Parameter Name="Username" Mode="In" Type="String" />
-            <Parameter Name="Password" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="FirstName" Mode="In" Type="String" />
-            <Parameter Name="LastName" Mode="In" Type="String" />
-            <Parameter Name="AssociationID" Mode="In" Type="Int32" />
-            <Parameter Name="UserLicenseNumber" Mode="In" Type="String" />
-            <Parameter Name="LicenseTypeID" Mode="In" Type="Int32" />
-            <Parameter Name="Birthday" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="stp_GetAllCitiesByCountryId" ReturnType="Collection(MyDiveModel.stp_GetAllCitiesByCountryId_Result)">
           <Parameter Name="countryID" Mode="In" Type="Int32" />
@@ -278,9 +271,6 @@
             <Parameter Name="Lat" Mode="In" Type="Double" />
             <Parameter Name="Long" Mode="In" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
-          <Parameter Name="userID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="stp_EditUserProfile">
             <Parameter Name="userId" Mode="In" Type="Int32" />
             <Parameter Name="firstname" Mode="In" Type="String" />
@@ -305,7 +295,25 @@
             <Parameter Name="data" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="stp_GetUserDiveLogs" ReturnType="Collection(MyDiveModel.stp_GetUserDiveLogs_Result)">
+          <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_CreateUser">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="AssociationID" Mode="In" Type="Int32" />
+            <Parameter Name="UserLicenseNumber" Mode="In" Type="String" />
+            <Parameter Name="LicenseTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="Birthday" Mode="In" Type="DateTime" />
+            <Parameter Name="Role" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
             <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetUserRole" ReturnType="Collection(Int32)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -447,17 +455,6 @@
           <Property Type="Int32" Name="LicenseTypeID" Nullable="false" />
           <Property Type="String" Name="LicenseType" Nullable="true" MaxLength="150" />
         </ComplexType>
-        <ComplexType Name="stp_GetUser_Result">
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="AssociationID" Nullable="true" />
-          <Property Type="String" Name="UserLicenceNumber" Nullable="true" MaxLength="40" />
-          <Property Type="Int32" Name="LicenseTypeID" Nullable="true" />
-          <Property Type="DateTime" Name="Birthday" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="stp_GetLog_Result">
           <Property Type="Int32" Name="Type" Nullable="false" />
           <Property Type="String" Name="Msg" Nullable="false" MaxLength="Max" />
@@ -475,6 +472,18 @@
           <Property Type="String" Name="WaterType" Nullable="true" MaxLength="50" />
           <Property Type="Double" Name="Lat" Nullable="true" />
           <Property Type="Double" Name="Long" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="stp_GetUser_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="AssociationID" Nullable="true" />
+          <Property Type="String" Name="UserLicenceNumber" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="LicenseTypeID" Nullable="true" />
+          <Property Type="DateTime" Name="Birthday" Nullable="true" />
+          <Property Type="Int32" Name="UserRole" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -507,7 +516,6 @@
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MyDiveModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MyDiveModel.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="stp_CreateNewWish" FunctionName="MyDiveModel.Store.stp_CreateNewWish" />
-          <FunctionImportMapping FunctionImportName="stp_CreateUser" FunctionName="MyDiveModel.Store.stp_CreateUser" />
           <FunctionImportMapping FunctionImportName="stp_GetAllCitiesByCountryId" FunctionName="MyDiveModel.Store.stp_GetAllCitiesByCountryId">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAllCitiesByCountryId_Result">
@@ -695,21 +703,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_CreateDiveLog" FunctionName="MyDiveModel.Store.stp_CreateDiveLog" />
-          <FunctionImportMapping FunctionImportName="stp_GetUser" FunctionName="MyDiveModel.Store.stp_GetUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetUser_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="AssociationID" ColumnName="AssociationID" />
-                <ScalarProperty Name="UserLicenceNumber" ColumnName="UserLicenceNumber" />
-                <ScalarProperty Name="LicenseTypeID" ColumnName="LicenseTypeID" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_EditUserProfile" FunctionName="MyDiveModel.Store.stp_EditUserProfile" />
           <FunctionImportMapping FunctionImportName="stp_UpdateUserPassword" FunctionName="MyDiveModel.Store.stp_UpdateUserPassword" />
           <FunctionImportMapping FunctionImportName="stp_GetUserPassword" FunctionName="MyDiveModel.Store.stp_GetUserPassword" />
@@ -741,6 +734,24 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_CreateUser" FunctionName="MyDiveModel.Store.stp_CreateUser" />
+          <FunctionImportMapping FunctionImportName="stp_GetUser" FunctionName="MyDiveModel.Store.stp_GetUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetUser_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="AssociationID" ColumnName="AssociationID" />
+                <ScalarProperty Name="UserLicenceNumber" ColumnName="UserLicenceNumber" />
+                <ScalarProperty Name="LicenseTypeID" ColumnName="LicenseTypeID" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetUserRole" FunctionName="MyDiveModel.Store.stp_GetUserRole" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

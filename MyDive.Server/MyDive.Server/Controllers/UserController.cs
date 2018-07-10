@@ -13,7 +13,8 @@ namespace MyDive.Server.Controllers
     [RoutePrefix("user")]
     public class UserController : MainController
     {
-        public UpdatePasswordLogic m_Logic { get; set; } = new UpdatePasswordLogic();
+        public UpdatePasswordLogic m_PasswordLogic { get; set; } = new UpdatePasswordLogic();
+        public UserLogic m_Logic { get; set; } = new UserLogic();
 
         [HttpPost]
         [Route("login")]
@@ -21,7 +22,7 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("login");
             IHttpActionResult result = null;
-            if (UserLogic.CheckUserLoginValidation(i_UserLoginInfo))
+            if (m_Logic.CheckUserLoginValidation(i_UserLoginInfo))
             {
                 try
                 {
@@ -37,30 +38,26 @@ namespace MyDive.Server.Controllers
 
                         if (userToReturn.Count == 0 || userToReturn.Count > 1)
                         {
-                            Logger.Instance.Notify(
+                            LogData(
                                 string.Format("user {0} were unable to login", i_UserLoginInfo.Username),
-                                eLogType.Info,
-                                JsonConvert.SerializeObject(i_UserLoginInfo));
+                                i_UserLoginInfo);
                             result = BadRequest();
                         }
                         else
                         {
-                            Logger.Instance.Notify(
-                                string.Format("user {0} is logged in", i_UserLoginInfo.Username),
-                                eLogType.Info,
-                                JsonConvert.SerializeObject(i_UserLoginInfo));
+                            LogData(string.Format("user {0} is logged in", i_UserLoginInfo.Username), i_UserLoginInfo);
                             result = Ok(userToReturn[0]);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    result = LogException(ex, null);
+                    result = LogException(ex, JsonConvert.SerializeObject(i_UserLoginInfo));
                 }
             }
             else
             {
-                Logger.Instance.Notify("user info in insufficient", eLogType.Error, JsonConvert.SerializeObject(i_UserLoginInfo));
+                LogError("user info in insufficient", JsonConvert.SerializeObject(i_UserLoginInfo));
                 result = BadRequest();
             }
 
@@ -73,38 +70,22 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("register");
             IHttpActionResult result = null;
+            eErrors error = eErrors.None;
 
-            if (UserLogic.CheckUserRegistrationValidation(i_User))
+            try
             {
-                try
+                error = m_Logic.CreateUser(i_User);
+                if(error != eErrors.None)
                 {
-                    using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-                    {
-                        int userID = MyDiveDB.stp_CreateUser(
-                            i_User.Username,
-                            i_User.Password,
-                            i_User.Email,
-                            i_User.FirstName,
-                            i_User.LastName,
-                            i_User.Association,
-                            i_User.UserLicenseNumber,
-                            i_User.LicenseTypeID,
-                            i_User.Birthday);
-
-                        result = Ok(userID);
-                    }
+                    result = BadRequest(((int)error).ToString());
                 }
-                catch (Exception ex)
-                {
-                    result = LogException(ex, null);
-                }
+                LogData("user is register", i_User);
             }
-            else
+            catch (Exception ex)
             {
-                Logger.Instance.Notify("user info in insufficient", eLogType.Error, JsonConvert.SerializeObject(i_User));
-                result = BadRequest();
+                result = LogException(ex, JsonConvert.SerializeObject(i_User));
             }
-
+            
             return result;
         }
 
@@ -139,7 +120,7 @@ namespace MyDive.Server.Controllers
             }
             catch (Exception ex)
             {
-                result = LogException(ex, null);
+                result = LogException(ex, JsonConvert.SerializeObject(i_UserId));
             }
 
             return result;
@@ -164,7 +145,7 @@ namespace MyDive.Server.Controllers
                             BottomType = res.BottomType,
                             Description = res.Description,
                             DiveType = res.Type,
-                            Location = new LocationModel { Lat = res.Lat, Long = res.Long },
+                            Coordinates = new LocationModel { Lat = res.Lat, Long = res.Long },
                             MaxDepth = res.MaxDepth,
                             Salinity = res.Salinity,
                             SiteName = res.Name,
@@ -189,6 +170,7 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("editprofile");
             IHttpActionResult result = null;
+
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -202,11 +184,12 @@ namespace MyDive.Server.Controllers
                         i_User.LicenseTypeID);
 
                     result = Ok(userID);
+                    LogData("user edited", i_User);
                 }
             }
             catch (Exception ex)
             {
-                result = LogException(ex, null);
+                result = LogException(ex, JsonConvert.SerializeObject(i_User));
             }
 
             return result;
@@ -221,32 +204,33 @@ namespace MyDive.Server.Controllers
 
             try
             {
-                eErrors error = m_Logic.CheckPasswordValidation(i_NewPassword);
+                eErrors error = m_PasswordLogic.CheckPasswordValidation(i_NewPassword);
 
                 if (error == eErrors.None)
                 {
-                    error = m_Logic.CheckIfPasswordsAreEquals(i_NewPassword);
+                    error = m_PasswordLogic.CheckIfPasswordsAreEquals(i_NewPassword);
                     if (error == eErrors.None)
                     {
                         using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                         {
                             MyDiveDB.stp_UpdateUserPassword(i_NewPassword.UserId, i_NewPassword.NewPassword);
+                            LogData("password was changed", i_NewPassword);
                         }
                     }
                     else
                     {
-                        LogInternalError(error, JsonConvert.SerializeObject(i_NewPassword));
+                        result = LogInternalError(error, JsonConvert.SerializeObject(i_NewPassword));
                     }
                 }
                 else
                 {
-                    LogInternalError(error, JsonConvert.SerializeObject(i_NewPassword));
+                    result = LogInternalError(error, JsonConvert.SerializeObject(i_NewPassword));
                 }
 
             }
             catch (Exception ex)
             {
-                result = LogException(ex, null);
+                result = LogException(ex, JsonConvert.SerializeObject(i_NewPassword));
             }
 
             return result;

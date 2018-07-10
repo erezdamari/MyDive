@@ -25,10 +25,7 @@ namespace MyDive.Server.Controllers
                     {
                         int? issueId = -1;
                         issueId = MyDiveDB.stp_CreateIssue(i_Issue.Subject, i_Issue.Email, i_Issue.Description);
-                        Logger.Instance.Notify(
-                            string.Format("add issue: '{0}'", i_Issue.Subject),
-                            eLogType.Info,
-                            JsonConvert.SerializeObject(i_Issue));
+                        LogData(string.Format("add issue: '{0}'", i_Issue.Subject), i_Issue);
                         result = Ok(issueId != -1 ? issueId : null);
                     }
                 }

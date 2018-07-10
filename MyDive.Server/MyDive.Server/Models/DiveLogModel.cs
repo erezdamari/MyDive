@@ -35,6 +35,6 @@ namespace MyDive.Server.Models
 
         public int UserID { get; set; }
 
-        public LocationModel Location { get; set; }
+        public LocationModel Coordinates { get; set; }
     }
 }

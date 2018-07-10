@@ -26,5 +26,7 @@ namespace MyDive.Server.Models
         public int? LicenseTypeID { get; set; }
 
         public DateTime? Birthday { get; set; }
+
+        public int UserRole { get; set; }
     }
 }

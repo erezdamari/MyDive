@@ -27,7 +27,7 @@ namespace MyDive.Server.Controllers
                 {
                     int? wishID = -1;
                     wishID = MyDiveDB.stp_CreateNewWish(i_Wish.SiteID, i_Wish.UserID);
-                    Logger.Instance.Notify("add wish", Enums.eLogType.Info, JsonConvert.SerializeObject(i_Wish));
+                    LogData("add wish",i_Wish);
                     result =  Ok(wishID != -1 ? wishID : null);
                 }
             }
@@ -52,7 +52,7 @@ namespace MyDive.Server.Controllers
                 {
                     int? wishID = -1;
                     wishID = MyDiveDB.stp_RemoveFromWishList(i_Wish.UserID, i_Wish.SiteID);
-                    Logger.Instance.Notify("remove wish", Enums.eLogType.Info, JsonConvert.SerializeObject(i_Wish));
+                    LogData("remove wish", i_Wish);
                     result =  Ok(wishID != -1 ? wishID : null);
                 }
             }
@@ -86,7 +86,7 @@ namespace MyDive.Server.Controllers
                             UserID = res.UserID
                         });
                     }
-                    Logger.Instance.Notify("fetch user wish list", Enums.eLogType.Info, i_UserId.ToString());
+                    LogData("fetch user wish list", i_UserId);
                     result = Ok(userWishList.Count > 0 ? userWishList : null);
                 }
             }

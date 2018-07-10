@@ -1,12 +1,5 @@
-﻿using MyDive.Server.Log;
-using MyDive.Server.Logic;
-using MyDive.Server.Models;
+﻿using MyDive.Server.Logic;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace MyDive.Server.Controllers

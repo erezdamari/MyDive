@@ -144,47 +144,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateNewWish", siteIDParameter, userIDParameter);
         }
     
-        public virtual int stp_CreateUser(string username, string password, string email, string firstName, string lastName, Nullable<int> associationID, string userLicenseNumber, Nullable<int> licenseTypeID, Nullable<System.DateTime> birthday)
-        {
-            var usernameParameter = username != null ?
-                new ObjectParameter("Username", username) :
-                new ObjectParameter("Username", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("Password", password) :
-                new ObjectParameter("Password", typeof(string));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var firstNameParameter = firstName != null ?
-                new ObjectParameter("FirstName", firstName) :
-                new ObjectParameter("FirstName", typeof(string));
-    
-            var lastNameParameter = lastName != null ?
-                new ObjectParameter("LastName", lastName) :
-                new ObjectParameter("LastName", typeof(string));
-    
-            var associationIDParameter = associationID.HasValue ?
-                new ObjectParameter("AssociationID", associationID) :
-                new ObjectParameter("AssociationID", typeof(int));
-    
-            var userLicenseNumberParameter = userLicenseNumber != null ?
-                new ObjectParameter("UserLicenseNumber", userLicenseNumber) :
-                new ObjectParameter("UserLicenseNumber", typeof(string));
-    
-            var licenseTypeIDParameter = licenseTypeID.HasValue ?
-                new ObjectParameter("LicenseTypeID", licenseTypeID) :
-                new ObjectParameter("LicenseTypeID", typeof(int));
-    
-            var birthdayParameter = birthday.HasValue ?
-                new ObjectParameter("Birthday", birthday) :
-                new ObjectParameter("Birthday", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateUser", usernameParameter, passwordParameter, emailParameter, firstNameParameter, lastNameParameter, associationIDParameter, userLicenseNumberParameter, licenseTypeIDParameter, birthdayParameter);
-        }
-    
         public virtual ObjectResult<stp_GetAllCitiesByCountryId_Result> stp_GetAllCitiesByCountryId(Nullable<int> countryID)
         {
             var countryIDParameter = countryID.HasValue ?
@@ -450,15 +409,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateDiveLog", siteIDParameter, maxDepthParameter, descriptionParameter, diveTypeIDParameter, userIDParameter, bottomTypeIDParameter, salinityUDParameter, waterTypeIDParameter, latParameter, longParameter);
         }
     
-        public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
-        }
-    
         public virtual int stp_EditUserProfile(Nullable<int> userId, string firstname, string lastname, Nullable<int> licenseId)
         {
             var userIdParameter = userId.HasValue ?
@@ -544,6 +494,69 @@ namespace MyDive.Server
                 new ObjectParameter("userID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserDiveLogs_Result>("stp_GetUserDiveLogs", userIDParameter);
+        }
+    
+        public virtual int stp_CreateUser(string username, string password, string email, string firstName, string lastName, Nullable<int> associationID, string userLicenseNumber, Nullable<int> licenseTypeID, Nullable<System.DateTime> birthday, Nullable<int> role)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var associationIDParameter = associationID.HasValue ?
+                new ObjectParameter("AssociationID", associationID) :
+                new ObjectParameter("AssociationID", typeof(int));
+    
+            var userLicenseNumberParameter = userLicenseNumber != null ?
+                new ObjectParameter("UserLicenseNumber", userLicenseNumber) :
+                new ObjectParameter("UserLicenseNumber", typeof(string));
+    
+            var licenseTypeIDParameter = licenseTypeID.HasValue ?
+                new ObjectParameter("LicenseTypeID", licenseTypeID) :
+                new ObjectParameter("LicenseTypeID", typeof(int));
+    
+            var birthdayParameter = birthday.HasValue ?
+                new ObjectParameter("Birthday", birthday) :
+                new ObjectParameter("Birthday", typeof(System.DateTime));
+    
+            var roleParameter = role.HasValue ?
+                new ObjectParameter("Role", role) :
+                new ObjectParameter("Role", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateUser", usernameParameter, passwordParameter, emailParameter, firstNameParameter, lastNameParameter, associationIDParameter, userLicenseNumberParameter, licenseTypeIDParameter, birthdayParameter, roleParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> stp_GetUserRole(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("stp_GetUserRole", userIdParameter);
         }
     }
 }

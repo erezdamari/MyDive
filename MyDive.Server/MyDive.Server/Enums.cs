@@ -11,7 +11,8 @@ namespace MyDive.Server
         {
             None = 0,
             PasswordIsWrong = -1,
-            PasswordAreNotEqual = -2
+            PasswordAreNotEqual = -2,
+            InsufficientData = -3
         }
 
         public enum eLogType
@@ -20,6 +21,12 @@ namespace MyDive.Server
             Error = 1,
             Info = 2,
             Debug = 3
+        }
+
+        public enum eUserRole
+        {
+            Admin = 1,
+            RegularUser = 2
         }
     }
 }

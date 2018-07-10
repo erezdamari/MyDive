@@ -37,12 +37,11 @@ namespace MyDive.Server.Controllers
                             CityID = site.CityID,
                             CountryID = site.CountryID,
                             Rating = site.Rating,
-                            Lat = site.Lat,
-                            Long = site.Long
+                            Coordinates = new LocationModel { Lat = site.Lat, Long = site.Long }
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch sites", eLogType.Info, i_SiteID.ToString());
+                    LogData("Fetch sites", i_SiteID);
                     result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
@@ -76,12 +75,11 @@ namespace MyDive.Server.Controllers
                             CityID = site.CityID,
                             CountryID = site.CountryID,
                             Rating = site.Rating,
-                            Lat = site.Lat,
-                            Long = site.Long
+                            Coordinates = new LocationModel { Lat = site.Lat, Long = site.Long }
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch sites", eLogType.Info, i_CityID.ToString() + " " + i_CountryID.ToString());
+                    LogData("Fetch sites", i_CityID.ToString() + " " + i_CountryID.ToString());
                     result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
@@ -115,12 +113,11 @@ namespace MyDive.Server.Controllers
                             CityID = site.CityID,
                             CountryID = site.CountryID,
                             Rating = site.Rating,
-                            Lat = site.Lat,
-                            Long = site.Long
+                            Coordinates = new LocationModel { Lat = site.Lat, Long = site.Long }
                         });
                     }
 
-                    Logger.Instance.Notify("Fetch sites", eLogType.Info, i_Keyword);
+                    LogData("Fetch sites", i_Keyword);
                     result = Ok(sites.Count > 0 ? sites : null);
                 }
             }
@@ -145,7 +142,7 @@ namespace MyDive.Server.Controllers
                     int? rateID = -1;
                     rateID = MyDiveDB.stp_RateSite(i_Rate.EntityID, i_Rate.Rate, i_Rate.Comment);
 
-                    Logger.Instance.Notify("Rate sites", eLogType.Info, JsonConvert.SerializeObject(i_Rate));
+                    LogData("Rate sites", i_Rate);
                     result = Ok(rateID != -1 ? rateID : null);
                 }
             }

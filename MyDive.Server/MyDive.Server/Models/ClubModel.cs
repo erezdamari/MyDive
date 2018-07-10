@@ -14,7 +14,6 @@ namespace MyDive.Server.Models
         public string Address { get; set; }
         public double? Rating { get; set; }
         public string SiteURL { get; set; }
-        public double Lat { get; set; }
-        public double Long { get; set; }
+        public LocationModel Coordinates { get; set; }
     }
 }

@@ -72,7 +72,7 @@ namespace MyDive.Server.Controllers
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                 {
                     var Log = MyDiveDB.stp_GetLog(i_Type);
-                    Logger.Instance.Notify(string.Format("Retrive {0} log", i_Type.ToString()), eLogType.Info, null);
+                    LogData(string.Format("Retrive {0} log", i_Type.ToString()), null);
                     result = Ok(convertToList(Log));
                 }
             }

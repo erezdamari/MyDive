@@ -35,10 +35,10 @@ namespace MyDive.Server.Controllers
                         i_Dive.BottomTypeID,
                         i_Dive.SalinityID,
                         i_Dive.WaterTypeID,
-                        i_Dive.Location.Lat,
-                        i_Dive.Location.Long);
+                        i_Dive.Coordinates.Lat,
+                        i_Dive.Coordinates.Long);
 
-                    Logger.Instance.Notify("Dive log created", eLogType.Info, JsonConvert.SerializeObject(i_Dive));
+                    LogData("Dive log created", i_Dive);
                     result = Ok(diveID != -1 ? diveID : null);
                 }
             }
