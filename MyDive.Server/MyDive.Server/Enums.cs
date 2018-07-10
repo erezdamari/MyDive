@@ -12,7 +12,9 @@ namespace MyDive.Server
             None = 0,
             PasswordIsWrong = -1,
             PasswordAreNotEqual = -2,
-            InsufficientData = -3
+            InsufficientData = -3,
+            AdminNotExist = -4,
+            UserIsNotAdmin = -5
         }
 
         public enum eLogType

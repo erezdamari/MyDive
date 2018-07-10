@@ -558,5 +558,18 @@ namespace MyDive.Server
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("stp_GetUserRole", userIdParameter);
         }
+    
+        public virtual int stp_ChangeUserRole(Nullable<int> userId, Nullable<int> userRole)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var userRoleParameter = userRole.HasValue ?
+                new ObjectParameter("UserRole", userRole) :
+                new ObjectParameter("UserRole", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_ChangeUserRole", userIdParameter, userRoleParameter);
+        }
     }
 }

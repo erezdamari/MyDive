@@ -19,7 +19,7 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult CreateWish([FromBody] WishModel i_Wish)
         {
             LogControllerEntring("create");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
 
             try
             {
@@ -44,7 +44,7 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult RemoveWish([FromBody] WishModel i_Wish)
         {
             LogControllerEntring("remove");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
 
             try
             {
@@ -69,7 +69,7 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult GetUserWishList(int i_UserId)
         {
             LogControllerEntring("getuserwish");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())

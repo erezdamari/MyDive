@@ -40,6 +40,10 @@
           <Parameter Name="username" Type="nvarchar" Mode="In" />
           <Parameter Name="password" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="stp_ChangeUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="UserRole" Type="int" Mode="In" />
+        </Function>
         <Function Name="stp_ClearLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stp_CreateDiveLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SiteID" Type="int" Mode="In" />
@@ -310,10 +314,14 @@
             <Parameter Name="Role" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetUser" ReturnType="Collection(MyDiveModel.stp_GetUser_Result)">
-            <Parameter Name="userID" Mode="In" Type="Int32" />
+          <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetUserRole" ReturnType="Collection(Int32)">
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_ChangeUserRole">
             <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="UserRole" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -752,6 +760,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_GetUserRole" FunctionName="MyDiveModel.Store.stp_GetUserRole" />
+          <FunctionImportMapping FunctionImportName="stp_ChangeUserRole" FunctionName="MyDiveModel.Store.stp_ChangeUserRole" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

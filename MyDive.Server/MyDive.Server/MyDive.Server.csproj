@@ -134,6 +134,7 @@
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Models\AssociationModel.cs" />
     <Compile Include="Models\BottomTypeModel.cs" />
+    <Compile Include="Models\ChangeRoleModel.cs" />
     <Compile Include="Models\CityModel.cs" />
     <Compile Include="Models\ClubModel.cs" />
     <Compile Include="Models\CountryModel.cs" />

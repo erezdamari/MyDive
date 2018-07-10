@@ -21,7 +21,7 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult AuthenticateLogin([FromBody] UserLoginModel i_UserLoginInfo)
         {
             LogControllerEntring("login");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
             if (m_Logic.CheckUserLoginValidation(i_UserLoginInfo))
             {
                 try
@@ -69,13 +69,13 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult CreateUser([FromBody] UserModel i_User)
         {
             LogControllerEntring("register");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
             eErrors error = eErrors.None;
 
             try
             {
                 error = m_Logic.CreateUser(i_User);
-                if(error != eErrors.None)
+                if (error != eErrors.None)
                 {
                     result = BadRequest(((int)error).ToString());
                 }
@@ -85,7 +85,32 @@ namespace MyDive.Server.Controllers
             {
                 result = LogException(ex, JsonConvert.SerializeObject(i_User));
             }
-            
+
+            return result;
+        }
+
+        [HttpPost]
+        [Route("changerole")]
+        public IHttpActionResult ChangeUserRole([FromBody] ChangeRoleModel i_Model)
+        {
+            LogControllerEntring("changerole");
+            IHttpActionResult result = Ok();
+            eErrors error = eErrors.None;
+
+            try
+            {
+                error = m_Logic.ChangeRole(i_Model);
+                if (error != eErrors.None)
+                {
+                    result = BadRequest(((int)error).ToString());
+                }
+                LogData("user role changed", i_Model);
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex, JsonConvert.SerializeObject(i_Model));
+            }
+
             return result;
         }
 
@@ -94,7 +119,7 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult GetUser(int i_UserId)
         {
             LogControllerEntring("getuser");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -113,6 +138,7 @@ namespace MyDive.Server.Controllers
                         userToReturn.UserLicenseNumber = user.UserLicenceNumber;
                         userToReturn.LicenseTypeID = user.LicenseTypeID;
                         userToReturn.Birthday = user.Birthday;
+                        userToReturn.UserRole = user.UserRole;
                     }
 
                     result = Ok(userToReturn);
@@ -131,7 +157,7 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult GetUserDiveLog(int i_UserId)
         {
             LogControllerEntring("getuserlog");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
             try
             {
                 using (MyDiveEntities MyDiveDB = new MyDiveEntities())
@@ -169,7 +195,7 @@ namespace MyDive.Server.Controllers
         public IHttpActionResult EditUserProfile([FromBody] UserModel i_User)
         {
             LogControllerEntring("editprofile");
-            IHttpActionResult result = null;
+            IHttpActionResult result = Ok();
 
             try
             {

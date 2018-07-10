@@ -36,7 +36,7 @@ namespace MyDive.Server.Controllers
 
         public void LogData(string i_Msg, object i_Model)
         {
-            LogData(i_Msg, i_Model);
+            Logger.Instance.Notify(i_Msg, eLogType.Info, JsonConvert.SerializeObject(i_Model));
         }
     }
 }
