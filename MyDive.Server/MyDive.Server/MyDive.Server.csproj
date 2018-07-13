@@ -130,6 +130,7 @@
     <Compile Include="Logic\ClubLogic.cs" />
     <Compile Include="Logic\IssueLogic.cs" />
     <Compile Include="Logic\LookupLogic.cs" />
+    <Compile Include="Logic\SiteLogic.cs" />
     <Compile Include="Logic\UpdatePasswordLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Models\AssociationModel.cs" />
@@ -223,6 +224,9 @@
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetSalinityTypes_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stp_GetSiteCoordinates_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetSiteInfoById_Result.cs">

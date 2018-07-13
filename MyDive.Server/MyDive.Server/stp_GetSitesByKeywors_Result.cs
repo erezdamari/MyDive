@@ -16,9 +16,5 @@ namespace MyDive.Server
         public int SiteID { get; set; }
         public string Name { get; set; }
         public Nullable<double> Rating { get; set; }
-        public int CountryID { get; set; }
-        public int CityID { get; set; }
-        public double Lat { get; set; }
-        public double Long { get; set; }
     }
 }

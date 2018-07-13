@@ -283,37 +283,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetClubInfo_Result>("stp_GetClubInfo", clubIDParameter);
         }
     
-        public virtual ObjectResult<stp_GetSiteInfoById_Result> stp_GetSiteInfoById(Nullable<int> siteID)
-        {
-            var siteIDParameter = siteID.HasValue ?
-                new ObjectParameter("siteID", siteID) :
-                new ObjectParameter("siteID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSiteInfoById_Result>("stp_GetSiteInfoById", siteIDParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetSitesByCountryAndCity_Result> stp_GetSitesByCountryAndCity(Nullable<int> countryID, Nullable<int> cityID)
-        {
-            var countryIDParameter = countryID.HasValue ?
-                new ObjectParameter("countryID", countryID) :
-                new ObjectParameter("countryID", typeof(int));
-    
-            var cityIDParameter = cityID.HasValue ?
-                new ObjectParameter("cityID", cityID) :
-                new ObjectParameter("cityID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByCountryAndCity_Result>("stp_GetSitesByCountryAndCity", countryIDParameter, cityIDParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetSitesByKeywors_Result> stp_GetSitesByKeywors(string keyword)
-        {
-            var keywordParameter = keyword != null ?
-                new ObjectParameter("keyword", keyword) :
-                new ObjectParameter("keyword", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByKeywors_Result>("stp_GetSitesByKeywors", keywordParameter);
-        }
-    
         public virtual ObjectResult<stp_GetAssosiations_Result> stp_GetAssosiations()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetAssosiations_Result>("stp_GetAssosiations");
@@ -570,6 +539,46 @@ namespace MyDive.Server
                 new ObjectParameter("UserRole", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_ChangeUserRole", userIdParameter, userRoleParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSiteCoordinates_Result> stp_GetSiteCoordinates(Nullable<int> siteid)
+        {
+            var siteidParameter = siteid.HasValue ?
+                new ObjectParameter("siteid", siteid) :
+                new ObjectParameter("siteid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSiteCoordinates_Result>("stp_GetSiteCoordinates", siteidParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSiteInfoById_Result> stp_GetSiteInfoById(Nullable<int> siteID)
+        {
+            var siteIDParameter = siteID.HasValue ?
+                new ObjectParameter("siteID", siteID) :
+                new ObjectParameter("siteID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSiteInfoById_Result>("stp_GetSiteInfoById", siteIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSitesByCountryAndCity_Result> stp_GetSitesByCountryAndCity(Nullable<int> countryID, Nullable<int> cityID)
+        {
+            var countryIDParameter = countryID.HasValue ?
+                new ObjectParameter("countryID", countryID) :
+                new ObjectParameter("countryID", typeof(int));
+    
+            var cityIDParameter = cityID.HasValue ?
+                new ObjectParameter("cityID", cityID) :
+                new ObjectParameter("cityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByCountryAndCity_Result>("stp_GetSitesByCountryAndCity", countryIDParameter, cityIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSitesByKeywors_Result> stp_GetSitesByKeywors(string keyword)
+        {
+            var keywordParameter = keyword != null ?
+                new ObjectParameter("keyword", keyword) :
+                new ObjectParameter("keyword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByKeywors_Result>("stp_GetSitesByKeywors", keywordParameter);
         }
     }
 }

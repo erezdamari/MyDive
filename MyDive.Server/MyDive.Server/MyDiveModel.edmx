@@ -109,6 +109,9 @@
           <Parameter Name="Type" Type="int" Mode="In" />
         </Function>
         <Function Name="stp_GetSalinityTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stp_GetSiteCoordinates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="siteid" Type="int" Mode="In" />
+        </Function>
         <Function Name="stp_GetSiteInfoById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="siteID" Type="int" Mode="In" />
         </Function>
@@ -240,16 +243,6 @@
           <FunctionImport Name="stp_GetClubInfo" ReturnType="Collection(MyDiveModel.stp_GetClubInfo_Result)">
           <Parameter Name="clubID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="stp_GetSiteInfoById" ReturnType="Collection(MyDiveModel.stp_GetSiteInfoById_Result)">
-          <Parameter Name="siteID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_GetSitesByCountryAndCity" ReturnType="Collection(MyDiveModel.stp_GetSitesByCountryAndCity_Result)">
-            <Parameter Name="countryID" Mode="In" Type="Int32" />
-            <Parameter Name="cityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_GetSitesByKeywors" ReturnType="Collection(MyDiveModel.stp_GetSitesByKeywors_Result)">
-          <Parameter Name="keyword" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetAssosiations" ReturnType="Collection(MyDiveModel.stp_GetAssosiations_Result)" />
           <FunctionImport Name="stp_GetAssociations" ReturnType="Collection(MyDiveModel.stp_GetAssociations_Result)" />
           <FunctionImport Name="stp_CreateIssue">
@@ -322,6 +315,19 @@
           <FunctionImport Name="stp_ChangeUserRole">
             <Parameter Name="UserId" Mode="In" Type="Int32" />
             <Parameter Name="UserRole" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSiteCoordinates" ReturnType="Collection(MyDiveModel.stp_GetSiteCoordinates_Result)">
+          <Parameter Name="siteid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSiteInfoById" ReturnType="Collection(MyDiveModel.stp_GetSiteInfoById_Result)">
+            <Parameter Name="siteID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSitesByCountryAndCity" ReturnType="Collection(MyDiveModel.stp_GetSitesByCountryAndCity_Result)">
+            <Parameter Name="countryID" Mode="In" Type="Int32" />
+            <Parameter Name="cityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSitesByKeywors" ReturnType="Collection(MyDiveModel.stp_GetSitesByKeywors_Result)">
+            <Parameter Name="keyword" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -416,33 +422,6 @@
           <Property Type="Double" Name="Lat" Nullable="false" />
           <Property Type="Double" Name="Long" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="stp_GetSiteInfoById_Result">
-          <Property Type="Int32" Name="SiteID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="Int32" Name="CityID" Nullable="false" />
-          <Property Type="Double" Name="Lat" Nullable="false" />
-          <Property Type="Double" Name="Long" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="stp_GetSitesByCountryAndCity_Result">
-          <Property Type="Int32" Name="SiteID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="Int32" Name="CityID" Nullable="false" />
-          <Property Type="Double" Name="Lat" Nullable="false" />
-          <Property Type="Double" Name="Long" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="stp_GetSitesByKeywors_Result">
-          <Property Type="Int32" Name="SiteID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="Double" Name="Rating" Nullable="true" />
-          <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="Int32" Name="CityID" Nullable="false" />
-          <Property Type="Double" Name="Lat" Nullable="false" />
-          <Property Type="Double" Name="Long" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="stp_GetAssosiations_Result">
           <Property Type="Int32" Name="AssociationID" Nullable="false" />
           <Property Type="String" Name="AssociationName" Nullable="true" MaxLength="150" />
@@ -492,6 +471,25 @@
           <Property Type="Int32" Name="LicenseTypeID" Nullable="true" />
           <Property Type="DateTime" Name="Birthday" Nullable="true" />
           <Property Type="Int32" Name="UserRole" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSiteCoordinates_Result">
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSiteInfoById_Result">
+          <Property Type="Int32" Name="SiteID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSitesByCountryAndCity_Result">
+          <Property Type="Int32" Name="SiteID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSitesByKeywors_Result">
+          <Property Type="Int32" Name="SiteID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -638,45 +636,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetSiteInfoById" FunctionName="MyDiveModel.Store.stp_GetSiteInfoById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteInfoById_Result">
-                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Long" ColumnName="Long" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetSitesByCountryAndCity" FunctionName="MyDiveModel.Store.stp_GetSitesByCountryAndCity">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByCountryAndCity_Result">
-                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Long" ColumnName="Long" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stp_GetSitesByKeywors" FunctionName="MyDiveModel.Store.stp_GetSitesByKeywors">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByKeywors_Result">
-                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Long" ColumnName="Long" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_GetAssociations" FunctionName="MyDiveModel.Store.stp_GetAssociations">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetAssociations_Result">
@@ -761,6 +720,41 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_GetUserRole" FunctionName="MyDiveModel.Store.stp_GetUserRole" />
           <FunctionImportMapping FunctionImportName="stp_ChangeUserRole" FunctionName="MyDiveModel.Store.stp_ChangeUserRole" />
+          <FunctionImportMapping FunctionImportName="stp_GetSiteCoordinates" FunctionName="MyDiveModel.Store.stp_GetSiteCoordinates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteCoordinates_Result">
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetSiteInfoById" FunctionName="MyDiveModel.Store.stp_GetSiteInfoById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteInfoById_Result">
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetSitesByCountryAndCity" FunctionName="MyDiveModel.Store.stp_GetSitesByCountryAndCity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByCountryAndCity_Result">
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_GetSitesByKeywors" FunctionName="MyDiveModel.Store.stp_GetSitesByKeywors">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSitesByKeywors_Result">
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

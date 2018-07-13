@@ -1,4 +1,5 @@
 ﻿using MyDive.Server.Log;
+using MyDive.Server.Logic;
 using MyDive.Server.Models;
 using Newtonsoft.Json;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using static MyDive.Server.Enums;
 
@@ -15,73 +15,18 @@ namespace MyDive.Server.Controllers
     [RoutePrefix("site")]
     public class SiteController : MainController
     {
+        private SiteLogic m_Logic = new SiteLogic();
+
         [HttpGet]
-        [Route("getsites/{i_SiteID}")]
-        public IHttpActionResult GetSitesByCuntryID(int i_SiteID)
+        [Route("getbycountryandcity/{i_CountryId}/{i_CityId}")]
+        public IHttpActionResult GetSitesByCuntryIDAndCityID(int i_CountryId, int i_CityId)
         {
             LogControllerEntring("getsites");
             IHttpActionResult result = Ok();
             try
             {
-                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-                {
-                    ObjectResult<stp_GetSiteInfoById_Result> sitesResult = MyDiveDB.stp_GetSiteInfoById(i_SiteID);
-                    List<SiteModel> sites = new List<SiteModel>();
-
-                    foreach (stp_GetSiteInfoById_Result site in sitesResult)
-                    {
-                        sites.Add(new SiteModel
-                        {
-                            SiteID = site.SiteID,
-                            Name = site.Name,
-                            CityID = site.CityID,
-                            CountryID = site.CountryID,
-                            Rating = site.Rating,
-                            Coordinates = new LocationModel { Lat = site.Lat, Long = site.Long }
-                        });
-                    }
-
-                    LogData("Fetch sites", i_SiteID);
-                    result = Ok(sites.Count > 0 ? sites : null);
-                }
-            }
-            catch (Exception ex)
-            {
-                result = LogException(ex, null);
-            }
-
-            return result;
-        }
-
-        [HttpGet]
-        [Route("getsites/{i_CuntryID}/{i_CityID}")]
-        public IHttpActionResult GetSitesByCuntryIDAndCityID(int i_CountryID, int i_CityID)
-        {
-            LogControllerEntring("getsites");
-            IHttpActionResult result = Ok();
-            try
-            {
-                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-                {
-                    ObjectResult<stp_GetSitesByCountryAndCity_Result> sitesResult = MyDiveDB.stp_GetSitesByCountryAndCity(i_CountryID, i_CityID);
-                    List<SiteModel> sites = new List<SiteModel>();
-
-                    foreach (stp_GetSitesByCountryAndCity_Result site in sitesResult)
-                    {
-                        sites.Add(new SiteModel
-                        {
-                            SiteID = site.SiteID,
-                            Name = site.Name,
-                            CityID = site.CityID,
-                            CountryID = site.CountryID,
-                            Rating = site.Rating,
-                            Coordinates = new LocationModel { Lat = site.Lat, Long = site.Long }
-                        });
-                    }
-
-                    LogData("Fetch sites", i_CityID.ToString() + " " + i_CountryID.ToString());
-                    result = Ok(sites.Count > 0 ? sites : null);
-                }
+                List<SiteModel> sites = m_Logic.GetSitesByCountryAndCityId(i_CountryId, i_CityId);
+                result = Ok(sites.Count > 0 ? sites : null);
             }
             catch (Exception ex)
             {
@@ -99,27 +44,8 @@ namespace MyDive.Server.Controllers
             IHttpActionResult result = Ok();
             try
             {
-                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-                {
-                    ObjectResult<stp_GetSitesByKeywors_Result> sitesResult = MyDiveDB.stp_GetSitesByKeywors(i_Keyword);
-                    List<SiteModel> sites = new List<SiteModel>();
-
-                    foreach (stp_GetSitesByKeywors_Result site in sitesResult)
-                    {
-                        sites.Add(new SiteModel
-                        {
-                            SiteID = site.SiteID,
-                            Name = site.Name,
-                            CityID = site.CityID,
-                            CountryID = site.CountryID,
-                            Rating = site.Rating,
-                            Coordinates = new LocationModel { Lat = site.Lat, Long = site.Long }
-                        });
-                    }
-
-                    LogData("Fetch sites", i_Keyword);
-                    result = Ok(sites.Count > 0 ? sites : null);
-                }
+                List<SiteModel> sites = m_Logic.GetSitesByKeyword(i_Keyword);
+                result = Ok(sites.Count > 0 ? sites : null);
             }
             catch (Exception ex)
             {

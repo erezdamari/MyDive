@@ -11,10 +11,9 @@ namespace MyDive.Server
 {
     using System;
     
-    public partial class stp_GetSiteInfoById_Result
+    public partial class stp_GetSiteCoordinates_Result
     {
-        public int SiteID { get; set; }
-        public string Name { get; set; }
-        public Nullable<double> Rating { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
     }
 }
