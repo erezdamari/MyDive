@@ -34,9 +34,7 @@ namespace MyDive.Server.Controllers
                         i_Dive.UserID,
                         i_Dive.BottomTypeID,
                         i_Dive.SalinityID,
-                        i_Dive.WaterTypeID,
-                        i_Dive.Coordinates.Lat,
-                        i_Dive.Coordinates.Long);
+                        i_Dive.WaterTypeID);
 
                     LogData("Dive log created", i_Dive);
                     result = Ok(diveID != -1 ? diveID : null);

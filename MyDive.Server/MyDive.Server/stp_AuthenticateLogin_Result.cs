@@ -15,5 +15,6 @@ namespace MyDive.Server
     {
         public int UserID { get; set; }
         public string Username { get; set; }
+        public int UserRole { get; set; }
     }
 }

@@ -56,9 +56,15 @@ namespace MyDive.Server.Logic
             return error;
         }
 
-        public eErrors CreateUser(UserModel i_Model)
+        public AuthenticationResultModel CreateUser(UserModel i_Model)
         {
-            eErrors error = eErrors.None;
+            AuthenticationResultModel registerResult = new AuthenticationResultModel
+            {
+                Error = eErrors.None,
+                HasError = false,
+                UserID = i_Model.UserID,
+                UserRole = eUserRole.RegularUser
+            };
 
             if (CheckUserRegistrationValidation(i_Model))
             {
@@ -80,10 +86,11 @@ namespace MyDive.Server.Logic
             else
             {
                 Logger.Instance.Notify("user info in insufficient", eLogType.Error, JsonConvert.SerializeObject(i_Model));
-                error = eErrors.InsufficientData;
+                registerResult.Error = eErrors.InsufficientData;
+                registerResult.HasError = true;
             }
 
-            return error;
+            return registerResult;
         }
     }
 }

@@ -310,19 +310,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateIssue", subjectParameter, emailParameter, descriptionParameter);
         }
     
-        public virtual ObjectResult<stp_AuthenticateLogin_Result> stp_AuthenticateLogin(string username, string password)
-        {
-            var usernameParameter = username != null ?
-                new ObjectParameter("username", username) :
-                new ObjectParameter("username", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_AuthenticateLogin_Result>("stp_AuthenticateLogin", usernameParameter, passwordParameter);
-        }
-    
         public virtual ObjectResult<stp_GetDiveTypes_Result> stp_GetDiveTypes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetDiveTypes_Result>("stp_GetDiveTypes");
@@ -331,51 +318,6 @@ namespace MyDive.Server
         public virtual ObjectResult<stp_GetLicenseTypes_Result> stp_GetLicenseTypes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetLicenseTypes_Result>("stp_GetLicenseTypes");
-        }
-    
-        public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID, Nullable<double> lat, Nullable<double> @long)
-        {
-            var siteIDParameter = siteID.HasValue ?
-                new ObjectParameter("SiteID", siteID) :
-                new ObjectParameter("SiteID", typeof(int));
-    
-            var maxDepthParameter = maxDepth.HasValue ?
-                new ObjectParameter("MaxDepth", maxDepth) :
-                new ObjectParameter("MaxDepth", typeof(double));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("Description", description) :
-                new ObjectParameter("Description", typeof(string));
-    
-            var diveTypeIDParameter = diveTypeID.HasValue ?
-                new ObjectParameter("DiveTypeID", diveTypeID) :
-                new ObjectParameter("DiveTypeID", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var bottomTypeIDParameter = bottomTypeID.HasValue ?
-                new ObjectParameter("BottomTypeID", bottomTypeID) :
-                new ObjectParameter("BottomTypeID", typeof(int));
-    
-            var salinityUDParameter = salinityUD.HasValue ?
-                new ObjectParameter("SalinityUD", salinityUD) :
-                new ObjectParameter("SalinityUD", typeof(int));
-    
-            var waterTypeIDParameter = waterTypeID.HasValue ?
-                new ObjectParameter("WaterTypeID", waterTypeID) :
-                new ObjectParameter("WaterTypeID", typeof(int));
-    
-            var latParameter = lat.HasValue ?
-                new ObjectParameter("Lat", lat) :
-                new ObjectParameter("Lat", typeof(double));
-    
-            var longParameter = @long.HasValue ?
-                new ObjectParameter("Long", @long) :
-                new ObjectParameter("Long", typeof(double));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateDiveLog", siteIDParameter, maxDepthParameter, descriptionParameter, diveTypeIDParameter, userIDParameter, bottomTypeIDParameter, salinityUDParameter, waterTypeIDParameter, latParameter, longParameter);
         }
     
         public virtual int stp_EditUserProfile(Nullable<int> userId, string firstname, string lastname, Nullable<int> licenseId)
@@ -510,15 +452,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateUser", usernameParameter, passwordParameter, emailParameter, firstNameParameter, lastNameParameter, associationIDParameter, userLicenseNumberParameter, licenseTypeIDParameter, birthdayParameter, roleParameter);
         }
     
-        public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
-        }
-    
         public virtual ObjectResult<Nullable<int>> stp_GetUserRole(Nullable<int> userId)
         {
             var userIdParameter = userId.HasValue ?
@@ -579,6 +512,65 @@ namespace MyDive.Server
                 new ObjectParameter("keyword", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitesByKeywors_Result>("stp_GetSitesByKeywors", keywordParameter);
+        }
+    
+        public virtual int stp_CreateDiveLog(Nullable<int> siteID, Nullable<double> maxDepth, string description, Nullable<int> diveTypeID, Nullable<int> userID, Nullable<int> bottomTypeID, Nullable<int> salinityUD, Nullable<int> waterTypeID)
+        {
+            var siteIDParameter = siteID.HasValue ?
+                new ObjectParameter("SiteID", siteID) :
+                new ObjectParameter("SiteID", typeof(int));
+    
+            var maxDepthParameter = maxDepth.HasValue ?
+                new ObjectParameter("MaxDepth", maxDepth) :
+                new ObjectParameter("MaxDepth", typeof(double));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var diveTypeIDParameter = diveTypeID.HasValue ?
+                new ObjectParameter("DiveTypeID", diveTypeID) :
+                new ObjectParameter("DiveTypeID", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bottomTypeIDParameter = bottomTypeID.HasValue ?
+                new ObjectParameter("BottomTypeID", bottomTypeID) :
+                new ObjectParameter("BottomTypeID", typeof(int));
+    
+            var salinityUDParameter = salinityUD.HasValue ?
+                new ObjectParameter("SalinityUD", salinityUD) :
+                new ObjectParameter("SalinityUD", typeof(int));
+    
+            var waterTypeIDParameter = waterTypeID.HasValue ?
+                new ObjectParameter("WaterTypeID", waterTypeID) :
+                new ObjectParameter("WaterTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateDiveLog", siteIDParameter, maxDepthParameter, descriptionParameter, diveTypeIDParameter, userIDParameter, bottomTypeIDParameter, salinityUDParameter, waterTypeIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetUser_Result> stp_GetUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUser_Result>("stp_GetUser", userIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_AuthenticateLogin_Result> stp_AuthenticateLogin(string username, string password)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_AuthenticateLogin_Result>("stp_AuthenticateLogin", usernameParameter, passwordParameter);
         }
     }
 }

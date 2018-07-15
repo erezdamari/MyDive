@@ -16,7 +16,7 @@ namespace MyDive.Server.Controllers
     public class ClubController : MainController
     {
         [HttpGet]
-        [Route("getclubs/{i_CuntryID}/{i_CityID}")]
+        [Route("getclubsbycountryandcity/{i_CuntryID}/{i_CityID}")]
         public IHttpActionResult GetClubsByCuntryIDAndCityID(int i_CountryID, int i_CityID)
         {
             LogControllerEntring("getclubs");
@@ -59,7 +59,7 @@ namespace MyDive.Server.Controllers
         }
 
         [HttpGet]
-        [Route("getclubs/{i_CuntryID}")]
+        [Route("getclubsbycountry/{i_CuntryID}")]
         public IHttpActionResult GetClubsByCuntryID(int i_CuntryID)
         {
             LogControllerEntring("getclubs");
@@ -132,49 +132,6 @@ namespace MyDive.Server.Controllers
                     }
 
                     LogData("Fetch all clubs", i_Keyword);
-                    result = Ok(clubs.Count > 0 ? clubs : null);
-                }
-            }
-            catch (Exception ex)
-            {
-                clubs = null;
-                result = LogException(ex, null);
-            }
-
-            return result;
-        }
-
-        [HttpGet]
-        [Route("getclub/{i_ClubID}")]
-        public IHttpActionResult GetClubsByID(int i_ClubID)
-        {
-            LogControllerEntring("getclub");
-            IHttpActionResult result = Ok();
-            List<ClubModel> clubs;
-            try
-            {
-                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-                {
-                    ObjectResult<stp_GetClubInfo_Result> clubsResult =
-                        MyDiveDB.stp_GetClubInfo(i_ClubID);
-                    clubs = new List<ClubModel>();
-
-                    foreach (stp_GetClubInfo_Result club in clubsResult)
-                    {
-                        clubs.Add(new ClubModel
-                        {
-                            ClubID = club.ClubID,
-                            Name = club.Name,
-                            Phone = club.Phone,
-                            Email = club.Email,
-                            Address = club.Address,
-                            Rating = club.Rating,
-                            SiteURL = club.SiteURL,
-                            Coordinates = new LocationModel { Lat = club.Lat, Long = club.Long }
-                        });
-                    }
-
-                    LogData("Fetch club", i_ClubID);
                     result = Ok(clubs.Count > 0 ? clubs : null);
                 }
             }

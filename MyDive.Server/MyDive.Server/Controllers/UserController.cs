@@ -29,11 +29,17 @@ namespace MyDive.Server.Controllers
                     using (MyDiveEntities MyDiveDB = new MyDiveEntities())
                     {
                         ObjectResult<stp_AuthenticateLogin_Result> serverAnswer;
-                        List<int> userToReturn = new List<int>();
+                        List<AuthenticationResultModel> userToReturn = new List<AuthenticationResultModel>();
                         serverAnswer = MyDiveDB.stp_AuthenticateLogin(i_UserLoginInfo.Username, i_UserLoginInfo.Password);
                         foreach (stp_AuthenticateLogin_Result res in serverAnswer)
                         {
-                            userToReturn.Add(res.UserID);
+                            userToReturn.Add(new AuthenticationResultModel
+                            {
+                                UserID = res.UserID,
+                                Error = eErrors.None,
+                                HasError = false,
+                                UserRole = (eUserRole)res.UserRole
+                            });
                         }
 
                         if (userToReturn.Count == 0 || userToReturn.Count > 1)
@@ -41,7 +47,7 @@ namespace MyDive.Server.Controllers
                             LogData(
                                 string.Format("user {0} were unable to login", i_UserLoginInfo.Username),
                                 i_UserLoginInfo);
-                            result = BadRequest();
+                            result = BadRequest(JsonConvert.SerializeObject(new AuthenticationResultModel { Error = eErrors.WrongPasswordOrUsername, HasError = true}));
                         }
                         else
                         {
@@ -58,7 +64,7 @@ namespace MyDive.Server.Controllers
             else
             {
                 LogError("user info in insufficient", JsonConvert.SerializeObject(i_UserLoginInfo));
-                result = BadRequest();
+                result = BadRequest(JsonConvert.SerializeObject(new AuthenticationResultModel { Error = eErrors.UserInfoInsufficient, HasError = true }));
             }
 
             return result;
@@ -70,16 +76,19 @@ namespace MyDive.Server.Controllers
         {
             LogControllerEntring("register");
             IHttpActionResult result = Ok();
-            eErrors error = eErrors.None;
+            AuthenticationResultModel registerResult;
 
             try
             {
-                error = m_Logic.CreateUser(i_User);
-                if (error != eErrors.None)
+                registerResult = m_Logic.CreateUser(i_User);
+                if (!registerResult.HasError)
                 {
-                    result = BadRequest(((int)error).ToString());
+                    result = BadRequest(JsonConvert.SerializeObject(registerResult));
                 }
-                LogData("user is register", i_User);
+                else
+                {
+                    LogData("user is register", i_User);
+                }
             }
             catch (Exception ex)
             {
@@ -138,7 +147,6 @@ namespace MyDive.Server.Controllers
                         userToReturn.UserLicenseNumber = user.UserLicenceNumber;
                         userToReturn.LicenseTypeID = user.LicenseTypeID;
                         userToReturn.Birthday = user.Birthday;
-                        userToReturn.UserRole = user.UserRole;
                     }
 
                     result = Ok(userToReturn);
