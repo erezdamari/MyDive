@@ -182,15 +182,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSalinityTypes_Result>("stp_GetSalinityTypes");
         }
     
-        public virtual ObjectResult<stp_GetUserWishList_Result> stp_GetUserWishList(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserWishList_Result>("stp_GetUserWishList", userIDParameter);
-        }
-    
         public virtual ObjectResult<stp_GetWaterTypes_Result> stp_GetWaterTypes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetWaterTypes_Result>("stp_GetWaterTypes");
@@ -398,15 +389,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_InsertLog", typeParameter, msgParameter, dateParameter, dataParameter);
         }
     
-        public virtual ObjectResult<stp_GetUserDiveLogs_Result> stp_GetUserDiveLogs(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserDiveLogs_Result>("stp_GetUserDiveLogs", userIDParameter);
-        }
-    
         public virtual int stp_CreateUser(string username, string password, string email, string firstName, string lastName, Nullable<int> associationID, string userLicenseNumber, Nullable<int> licenseTypeID, Nullable<System.DateTime> birthday, Nullable<int> role)
         {
             var usernameParameter = username != null ?
@@ -571,6 +553,51 @@ namespace MyDive.Server
                 new ObjectParameter("password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_AuthenticateLogin_Result>("stp_AuthenticateLogin", usernameParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetUserDiveLogs_Result> stp_GetUserDiveLogs(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserDiveLogs_Result>("stp_GetUserDiveLogs", userIDParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetClubPictures_Result> stp_GetClubPictures(Nullable<int> clubid)
+        {
+            var clubidParameter = clubid.HasValue ?
+                new ObjectParameter("clubid", clubid) :
+                new ObjectParameter("clubid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetClubPictures_Result>("stp_GetClubPictures", clubidParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSitePictures_Result> stp_GetSitePictures(Nullable<int> siteid)
+        {
+            var siteidParameter = siteid.HasValue ?
+                new ObjectParameter("siteid", siteid) :
+                new ObjectParameter("siteid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSitePictures_Result>("stp_GetSitePictures", siteidParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetUserProfilePicture_Result> stp_GetUserProfilePicture(Nullable<int> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserProfilePicture_Result>("stp_GetUserProfilePicture", useridParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetUserWishList_Result> stp_GetUserWishList(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserWishList_Result>("stp_GetUserWishList", userIDParameter);
         }
     }
 }

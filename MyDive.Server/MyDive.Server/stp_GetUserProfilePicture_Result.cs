@@ -11,14 +11,9 @@ namespace MyDive.Server
 {
     using System;
     
-    public partial class stp_GetUserWishList_Result
+    public partial class stp_GetUserProfilePicture_Result
     {
-        public int WishID { get; set; }
-        public int SiteID { get; set; }
-        public int UserID { get; set; }
-        public string Name { get; set; }
-        public Nullable<double> Rating { get; set; }
-        public string CountryName { get; set; }
-        public string CityName { get; set; }
+        public string Picture { get; set; }
+        public int PictureType { get; set; }
     }
 }

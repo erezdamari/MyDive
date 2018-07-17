@@ -83,9 +83,14 @@ namespace MyDive.Server.Controllers
                         {
                             WishID = res.WishID,
                             SiteID = res.SiteID,
-                            UserID = res.UserID
+                            UserID = res.UserID,
+                            City = res.CityName,
+                            Country = res.CountryName,
+                            Rating = res.Rating,
+                            SiteName = res.Name
                         });
                     }
+
                     LogData("fetch user wish list", i_UserId);
                     result = Ok(userWishList.Count > 0 ? userWishList : null);
                 }

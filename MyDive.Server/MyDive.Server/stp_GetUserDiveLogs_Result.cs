@@ -21,7 +21,5 @@ namespace MyDive.Server
         public string BottomType { get; set; }
         public string Salinity { get; set; }
         public string WaterType { get; set; }
-        public Nullable<double> Lat { get; set; }
-        public Nullable<double> Long { get; set; }
     }
 }

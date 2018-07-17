@@ -34,7 +34,5 @@ namespace MyDive.Server.Models
         public int WaterTypeID { get; set; }
 
         public int UserID { get; set; }
-
-        public LocationModel Coordinates { get; set; }
     }
 }

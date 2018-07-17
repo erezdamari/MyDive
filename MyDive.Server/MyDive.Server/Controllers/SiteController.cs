@@ -79,5 +79,38 @@ namespace MyDive.Server.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        [Route("pictures/{i_SiteId}")]
+        public IHttpActionResult GetSitePictures(int i_SiteId)
+        {
+            LogControllerEntring("pictures");
+            IHttpActionResult result = Ok();
+            try
+            {
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    var serverAnswer = MyDiveDB.stp_GetSitePictures(i_SiteId);
+                    List<PictureModel> sitePictures = new List<PictureModel>();
+                    foreach (stp_GetSitePictures_Result res in serverAnswer)
+                    {
+                        sitePictures.Add(new PictureModel
+                        {
+                            Picture = res.Picture,
+                            PictureType = (ePictureType)res.PictureType
+                        });
+                    }
+
+                    LogData("Fetch site pictures", i_SiteId);
+                    result = Ok(sitePictures.Count > 0 ? sitePictures : null);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex, null);
+            }
+
+            return result;
+        }
     }
 }

@@ -168,5 +168,38 @@ namespace MyDive.Server.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        [Route("pictures/{i_ClubId}")]
+        public IHttpActionResult GetClubPictures(int i_ClubId)
+        {
+            LogControllerEntring("pictures");
+            IHttpActionResult result = Ok();
+            try
+            {
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    var serverAnswer = MyDiveDB.stp_GetClubPictures(i_ClubId);
+                    List<PictureModel> clubPictures = new List<PictureModel>();
+                    foreach(stp_GetClubPictures_Result res in serverAnswer)
+                    {
+                        clubPictures.Add(new PictureModel
+                        {
+                            Picture = res.Picture,
+                            PictureType = (ePictureType)res.PictureType
+                        });
+                    }
+
+                    LogData("Fetch club pictures", i_ClubId);
+                    result = Ok(clubPictures.Count > 0 ? clubPictures : null);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex, null);
+            }
+
+            return result;
+        }
     }
 }

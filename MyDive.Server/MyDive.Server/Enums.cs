@@ -32,5 +32,12 @@ namespace MyDive.Server
             Admin = 1,
             RegularUser = 2
         }
+
+        public enum ePictureType
+        {
+            SecondaryPicture = 0,
+            MainPicture = 1,
+            ProfilePicture = 2
+        }
     }
 }

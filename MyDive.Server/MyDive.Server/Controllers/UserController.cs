@@ -81,13 +81,14 @@ namespace MyDive.Server.Controllers
             try
             {
                 registerResult = m_Logic.CreateUser(i_User);
-                if (!registerResult.HasError)
+                if (registerResult.HasError)
                 {
                     result = BadRequest(JsonConvert.SerializeObject(registerResult));
                 }
                 else
                 {
                     LogData("user is register", i_User);
+                    result = Ok(JsonConvert.SerializeObject(registerResult));
                 }
             }
             catch (Exception ex)
@@ -179,7 +180,6 @@ namespace MyDive.Server.Controllers
                             BottomType = res.BottomType,
                             Description = res.Description,
                             DiveType = res.Type,
-                            Coordinates = new LocationModel { Lat = res.Lat, Long = res.Long },
                             MaxDepth = res.MaxDepth,
                             Salinity = res.Salinity,
                             SiteName = res.Name,
@@ -265,6 +265,39 @@ namespace MyDive.Server.Controllers
             catch (Exception ex)
             {
                 result = LogException(ex, JsonConvert.SerializeObject(i_NewPassword));
+            }
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("profilepicture/{i_UserId}")]
+        public IHttpActionResult GetSitePictures(int i_UserId)
+        {
+            LogControllerEntring("profilepicture");
+            IHttpActionResult result = Ok();
+            try
+            {
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    var serverAnswer = MyDiveDB.stp_GetUserProfilePicture(i_UserId);
+                    List<PictureModel> profilePicture = new List<PictureModel>();
+                    foreach (stp_GetUserProfilePicture_Result res in serverAnswer)
+                    {
+                        profilePicture.Add(new PictureModel
+                        {
+                            Picture = res.Picture,
+                            PictureType = (ePictureType)res.PictureType
+                        });
+                    }
+
+                    LogData("Fetch user profile picture", i_UserId);
+                    result = Ok(profilePicture.Count > 0 ? profilePicture : null);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = LogException(ex, null);
             }
 
             return result;

@@ -147,6 +147,7 @@
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\LogNewDiveModel.cs" />
+    <Compile Include="Models\PictureModel.cs" />
     <Compile Include="Models\RatingModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\SalinityTypeModel.cs" />
@@ -212,6 +213,9 @@
     <Compile Include="stp_GetClubInfo_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="stp_GetClubPictures_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="stp_GetCountries_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
@@ -233,6 +237,9 @@
     <Compile Include="stp_GetSiteInfoById_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="stp_GetSitePictures_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="stp_GetSitesByCountryAndCity_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
@@ -240,6 +247,9 @@
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetUserDiveLogs_Result.cs">
+      <DependentUpon>MyDiveModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stp_GetUserProfilePicture_Result.cs">
       <DependentUpon>MyDiveModel.tt</DependentUpon>
     </Compile>
     <Compile Include="stp_GetUserWishList_Result.cs">
