@@ -13,12 +13,10 @@ namespace MyDive.Server.Models
 
         public int UserID { get; set; }
 
-        public string SiteName { get; set; }
-
         public string Country { get; set; }
 
         public string City { get; set; }
 
-        public double? Rating { get; set; }
+        public SiteModel SiteInfo { get; set; }
     }
 }

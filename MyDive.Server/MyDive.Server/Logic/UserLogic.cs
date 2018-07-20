@@ -62,26 +62,29 @@ namespace MyDive.Server.Logic
             {
                 Error = eErrors.None,
                 HasError = false,
-                UserID = i_Model.UserID,
                 UserRole = eUserRole.RegularUser
             };
 
             if (CheckUserRegistrationValidation(i_Model))
             {
-                    using (MyDiveEntities MyDiveDB = new MyDiveEntities())
-                    {
-                        int userID = MyDiveDB.stp_CreateUser(
-                            i_Model.Username,
-                            i_Model.Password,
-                            i_Model.Email,
-                            i_Model.FirstName,
-                            i_Model.LastName,
-                            i_Model.Association,
-                            i_Model.UserLicenseNumber,
-                            i_Model.LicenseTypeID,
-                            i_Model.Birthday,
-                            (int)eUserRole.RegularUser);
-                    }
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    int userID = MyDiveDB.stp_CreateUser(
+                        i_Model.Username,
+                        i_Model.Password,
+                        i_Model.Email,
+                        i_Model.FirstName,
+                        i_Model.LastName,
+                        i_Model.Association,
+                        i_Model.UserLicenseNumber,
+                        i_Model.LicenseTypeID,
+                        i_Model.Birthday,
+                        (int)eUserRole.RegularUser,
+                        i_Model.ProfilePicture.Picture,
+                        (int)ePictureType.ProfilePicture);
+                    registerResult.UserID = userID;
+                }
+
             }
             else
             {
@@ -91,6 +94,32 @@ namespace MyDive.Server.Logic
             }
 
             return registerResult;
+        }
+
+        public PictureModel GetUserProfilePicture(int i_UserId)
+        {
+            List<PictureModel> profilePicture = new List<PictureModel>();
+            try
+            {
+                using (MyDiveEntities MyDiveDB = new MyDiveEntities())
+                {
+                    var serverAnswer = MyDiveDB.stp_GetUserProfilePicture(i_UserId);
+                    foreach (stp_GetUserProfilePicture_Result res in serverAnswer)
+                    {
+                        profilePicture.Add(new PictureModel
+                        {
+                            Picture = res.Picture,
+                            PictureType = (ePictureType)res.PictureType
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Notify(ex.StackTrace, eLogType.Error, i_UserId.ToString());
+            }
+
+            return profilePicture.Count == 1 ? profilePicture[0] : null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MyDive.Server.Log;
+using MyDive.Server.Logic;
 using MyDive.Server.Models;
 using Newtonsoft.Json;
 using System;
@@ -86,8 +87,13 @@ namespace MyDive.Server.Controllers
                             UserID = res.UserID,
                             City = res.CityName,
                             Country = res.CountryName,
-                            Rating = res.Rating,
-                            SiteName = res.Name
+                            SiteInfo = new SiteModel
+                            {
+                                Name = res.Name,
+                                Rating = res.Rating,
+                                SiteID = res.SiteID,
+                                Coordinates = SiteLogic.getCoordinates(MyDiveDB.stp_GetSiteCoordinates(res.SiteID))
+                            }
                         });
                     }
 

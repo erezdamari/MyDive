@@ -45,9 +45,9 @@ namespace MyDive.Server.Logic
             return sites;
         }
 
-        private List<LocationModel> getCoordinates(ObjectResult<stp_GetSiteCoordinates_Result> i_CoordnatesList)
+        public static List<LocationModel> getCoordinates(ObjectResult<stp_GetSiteCoordinates_Result> i_CoordnatesList)
         {
-            return i_CoordnatesList.Select(c => new LocationModel { Lat = c.Lat, Long = c.Long}).ToList();
+            return i_CoordnatesList.Select(c => new LocationModel { Lat = c.Lat, Long = c.Long, Place = c.Place }).ToList().OrderBy(c => c.Place).ToList();
         }
 
         public List<SiteModel> GetSitesByKeyword(string i_Keyword)

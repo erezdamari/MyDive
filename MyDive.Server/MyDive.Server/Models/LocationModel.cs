@@ -13,5 +13,7 @@ namespace MyDive.Server.Models
 
         [JsonProperty(PropertyName = "lng")]
         public double? Long { get; set; }
+
+        public int? Place { get; set; }
     }
 }

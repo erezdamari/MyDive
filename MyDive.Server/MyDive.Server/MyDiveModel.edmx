@@ -75,6 +75,8 @@
           <Parameter Name="LicenseTypeID" Type="int" Mode="In" />
           <Parameter Name="Birthday" Type="date" Mode="In" />
           <Parameter Name="Role" Type="int" Mode="In" />
+          <Parameter Name="Picture" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PictureType" Type="int" Mode="In" />
         </Function>
         <Function Name="stp_EditUserProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
@@ -279,27 +281,12 @@
             <Parameter Name="Date" Mode="In" Type="DateTime" />
             <Parameter Name="data" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="stp_CreateUser">
-            <Parameter Name="Username" Mode="In" Type="String" />
-            <Parameter Name="Password" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="FirstName" Mode="In" Type="String" />
-            <Parameter Name="LastName" Mode="In" Type="String" />
-            <Parameter Name="AssociationID" Mode="In" Type="Int32" />
-            <Parameter Name="UserLicenseNumber" Mode="In" Type="String" />
-            <Parameter Name="LicenseTypeID" Mode="In" Type="Int32" />
-            <Parameter Name="Birthday" Mode="In" Type="DateTime" />
-            <Parameter Name="Role" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="stp_GetUserRole" ReturnType="Collection(Int32)">
           <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_ChangeUserRole">
             <Parameter Name="UserId" Mode="In" Type="Int32" />
             <Parameter Name="UserRole" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stp_GetSiteCoordinates" ReturnType="Collection(MyDiveModel.stp_GetSiteCoordinates_Result)">
-          <Parameter Name="siteid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetSiteInfoById" ReturnType="Collection(MyDiveModel.stp_GetSiteInfoById_Result)">
           <Parameter Name="siteID" Mode="In" Type="Int32" />
@@ -341,7 +328,24 @@
           <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stp_GetUserWishList" ReturnType="Collection(MyDiveModel.stp_GetUserWishList_Result)">
-            <Parameter Name="userID" Mode="In" Type="Int32" />
+          <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_CreateUser">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="AssociationID" Mode="In" Type="Int32" />
+            <Parameter Name="UserLicenseNumber" Mode="In" Type="String" />
+            <Parameter Name="LicenseTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="Birthday" Mode="In" Type="DateTime" />
+            <Parameter Name="Role" Mode="In" Type="Int32" />
+            <Parameter Name="Picture" Mode="In" Type="String" />
+            <Parameter Name="PictureType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_GetSiteCoordinates" ReturnType="Collection(MyDiveModel.stp_GetSiteCoordinates_Result)">
+            <Parameter Name="siteid" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -453,10 +457,6 @@
           <Property Type="DateTime" Name="LogDate" Nullable="false" Precision="16" />
           <Property Type="String" Name="Data" Nullable="true" MaxLength="Max" />
         </ComplexType>
-        <ComplexType Name="stp_GetSiteCoordinates_Result">
-          <Property Type="Double" Name="Lat" Nullable="false" />
-          <Property Type="Double" Name="Long" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="stp_GetSiteInfoById_Result">
           <Property Type="Int32" Name="SiteID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
@@ -518,6 +518,11 @@
           <Property Type="Double" Name="Rating" Nullable="true" />
           <Property Type="String" Name="CountryName" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="CityName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="stp_GetSiteCoordinates_Result">
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Long" Nullable="false" />
+          <Property Type="Int32" Name="Place" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -695,17 +700,8 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_InsertLog" FunctionName="MyDiveModel.Store.stp_InsertLog" />
-          <FunctionImportMapping FunctionImportName="stp_CreateUser" FunctionName="MyDiveModel.Store.stp_CreateUser" />
           <FunctionImportMapping FunctionImportName="stp_GetUserRole" FunctionName="MyDiveModel.Store.stp_GetUserRole" />
           <FunctionImportMapping FunctionImportName="stp_ChangeUserRole" FunctionName="MyDiveModel.Store.stp_ChangeUserRole" />
-          <FunctionImportMapping FunctionImportName="stp_GetSiteCoordinates" FunctionName="MyDiveModel.Store.stp_GetSiteCoordinates">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteCoordinates_Result">
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Long" ColumnName="Long" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stp_GetSiteInfoById" FunctionName="MyDiveModel.Store.stp_GetSiteInfoById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteInfoById_Result">
@@ -806,6 +802,16 @@
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="CityName" ColumnName="CityName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_CreateUser" FunctionName="MyDiveModel.Store.stp_CreateUser" />
+          <FunctionImportMapping FunctionImportName="stp_GetSiteCoordinates" FunctionName="MyDiveModel.Store.stp_GetSiteCoordinates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyDiveModel.stp_GetSiteCoordinates_Result">
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

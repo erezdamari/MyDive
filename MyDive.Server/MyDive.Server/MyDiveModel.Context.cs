@@ -389,51 +389,6 @@ namespace MyDive.Server
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_InsertLog", typeParameter, msgParameter, dateParameter, dataParameter);
         }
     
-        public virtual int stp_CreateUser(string username, string password, string email, string firstName, string lastName, Nullable<int> associationID, string userLicenseNumber, Nullable<int> licenseTypeID, Nullable<System.DateTime> birthday, Nullable<int> role)
-        {
-            var usernameParameter = username != null ?
-                new ObjectParameter("Username", username) :
-                new ObjectParameter("Username", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("Password", password) :
-                new ObjectParameter("Password", typeof(string));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var firstNameParameter = firstName != null ?
-                new ObjectParameter("FirstName", firstName) :
-                new ObjectParameter("FirstName", typeof(string));
-    
-            var lastNameParameter = lastName != null ?
-                new ObjectParameter("LastName", lastName) :
-                new ObjectParameter("LastName", typeof(string));
-    
-            var associationIDParameter = associationID.HasValue ?
-                new ObjectParameter("AssociationID", associationID) :
-                new ObjectParameter("AssociationID", typeof(int));
-    
-            var userLicenseNumberParameter = userLicenseNumber != null ?
-                new ObjectParameter("UserLicenseNumber", userLicenseNumber) :
-                new ObjectParameter("UserLicenseNumber", typeof(string));
-    
-            var licenseTypeIDParameter = licenseTypeID.HasValue ?
-                new ObjectParameter("LicenseTypeID", licenseTypeID) :
-                new ObjectParameter("LicenseTypeID", typeof(int));
-    
-            var birthdayParameter = birthday.HasValue ?
-                new ObjectParameter("Birthday", birthday) :
-                new ObjectParameter("Birthday", typeof(System.DateTime));
-    
-            var roleParameter = role.HasValue ?
-                new ObjectParameter("Role", role) :
-                new ObjectParameter("Role", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateUser", usernameParameter, passwordParameter, emailParameter, firstNameParameter, lastNameParameter, associationIDParameter, userLicenseNumberParameter, licenseTypeIDParameter, birthdayParameter, roleParameter);
-        }
-    
         public virtual ObjectResult<Nullable<int>> stp_GetUserRole(Nullable<int> userId)
         {
             var userIdParameter = userId.HasValue ?
@@ -454,15 +409,6 @@ namespace MyDive.Server
                 new ObjectParameter("UserRole", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_ChangeUserRole", userIdParameter, userRoleParameter);
-        }
-    
-        public virtual ObjectResult<stp_GetSiteCoordinates_Result> stp_GetSiteCoordinates(Nullable<int> siteid)
-        {
-            var siteidParameter = siteid.HasValue ?
-                new ObjectParameter("siteid", siteid) :
-                new ObjectParameter("siteid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSiteCoordinates_Result>("stp_GetSiteCoordinates", siteidParameter);
         }
     
         public virtual ObjectResult<stp_GetSiteInfoById_Result> stp_GetSiteInfoById(Nullable<int> siteID)
@@ -598,6 +544,68 @@ namespace MyDive.Server
                 new ObjectParameter("userID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetUserWishList_Result>("stp_GetUserWishList", userIDParameter);
+        }
+    
+        public virtual int stp_CreateUser(string username, string password, string email, string firstName, string lastName, Nullable<int> associationID, string userLicenseNumber, Nullable<int> licenseTypeID, Nullable<System.DateTime> birthday, Nullable<int> role, string picture, Nullable<int> pictureType)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var associationIDParameter = associationID.HasValue ?
+                new ObjectParameter("AssociationID", associationID) :
+                new ObjectParameter("AssociationID", typeof(int));
+    
+            var userLicenseNumberParameter = userLicenseNumber != null ?
+                new ObjectParameter("UserLicenseNumber", userLicenseNumber) :
+                new ObjectParameter("UserLicenseNumber", typeof(string));
+    
+            var licenseTypeIDParameter = licenseTypeID.HasValue ?
+                new ObjectParameter("LicenseTypeID", licenseTypeID) :
+                new ObjectParameter("LicenseTypeID", typeof(int));
+    
+            var birthdayParameter = birthday.HasValue ?
+                new ObjectParameter("Birthday", birthday) :
+                new ObjectParameter("Birthday", typeof(System.DateTime));
+    
+            var roleParameter = role.HasValue ?
+                new ObjectParameter("Role", role) :
+                new ObjectParameter("Role", typeof(int));
+    
+            var pictureParameter = picture != null ?
+                new ObjectParameter("Picture", picture) :
+                new ObjectParameter("Picture", typeof(string));
+    
+            var pictureTypeParameter = pictureType.HasValue ?
+                new ObjectParameter("PictureType", pictureType) :
+                new ObjectParameter("PictureType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stp_CreateUser", usernameParameter, passwordParameter, emailParameter, firstNameParameter, lastNameParameter, associationIDParameter, userLicenseNumberParameter, licenseTypeIDParameter, birthdayParameter, roleParameter, pictureParameter, pictureTypeParameter);
+        }
+    
+        public virtual ObjectResult<stp_GetSiteCoordinates_Result> stp_GetSiteCoordinates(Nullable<int> siteid)
+        {
+            var siteidParameter = siteid.HasValue ?
+                new ObjectParameter("siteid", siteid) :
+                new ObjectParameter("siteid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stp_GetSiteCoordinates_Result>("stp_GetSiteCoordinates", siteidParameter);
         }
     }
 }

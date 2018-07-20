@@ -15,5 +15,6 @@ namespace MyDive.Server
     {
         public double Lat { get; set; }
         public double Long { get; set; }
+        public Nullable<int> Place { get; set; }
     }
 }

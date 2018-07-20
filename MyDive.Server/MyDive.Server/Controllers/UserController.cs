@@ -88,7 +88,7 @@ namespace MyDive.Server.Controllers
                 else
                 {
                     LogData("user is register", i_User);
-                    result = Ok(JsonConvert.SerializeObject(registerResult));
+                    result = Ok(registerResult);
                 }
             }
             catch (Exception ex)
@@ -148,6 +148,7 @@ namespace MyDive.Server.Controllers
                         userToReturn.UserLicenseNumber = user.UserLicenceNumber;
                         userToReturn.LicenseTypeID = user.LicenseTypeID;
                         userToReturn.Birthday = user.Birthday;
+                        userToReturn.ProfilePicture = m_Logic.GetUserProfilePicture(i_UserId);
                     }
 
                     result = Ok(userToReturn);
@@ -272,7 +273,7 @@ namespace MyDive.Server.Controllers
 
         [HttpGet]
         [Route("profilepicture/{i_UserId}")]
-        public IHttpActionResult GetSitePictures(int i_UserId)
+        public IHttpActionResult GetProfilePictures(int i_UserId)
         {
             LogControllerEntring("profilepicture");
             IHttpActionResult result = Ok();
